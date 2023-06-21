@@ -1,4 +1,4 @@
-package com.pophory.pophoryserver.config;
+package com.pophory.pophoryserver.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
