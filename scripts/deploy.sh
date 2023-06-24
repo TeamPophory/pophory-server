@@ -62,7 +62,7 @@ do
       echo "> Health check 성공"
       break
   else
-      echo "> Health check의 응답 을 알 수 없거나 혹은 status가 UP이 아닙니다."
+      echo "> Health check의 응답 을 알 수 없거나 혹은 status가 OK가 아닙니다."
       echo "> Health check: ${response}"
   fi
 
