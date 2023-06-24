@@ -91,8 +91,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
         run:
           aws deploy create-deployment
-          --application-name sopt-server-codedeploy
-          --deployment-group-name sopt-server-codedeploy-group
+          --application-name pophory-ec2-deploy
+          --deployment-group-name pophory-deploy-group
           --file-exists-behavior OVERWRITE
-          --s3-location bucket=sopt32-seminar,bundleType=zip,key=pophory-server.zip
+          --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=pophory-server.zip
           --region ap-northeast-2
