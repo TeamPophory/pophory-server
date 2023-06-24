@@ -80,4 +80,5 @@ done
 
 echo "> 스위칭"
 sleep 10
+sudo chmod 700 /home/ubuntu/app/switch.sh
 /home/ubuntu/app/switch.sh
