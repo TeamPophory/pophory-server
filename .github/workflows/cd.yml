@@ -61,9 +61,9 @@ jobs:
       - name: Copy Jar
         run: cp ./build/libs/*.jar ./deploy
 
-      # appspec.yml 파일 복사
       - name: Copy appspec.yml
-        run: cp appspec.yml ./deploy
+        run:
+          cp appspec.yml ./deploy
 
       # script files 복사
       - name: Copy script
@@ -91,6 +91,7 @@ jobs:
         run:
           aws deploy create-deployment
           --application-name pophory-ec2-deploy
+          --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name pophory-deploy-group
           --file-exists-behavior OVERWRITE
           --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=pophory-server.zip
