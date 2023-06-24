@@ -5,6 +5,7 @@ echo "> build 파일명: $JAR_NAME"
 
 echo "> build 파일 복사"
 DEPLOY_PATH=/home/ubuntu/app/nonstop/jar/
+mkdir -p $DEPLOY_PATH
 cp $BUILD_PATH $DEPLOY_PATH
 
 echo "> 현재 구동중인 Set 확인"
@@ -28,7 +29,7 @@ else
 fi
 
 echo "> application.jar 교체"
-IDLE_APPLICATION=$IDLE_PROFILE-pophoryserver.jar
+IDLE_APPLICATION=$IDLE_PROFILE-pophoryserver-0.0.1-SNAPSHOT.jar
 IDLE_APPLICATION_PATH=$DEPLOY_PATH$IDLE_APPLICATION
 
 ln -Tfs $DEPLOY_PATH$JAR_NAME $IDLE_APPLICATION_PATH
@@ -46,11 +47,11 @@ else
 fi
 
 echo "> $IDLE_PROFILE 배포"
-nohup java -jar -Duser.timezone=Asia/Seoul -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH >> /home/ubuntu/app/nohup.out 2>&1 &
+nohup java -jar -Xmx512m -Duser.timezone=Asia/Seoul -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH >> /home/ubuntu/app/nohup.out 2>&1 &
 
 echo "> $IDLE_PROFILE 10초 후 Health check 시작"
 echo "> curl -s http://localhost:$IDLE_PORT/health"
-sleep 10
+sleep 60
 
 for retry_count in {1..10}
 do
