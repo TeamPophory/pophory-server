@@ -51,7 +51,7 @@ nohup java -jar -Xmx512m -Duser.timezone=Asia/Seoul -Dspring.profiles.active=$ID
 
 echo "> $IDLE_PROFILE 10초 후 Health check 시작"
 echo "> curl -s http://localhost:$IDLE_PORT/health"
-sleep 60
+sleep 30
 
 for retry_count in {1..10}
 do
