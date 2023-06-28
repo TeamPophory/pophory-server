@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class StudioResponseVO {
+public class StudioResponseDTO {
 
     private List<Studio> studios;
 
-    public static StudioResponseVO of(List<Studio> studios) {
-        return new StudioResponseVO(studios);
+    public static StudioResponseDTO of(List<Studio> studios) {
+        return new StudioResponseDTO(studios);
 
     }
 }
