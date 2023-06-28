@@ -41,3 +41,4 @@ application-dev.yml
 application-local.yml
 application-prod.yml
 application-infra.yml
+.DS_Store
