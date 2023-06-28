@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "io.sentry.jvm.gradle" version "3.11.0"
 }
 
 group = 'com.pophory'
@@ -34,6 +35,10 @@ dependencies {
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// sentry
+	implementation 'io.sentry:sentry-spring-boot-starter:6.23.0'
+	implementation 'io.sentry:sentry-logback:6.23.0'
 
 	// Database
 	runtimeOnly 'com.h2database:h2'
