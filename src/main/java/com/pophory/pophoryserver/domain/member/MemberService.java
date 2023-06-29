@@ -14,15 +14,16 @@ public class MemberService {
 
     public final MemberJpaRepository memberJpaRepository;
 
-    public void create(MemberCreateRequestDto request) {
+    public void update(MemberCreateRequestDto request) {
         checkNicknameDuplicate(request.getNickname());
+        updateMemberInfo(request);
+    }
+
+    private void updateMemberInfo(MemberCreateRequestDto request) {
         Member member = findMemberById(request.getId());
         member.updateRealName(request.getRealName());
         member.updateNickname(request.getNickname());
-
-        Album album = new Album();
-        album.setCover(request.getAlbumCover());
-        member.getAlbumList().add(album);
+        addAlbum(member, request.getAlbumCover());
     }
 
     private void checkNicknameDuplicate(String nickName) {
@@ -35,5 +36,11 @@ public class MemberService {
         return memberJpaRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException()
         );
+    }
+
+    private void addAlbum(Member member, int albumCover) {
+        Album album = new Album();
+        album.setCover(albumCover);
+        member.getAlbumList().add(album);
     }
 }

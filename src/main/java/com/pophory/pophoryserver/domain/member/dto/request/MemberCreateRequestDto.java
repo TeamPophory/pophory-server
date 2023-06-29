@@ -16,11 +16,12 @@ public class MemberCreateRequestDto {
 
     @NotBlank
     @Size(min = 1, max = 10)
+    @Pattern(regexp = "[가-힣]")
     private String realName;
 
     @NotBlank
     @Size(min = 4, max = 12)
-    @Pattern(regexp = "[a-zA-Z0-9_]{4,12}$")
+    @Pattern(regexp = "\\w$")
     private String nickname;
 
     @NotBlank
