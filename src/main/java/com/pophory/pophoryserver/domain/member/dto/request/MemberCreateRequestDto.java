@@ -12,8 +12,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberCreateRequestDto {
 
-    private Long id;
-
     @NotBlank
     @Size(min = 1, max = 10)
     @Pattern(regexp = "[가-힣]")

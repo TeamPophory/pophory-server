@@ -4,9 +4,9 @@ import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDt
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,8 +15,9 @@ public class MemberController {
     public final MemberService memberService;
 
     @PatchMapping
-    public ResponseEntity.BodyBuilder patchMember(MemberCreateRequestDto memberCreateRequestDto) {
-        memberService.update(memberCreateRequestDto);
+
+    public ResponseEntity.BodyBuilder patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, @RequestHeader Long memberId) {
+        memberService.update(memberCreateRequestDto, memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT);
     }
 }
