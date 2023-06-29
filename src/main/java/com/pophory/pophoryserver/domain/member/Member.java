@@ -4,6 +4,7 @@ package com.pophory.pophoryserver.domain.member;
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.member.auth.SocialType;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.List;
 import static javax.persistence.EnumType.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
@@ -41,10 +43,18 @@ public class Member extends BaseTimeEntity {
     private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "member")
-    private  List<Album> albumList = new ArrayList<>();
+    private List<Album> albumList = new ArrayList<>();
 
     public void softDelete() {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
+    }
+
+    public void updateRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
