@@ -4,17 +4,18 @@ package com.pophory.pophoryserver.infrastructure.s3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
-@Configuration
+@Component
 @RequiredArgsConstructor
 public class S3Util {
 
     private final AwsS3Config awsS3Config;
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     // 파일 업로드
