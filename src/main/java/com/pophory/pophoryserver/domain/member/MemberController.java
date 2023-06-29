@@ -16,7 +16,7 @@ public class MemberController {
 
     @PatchMapping
     public ResponseEntity.BodyBuilder patchMember(MemberCreateRequestDto memberCreateRequestDto) {
-        memberService.updateMemberInfo(memberCreateRequestDto);
+        memberService.update(memberCreateRequestDto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT);
     }
 }
