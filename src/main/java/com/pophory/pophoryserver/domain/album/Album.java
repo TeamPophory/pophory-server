@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.album;
 
 import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import static javax.persistence.FetchType.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Album extends BaseTimeEntity {
 
@@ -32,5 +34,9 @@ public class Album extends BaseTimeEntity {
     public void softDelete() {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
+    }
+
+    public void setCover(int cover) {
+        this.cover = cover;
     }
 }
