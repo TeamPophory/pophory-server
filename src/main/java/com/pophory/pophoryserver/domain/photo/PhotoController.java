@@ -21,4 +21,10 @@ public class PhotoController {
         photoService.addPhoto(photo, request, memberId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @DeleteMapping("/{photoId}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable Long photoId, @RequestHeader Long memberId) {
+        photoService.deletePhoto(photoId, memberId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
