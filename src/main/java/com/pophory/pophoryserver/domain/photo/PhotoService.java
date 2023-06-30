@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -41,9 +42,21 @@ public class PhotoService {
                 .studio(studio)
                 .build());
     }
+
+    @Transactional
+    public void deletePhoto(Long photoId, Long memberId) {
+        Photo photo = getPhotoById(photoId);
+        s3Util.delete(photo.getImageUrl());
+        photoJpaRepository.deleteById(photoId);
+    }
+
+    private Photo getPhotoById(Long photoId) {
+        return photoJpaRepository.findById(photoId).orElseThrow(() -> new EntityNotFoundException("해당 사진이 존재하지 않습니다. id=" + photoId));
+    }
+
     private String upload(MultipartFile file, Long memberId) {
         try {
-            String uploadPath = "images/" + memberId + "member/" + UUID.randomUUID().toString() + "." + getExtension(file);
+            String uploadPath = "images/" + memberId + "member/" + UUID.randomUUID() + "." + getExtension(file);
             return s3Util.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
         } catch (IOException e) {
             throw new IllegalStateException("파일 업로드에 실패했습니다.");
@@ -58,9 +71,8 @@ public class PhotoService {
 
 
     private void validateExt(MultipartFile file) {
-        System.out.println(file.getContentType());
-        List<String> exts = List.of("image/jpeg", "image/jpg");
-        if (!exts.contains(file.getContentType())) {
+        List<String> ext = List.of("image/jpeg", "image/jpg");
+        if (!ext.contains(file.getContentType())) {
             throw new IllegalArgumentException("지원하지 않는 확장명입니다.");
         }
     }
