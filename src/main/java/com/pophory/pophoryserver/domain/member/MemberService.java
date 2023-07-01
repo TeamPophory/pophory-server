@@ -68,19 +68,23 @@ public class MemberService {
     }
 
     private int getPhotoCount(Long memberId) {
-        return albumJpaRepository.findAllByMemberId(memberId).stream().map(
+        return getAllAlbumByMemberId(memberId).stream().map(
                 album -> album.getPhotoList().size())
                 .mapToInt(Integer::intValue)
                 .sum();
     }
 
     private PhotoListGetResponseDto getPhotos(Long memberId) {
-        List<PhotoGetResponseDto> photoList = albumJpaRepository.findAllByMemberId(memberId)
+        List<PhotoGetResponseDto> photoList = getAllAlbumByMemberId(memberId)
                 .stream()
                 .flatMap(
                         album -> album.getPhotoList().stream()
                                 .map(PhotoGetResponseDto::of))
                 .collect(Collectors.toList());
         return PhotoListGetResponseDto.of(photoList);
+    }
+
+    private List<Album> getAllAlbumByMemberId(Long memberId) {
+        return albumJpaRepository.findAllByMemberId(memberId);
     }
 }
