@@ -1,6 +1,6 @@
 package com.pophory.pophoryserver.domain.photo;
 
-import com.pophory.pophoryserver.domain.photo.dto.PhotoAddRequestDto;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

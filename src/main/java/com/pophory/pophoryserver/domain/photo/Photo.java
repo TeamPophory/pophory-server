@@ -47,10 +47,12 @@ public class Photo extends BaseTimeEntity {
     private final List<GuestTag> guestTagList = new ArrayList<>();
 
     @Builder
-    public Photo(String imageUrl, Album album, Studio studio) {
+    public Photo(String imageUrl, Album album, Studio studio, LocalDate takenAt) {
         this.imageUrl = imageUrl;
         this.album = album;
         this.studio = studio;
+        this.takenAt = takenAt;
+        this.isDeleted = false;
     }
 
     public void softDelete() {

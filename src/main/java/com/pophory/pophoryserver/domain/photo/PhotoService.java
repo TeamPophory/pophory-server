@@ -3,9 +3,10 @@ package com.pophory.pophoryserver.domain.photo;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
-import com.pophory.pophoryserver.domain.photo.dto.PhotoAddRequestDto;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
+import com.pophory.pophoryserver.global.util.PhotoUtil;
 import com.pophory.pophoryserver.infrastructure.s3.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class PhotoService {
                 .imageUrl(upload(file, memberId))
                 .album(album)
                 .studio(studio)
+                .takenAt(PhotoUtil.changeRequestToTakenAt(request.getTakenAt()))
                 .build());
     }
 
