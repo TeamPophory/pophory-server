@@ -6,19 +6,23 @@ import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDt
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
-    public final MemberJpaRepository memberJpaRepository;
-    public final AlbumJpaRepository albumJpaRepository;
+    private final MemberJpaRepository memberJpaRepository;
+    private final AlbumJpaRepository albumJpaRepository;
 
     @Transactional
     public void update(MemberCreateRequestDto request, Long memberId) {
@@ -34,8 +38,8 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MemberMyPageGetResponseDto getMypageMember(Long memberId) {
         return MemberMyPageGetResponseDto.of(
-                findMemberById(memberId), findBasicAlbum(memberId).getPhotoList().size(), );
-
+                findMemberById(memberId), getPhotoCount(memberId), getPhotos(memberId)
+        );
     }
 
     private void updateMemberInfo(MemberCreateRequestDto request, Long memberId) {
@@ -63,10 +67,20 @@ public class MemberService {
         member.getAlbumList().add(album);
     }
 
-    private Album findBasicAlbum(Long memberId) {
-        Album basic = albumJpaRepository.findAllByMemberId(memberId).stream().findFirst().orElseThrow(
-                () -> new EntityNotFoundException()
-        );
-        return basic;
+    private int getPhotoCount(Long memberId) {
+        return albumJpaRepository.findAllByMemberId(memberId).stream().map(
+                album -> album.getPhotoList().size())
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    private PhotoListGetResponseDto getPhotos(Long memberId) {
+        List<PhotoGetResponseDto> photoList = albumJpaRepository.findAllByMemberId(memberId)
+                .stream()
+                .flatMap(
+                        album -> album.getPhotoList().stream()
+                                .map(PhotoGetResponseDto::of))
+                .collect(Collectors.toList());
+        return PhotoListGetResponseDto.of(photoList);
     }
 }
