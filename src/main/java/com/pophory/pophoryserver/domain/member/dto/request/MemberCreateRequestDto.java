@@ -19,7 +19,7 @@ public class MemberCreateRequestDto {
     private String realName;
 
     @Size(min = 4, max = 12)
-    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    @Pattern(regexp = "^[a-zA-Z0-9_]*$")
     private String nickname;
 
     private int albumCover;
