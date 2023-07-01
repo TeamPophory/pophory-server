@@ -2,8 +2,10 @@ package com.pophory.pophoryserver.domain.member;
 
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
+import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -14,9 +16,15 @@ public class MemberService {
 
     public final MemberJpaRepository memberJpaRepository;
 
+    @Transactional
     public void update(MemberCreateRequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
         updateMemberInfo(request, memberId);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberGetResponseDto getMember(Long id) {
+        return MemberGetResponseDto.of(findMemberById(id));
     }
 
     private void updateMemberInfo(MemberCreateRequestDto request, Long memberId) {
