@@ -42,7 +42,7 @@ public class Member extends BaseTimeEntity {
     private boolean isDeleted = false;
     private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Album> albumList = new ArrayList<>();
 
     public void softDelete() {
