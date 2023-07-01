@@ -5,7 +5,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+import static lombok.AccessLevel.*;
+
+@AllArgsConstructor(access = PRIVATE)
 @Getter
 public class MemberGetResponseDto {
     private Long id;
