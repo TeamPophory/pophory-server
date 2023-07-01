@@ -1,12 +1,15 @@
 package com.pophory.pophoryserver.domain.album;
 
 import com.pophory.pophoryserver.domain.member.Member;
+import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
@@ -30,6 +33,9 @@ public class Album extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = LAZY)
     private Member member;
+
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<Photo> photoList = new ArrayList<>();
 
     public void softDelete() {
         this.isDeleted = true;
