@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.member;
 
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
+import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ public class MemberController {
     public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, @RequestHeader Long memberId) {
         memberService.update(memberCreateRequestDto, memberId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<MemberMyPageGetResponseDto> getMypageMember(@RequestHeader Long memberId) {
+        return ResponseEntity.ok(memberService.getMypageMember(memberId));
     }
 
     @GetMapping("/me")
