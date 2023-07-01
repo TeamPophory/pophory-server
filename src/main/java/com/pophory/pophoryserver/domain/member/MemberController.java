@@ -16,8 +16,7 @@ public class MemberController {
     public final MemberService memberService;
 
     @PatchMapping
-
-    public ResponseEntity.BodyBuilder patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, @RequestHeader Long memberId) {
+    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, @RequestHeader Long memberId) {
         memberService.update(memberCreateRequestDto, memberId);
         return ResponseEntity.noContent().build();
     }
