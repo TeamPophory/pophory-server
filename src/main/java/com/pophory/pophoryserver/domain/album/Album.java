@@ -35,7 +35,7 @@ public class Album extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
-    private List<Photo> photoList = new ArrayList<>();
+    private final List<Photo> photoList = new ArrayList<>();
 
     public void softDelete() {
         this.isDeleted = true;
