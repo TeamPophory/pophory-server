@@ -27,5 +27,4 @@ public class PhotoController {
         photoService.deletePhoto(photoId, memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }
