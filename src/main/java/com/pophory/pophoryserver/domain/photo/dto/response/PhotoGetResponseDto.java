@@ -1,12 +1,13 @@
 package com.pophory.pophoryserver.domain.photo.dto.response;
 
 import com.pophory.pophoryserver.domain.photo.Photo;
-import com.pophory.pophoryserver.global.util.PhotoUtil;
+import com.pophory.pophoryserver.global.utils.PhotoUtil;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PhotoGetResponseDto {
     private Long id;
     private String studio;
