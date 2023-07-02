@@ -3,7 +3,6 @@ package com.pophory.pophoryserver.domain.album;
 
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service

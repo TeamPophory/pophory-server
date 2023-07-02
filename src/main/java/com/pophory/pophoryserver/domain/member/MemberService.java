@@ -51,13 +51,13 @@ public class MemberService {
 
     private void checkNicknameDuplicate(String nickName) {
         if (memberJpaRepository.existsMemberByNickname(nickName)) {
-            throw new EntityExistsException();
+            throw new EntityExistsException("이미 존재하는 닉네임입니다. nickname: " + nickName);
         }
     }
 
     private Member findMemberById(Long id) {
         return memberJpaRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException()
+                () -> new EntityNotFoundException("Member가 존재하지 않습니다. id: " + id)
         );
     }
 
