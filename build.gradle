@@ -44,6 +44,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'org.postgresql:postgresql'
 
+	// swagger
+	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+
 	// AWS S3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
