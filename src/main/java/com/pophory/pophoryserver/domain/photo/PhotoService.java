@@ -6,6 +6,8 @@ import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
+import com.pophory.pophoryserver.global.exception.PayloadTooLargeException;
+import com.pophory.pophoryserver.global.exception.S3UploadException;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
 import com.pophory.pophoryserver.infrastructure.s3.S3Util;
 import lombok.RequiredArgsConstructor;
@@ -61,13 +63,13 @@ public class PhotoService {
             String uploadPath = "images/" + memberId + "member/" + UUID.randomUUID() + "." + getExtension(file);
             return s3Util.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
         } catch (IOException e) {
-            throw new IllegalStateException("파일 업로드에 실패했습니다.");
+            throw new S3UploadException("파일 업로드에 실패했습니다.");
         }
     }
 
     private void validateFileSize(MultipartFile file) {
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("파일의 크기가 너무 큽니다." + file.getSize());
+            throw new PayloadTooLargeException("파일의 크기가 너무 큽니다.");
         }
     }
 
