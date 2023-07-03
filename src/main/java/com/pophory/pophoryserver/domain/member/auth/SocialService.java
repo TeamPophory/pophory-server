@@ -7,8 +7,14 @@ import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
 import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
 import com.pophory.pophoryserver.global.config.jwt.JwtTokenProvider;
 import com.pophory.pophoryserver.global.config.jwt.UserAuthentication;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
+@Service
+@RequiredArgsConstructor
 public abstract class SocialService {
 
     protected static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 2 * 12 * 100L; // 2시간
@@ -18,7 +24,7 @@ public abstract class SocialService {
 
     protected abstract String login(String socialAccessToken);
 
-    private AuthResponseDto signIn(String socialAccessToken, AuthRequestDto authRequestDto) {
+    public AuthResponseDto signIn(String socialAccessToken, AuthRequestDto authRequestDto) {
         SocialType socialType = authRequestDto.getSocialType();
         String socialId = login(socialAccessToken);
 
@@ -31,12 +37,18 @@ public abstract class SocialService {
                     .socialType(socialType)
                     .build();
             memberJpaRepository.save(member);
+
+            TokenVO tokenVO = generateToken(new UserAuthentication(member.getId(), null, null));
+            member.updateRefreshToken(tokenVO.getRefreshToken());
+            return AuthResponseDto.of(tokenVO.getAccessToken(), tokenVO.getAccessToken(), isRegisterd);
         }
 
-        Member signedMember = memberJpaRepository.getMemberBySocialIdAAndSocialType(socialType, socialId);
+        Member signedMember = memberJpaRepository.getMemberBySocialIdAndSocialType(socialType, socialId).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
         TokenVO tokenVO = generateToken(new UserAuthentication(signedMember.getId(), null, null));
 
-        return AuthResponseDto.of(tokenVO.getAccessToken(), tokenVO.getRefreshToken(), true);
+        return AuthResponseDto.of(tokenVO.getAccessToken(), tokenVO.getRefreshToken(), isRegisterd);
     }
 
     private TokenVO generateToken(Authentication authentication) {
