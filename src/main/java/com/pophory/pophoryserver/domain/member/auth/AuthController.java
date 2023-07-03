@@ -1,16 +1,16 @@
 package com.pophory.pophoryserver.domain.member.auth;
 
+import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
+import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final KakaoAuthService kakaoAuthService;
 
     @DeleteMapping(produces = "application/json")
     @SecurityRequirement(name = "Authorization")
@@ -31,5 +32,17 @@ public class AuthController {
     public ResponseEntity<Void> signOut(@RequestHeader Long memberId) {
         authService.signOut(memberId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping
+    @SecurityRequirement(name = "Authorization")
+    @Operation(summary = "소셜로그인 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "소셜로그인 성공"),
+            @ApiResponse(responseCode = "400", description = "소셜로그인 실패"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto authRequestDto) {
+        return ResponseEntity.ok(kakaoAuthService.signIn(socialAccessToken, authRequestDto));
     }
 }
