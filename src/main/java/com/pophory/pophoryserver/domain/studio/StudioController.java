@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.studio;
 
 import com.pophory.pophoryserver.domain.studio.dto.StudioResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,8 +27,8 @@ public class StudioController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "스튜디오 목록 조회 성공"),
-                    @ApiResponse(responseCode = "400", description = "스튜디오 목록 조회 실패"),
-                    @ApiResponse(responseCode = "500", description = "서버 오류")
+                    @ApiResponse(responseCode = "400", description = "스튜디오 목록 조회 실패", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
             }
     )
     public ResponseEntity<StudioResponseDto> getAllStudio() {

@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.photo;
 
 import com.pophory.pophoryserver.domain.album.Album;
+import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.tag.GuestTag;
 import com.pophory.pophoryserver.domain.tag.MemberTag;
@@ -40,6 +41,10 @@ public class Photo extends BaseTimeEntity {
 
     private LocalDate takenAt;
 
+    private int width;
+
+    private int height;
+
     @OneToMany(mappedBy = "photo", cascade = CascadeType.ALL)
     private final List<MemberTag> memberTagList = new ArrayList<>();
 
@@ -47,12 +52,14 @@ public class Photo extends BaseTimeEntity {
     private final List<GuestTag> guestTagList = new ArrayList<>();
 
     @Builder
-    public Photo(String imageUrl, Album album, Studio studio, LocalDate takenAt) {
+    public Photo(String imageUrl, Album album, Studio studio, LocalDate takenAt, PhotoSizeVO photoSizeVO) {
         this.imageUrl = imageUrl;
         this.album = album;
         this.studio = studio;
         this.takenAt = takenAt;
         this.isDeleted = false;
+        this.width = photoSizeVO.getWidth();
+        this.height = photoSizeVO.getHeight();
     }
 
     public void softDelete() {

@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.photo;
 
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -46,9 +47,9 @@ public class PhotoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "204", description = "사진 삭제 성공"),
-                    @ApiResponse(responseCode = "400", description = "사진 삭제 실패"),
-                    @ApiResponse(responseCode = "404", description = "해당 사진이 존재하지 않습니다."),
-                    @ApiResponse(responseCode = "500", description = "서버 오류")
+                    @ApiResponse(responseCode = "400", description = "사진 삭제 실패", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "해당 사진이 존재하지 않습니다.", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
             }
     )
     public ResponseEntity<Void> deletePhoto(@PathVariable Long photoId, @RequestHeader Long memberId) {
