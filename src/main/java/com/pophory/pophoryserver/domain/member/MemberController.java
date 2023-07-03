@@ -4,6 +4,7 @@ import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDt
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,8 +27,8 @@ public class MemberController {
     @Operation(summary = "회원가입 API")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "204", description = "회원가입 성공"),
-            @ApiResponse(responseCode = "400", description = "회원가입 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "회원가입 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
     public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, @RequestHeader Long memberId) {
@@ -39,8 +40,8 @@ public class MemberController {
     @Operation(summary = "마이페이지 조회 API")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "마이페이지 조회 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "마이페이지 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
     public ResponseEntity<MemberMyPageGetResponseDto> getMypageMember(@RequestHeader Long memberId) {
@@ -51,8 +52,8 @@ public class MemberController {
     @Operation(summary = "사용자 정보 조회 API")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "사용자 정보 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "사용자 정보 조회 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "사용자 정보 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
     public ResponseEntity<MemberGetResponseDto> getMember(@RequestHeader Long memberId) {
