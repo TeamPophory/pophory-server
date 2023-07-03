@@ -12,9 +12,10 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Schema(description = "소셜 로그인 요청 DTO")
+@NoArgsConstructor
 public class AuthRequestDto {
 
     @NotBlank
-    @Schema(description = "로그인한 소셜 서비스 정보", example = "Kakao, Apple")
-    private SocialType socialType;
+    @Schema(description = "로그인한 소셜 서비스 정보", example = "KAKAO, APPLE")
+    private String socialType;
 }

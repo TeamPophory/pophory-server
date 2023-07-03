@@ -8,9 +8,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final KakaoAuthService kakaoAuthService;
+    private final SocialService socialService;
 
     @DeleteMapping(produces = "application/json")
     @SecurityRequirement(name = "Authorization")
@@ -42,7 +44,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "소셜로그인 실패"),
             @ApiResponse(responseCode = "500", description = "서버 오류")
     })
-    public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto authRequestDto) {
-        return ResponseEntity.ok(kakaoAuthService.signIn(socialAccessToken, authRequestDto));
+    public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto authRequestDto) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return ResponseEntity.ok(socialService.signIn(socialAccessToken, authRequestDto));
     }
 }
