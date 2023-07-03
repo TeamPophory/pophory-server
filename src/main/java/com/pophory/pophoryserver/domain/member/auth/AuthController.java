@@ -3,6 +3,7 @@ package com.pophory.pophoryserver.domain.member.auth;
 import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
 import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,8 +29,8 @@ public class AuthController {
     @Operation(summary = "회원탈퇴 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "회원탈퇴 성공"),
-            @ApiResponse(responseCode = "400", description = "회원탈퇴 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "회원탈퇴 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<Void> signOut(@RequestHeader Long memberId) {
         authService.signOut(memberId);
@@ -41,8 +42,8 @@ public class AuthController {
     @Operation(summary = "소셜로그인 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "소셜로그인 성공"),
-            @ApiResponse(responseCode = "400", description = "소셜로그인 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "소셜로그인 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto authRequestDto) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return ResponseEntity.ok(socialService.signIn(socialAccessToken, authRequestDto));
