@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Tag(name = "Member", description = "사용자 관련 API")
 @SecurityRequirement(name = "Authorization")
 public class MemberController {
-    public final MemberService memberService;
+    private final MemberService memberService;
 
     @PatchMapping
     @Operation(summary = "회원가입 API")
