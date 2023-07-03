@@ -36,7 +36,6 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .formLogin().disable()
-                .httpBasic().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)     // 스프링시큐리티가 생성하지도않고 기존것을 사용하지도 않음 -> JWT 방식 사용
                 .and()

@@ -3,6 +3,7 @@ package com.pophory.pophoryserver.global.advice;
 import com.pophory.pophoryserver.global.exception.PayloadTooLargeException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import io.sentry.Sentry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 
 @RestControllerAdvice
+@Slf4j
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -60,6 +62,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Void> handleException(final Exception e) {
+        log.error(e.getMessage());
         Sentry.captureException(e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
