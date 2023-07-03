@@ -4,6 +4,7 @@ package com.pophory.pophoryserver.domain.member;
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.member.auth.SocialType;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -56,5 +57,13 @@ public class Member extends BaseTimeEntity {
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; };
+
+    @Builder
+    public Member(String socialId, SocialType socialType) {
+        this.socialId = socialId;
+        this.socialType = socialType;
     }
 }
