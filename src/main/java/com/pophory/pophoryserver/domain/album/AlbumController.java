@@ -1,8 +1,10 @@
 package com.pophory.pophoryserver.domain.album;
 
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,8 +26,8 @@ public class AlbumController {
     @Operation(summary = "앨범 목록 조회 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "앨범 목록 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<AlbumListGetResponseDto> getAlbums(@RequestHeader Long memberId) {
         return ResponseEntity.ok(albumService.getAlbums(memberId));
@@ -35,9 +37,9 @@ public class AlbumController {
     @Operation(summary = "앨범에 속한 사진 목록 조회 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "앨범에 속한 사진 목록 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "앨범에 속한 사진 목록 조회 실패"),
-            @ApiResponse(responseCode = "404", description = "앨범이 존재하지 않습니다."),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "앨범에 속한 사진 목록 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "404", description = "앨범이 존재하지 않습니다.", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<PhotoListGetResponseDto> getPhotos(
             @PathVariable Long albumId,

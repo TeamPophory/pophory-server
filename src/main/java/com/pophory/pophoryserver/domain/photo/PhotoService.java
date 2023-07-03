@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
+import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
 import com.pophory.pophoryserver.global.exception.PayloadTooLargeException;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +47,7 @@ public class PhotoService {
                 .album(album)
                 .studio(studio)
                 .takenAt(PhotoUtil.changeRequestToTakenAt(request.getTakenAt()))
+                .photoSizeVO(getImageSize(file))
                 .build());
     }
 
@@ -52,6 +56,15 @@ public class PhotoService {
         Photo photo = getPhotoById(photoId);
         s3Util.delete(photo.getImageUrl());
         photoJpaRepository.deleteById(photoId);
+    }
+
+    private PhotoSizeVO getImageSize(MultipartFile file) {
+        try {
+            BufferedImage image = ImageIO.read(file.getInputStream());
+            return new PhotoSizeVO(image.getWidth(), image.getHeight());
+        } catch (IOException e) {
+            throw new IllegalArgumentException("이미지를 읽어오는데 실패했습니다.");
+        }
     }
 
     private Photo getPhotoById(Long photoId) {
