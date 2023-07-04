@@ -3,7 +3,6 @@ package com.pophory.pophoryserver.domain.member;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
-import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
