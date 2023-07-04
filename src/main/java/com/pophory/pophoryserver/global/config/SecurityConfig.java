@@ -31,7 +31,11 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/swagger-ui/index.html",
             "/docs/swagger-ui/index.html",
-            "/swagger-ui/swagger-ui.css"
+            "/swagger-ui/swagger-ui.css",
+            "/actuator/**",
+            "/swagger-resources/**",
+            "/favicon.ico",
+            "/api-docs/**"
     };
 
     @Bean
