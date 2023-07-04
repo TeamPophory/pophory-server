@@ -1,14 +1,13 @@
 package com.pophory.pophoryserver.global.advice;
 
-import com.pophory.pophoryserver.global.exception.PayloadTooLargeException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import io.sentry.Sentry;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -47,21 +46,20 @@ public class ControllerExceptionHandler {
         return ResponseEntity.badRequest().build();
     }
 
-
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Void> handleIllegalArgumentException(final IllegalArgumentException e) {
         Sentry.captureException(e);
         return ResponseEntity.badRequest().build();
     }
 
-    @ExceptionHandler(PayloadTooLargeException.class)
-    public ResponseEntity<Void> handleEntityIsTooLargeException(final PayloadTooLargeException e) {
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<Void> handleMaxUploadSizeExceededException(final MaxUploadSizeExceededException e) {
         Sentry.captureException(e);
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).build();
     }
 
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<Void> handleEntityIsTooLargeException(final EntityExistsException e) {
+    public ResponseEntity<Void> handleEntityExistsException(final EntityExistsException e) {
         Sentry.captureException(e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
