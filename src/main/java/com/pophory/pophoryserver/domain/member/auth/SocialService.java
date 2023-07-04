@@ -66,7 +66,7 @@ public class SocialService {
     private String getSocialId(SocialType socialType, String socialAccessToken) throws NoSuchAlgorithmException, InvalidKeySpecException {
         switch (socialType) {
             case KAKAO:
-                return kakaoAuthService.login(socialAccessToken.substring(7));
+                return kakaoAuthService.login(socialAccessToken);
             case APPLE:
                 return appleAuthService.login(socialAccessToken);
             default:
