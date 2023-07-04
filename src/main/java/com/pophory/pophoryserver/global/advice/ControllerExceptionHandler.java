@@ -10,11 +10,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 
 @RestControllerAdvice
-@Slf4j
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -60,9 +60,14 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).build();
     }
 
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<Void> handleEntityIsTooLargeException(final EntityExistsException e) {
+        Sentry.captureException(e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Void> handleException(final Exception e) {
-        log.error(e.getMessage());
         Sentry.captureException(e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
