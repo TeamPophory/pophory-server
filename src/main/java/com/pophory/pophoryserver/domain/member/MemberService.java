@@ -5,15 +5,16 @@ import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
+import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,14 +75,13 @@ public class MemberService {
                 .sum();
     }
 
-    private PhotoListGetResponseDto getPhotos(Long memberId) {
-        List<PhotoGetResponseDto> photoList = getAllAlbumByMemberId(memberId)
-                .stream()
-                .flatMap(
-                        album -> album.getPhotoList().stream()
-                                .map(PhotoGetResponseDto::of))
-                .collect(Collectors.toList());
-        return PhotoListGetResponseDto.of(photoList);
+    private List<PhotoGetResponseDto> getPhotos(Long memberId) {
+        List<Photo> photos = new ArrayList<>();
+        getAllAlbumByMemberId(memberId).forEach(album -> photos.addAll(album.getPhotoList()));
+         return photos.stream().sorted(Comparator.comparing(Photo::getTakenAt)
+                .thenComparing(Photo::getCreatedAt).reversed())
+                 .map(PhotoGetResponseDto::of)
+                 .collect(Collectors.toList());
     }
 
     private List<Album> getAllAlbumByMemberId(Long memberId) {
