@@ -56,7 +56,7 @@ public class SocialService {
         );
     }
 
-    private TokenVO generateToken(Authentication authentication) {
+    protected TokenVO generateToken(Authentication authentication) {
         return TokenVO.of(
                 jwtTokenProvider.generateToken(authentication, ACCESS_TOKEN_EXPIRATION_TIME),
                 jwtTokenProvider.generateToken(authentication, REFRESH_TOKEN_EXPIRATION_TIME)

@@ -1,7 +1,5 @@
 package com.pophory.pophoryserver.global.config.jwt;
 
-import io.sentry.Sentry;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

@@ -7,13 +7,13 @@ import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
-import com.pophory.pophoryserver.global.exception.PayloadTooLargeException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
 import com.pophory.pophoryserver.infrastructure.s3.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -82,7 +82,7 @@ public class PhotoService {
 
     private void validateFileSize(MultipartFile file) {
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new PayloadTooLargeException("파일의 크기가 너무 큽니다.");
+            throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
         }
     }
 

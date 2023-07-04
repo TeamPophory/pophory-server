@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.member.auth;
 
 import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
 import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
+import com.pophory.pophoryserver.domain.member.auth.dto.response.TokenResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -49,5 +50,17 @@ public class AuthController {
     })
     public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto authRequestDto) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return ResponseEntity.ok(socialService.signIn(socialAccessToken, authRequestDto));
+    }
+
+    @PostMapping("/token")
+    @SecurityRequirement(name = "Authorization")
+    @Operation(summary = "토큰 재발급 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "토큰 재발급 성공"),
+            @ApiResponse(responseCode = "400", description = "토큰 재발급 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    })
+    public ResponseEntity<TokenResponseDto> reissue(Principal principal) {
+        return ResponseEntity.ok(authService.reIssue(MemberUtil.getMemberId(principal)));
     }
 }
