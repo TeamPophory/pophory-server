@@ -7,7 +7,6 @@ import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +22,7 @@ public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
+    private final PhotoJpaRepository photoJpaRepository;
 
     @Transactional
     public void update(MemberCreateRequestDto request, Long memberId) {
@@ -74,14 +74,14 @@ public class MemberService {
                 .sum();
     }
 
-    private PhotoListGetResponseDto getPhotos(Long memberId) {
+    private List<PhotoGetResponseDto> getPhotos(Long memberId) {
         List<PhotoGetResponseDto> photoList = getAllAlbumByMemberId(memberId)
                 .stream()
                 .flatMap(
                         album -> album.getPhotoList().stream()
                                 .map(PhotoGetResponseDto::of))
                 .collect(Collectors.toList());
-        return PhotoListGetResponseDto.of(photoList);
+        return photoList;
     }
 
     private List<Album> getAllAlbumByMemberId(Long memberId) {

@@ -1,8 +1,8 @@
 package com.pophory.pophoryserver.domain.member.dto.response;
 
 import com.pophory.pophoryserver.domain.member.Member;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,9 +21,9 @@ public class MemberMyPageGetResponseDto {
     private String profileImage;
     @Schema(description = "회원 앨범 수", example = "3")
     private int photoCount;
-    private PhotoListGetResponseDto photos;
+    private List<PhotoGetResponseDto> photos;
 
-    public static MemberMyPageGetResponseDto of(Member member, int count, PhotoListGetResponseDto photos) {
+    public static MemberMyPageGetResponseDto of(Member member, int count, List<PhotoGetResponseDto> photos) {
         return new MemberMyPageGetResponseDto(member.getRealName(), member.getNickname(), member.getProfileImage(), count, photos);
     }
 
