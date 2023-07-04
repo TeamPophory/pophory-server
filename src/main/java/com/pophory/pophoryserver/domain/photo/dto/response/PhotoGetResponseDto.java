@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Schema(description = "사진 정보")
@@ -32,4 +34,9 @@ public class PhotoGetResponseDto {
     public static PhotoGetResponseDto of(Photo photo) {
         return new PhotoGetResponseDto(photo.getId(), photo.getStudio().getName(), PhotoUtil.changeTakenAtToResponseFormat(photo.getTakenAt()), photo.getImageUrl(), photo.getWidth(), photo.getHeight());
     }
+
+    public static LocalDate getLocalDateTakenAt(PhotoGetResponseDto photoGetResponseDto) {
+        return PhotoUtil.changeRequestToTakenAt(photoGetResponseDto.getTakenAt());
+    }
+
 }
