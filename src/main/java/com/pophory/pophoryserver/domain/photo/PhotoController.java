@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.photo;
 
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
+import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+
+import java.security.Principal;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
@@ -37,8 +40,8 @@ public class PhotoController {
     })
     public ResponseEntity<Void> addPhoto(
             @Schema(description = "사진 file") @RequestPart MultipartFile photo,
-            @Valid PhotoAddRequestDto request, @RequestHeader Long memberId) {
-        photoService.addPhoto(photo, request, memberId);
+            @Valid PhotoAddRequestDto request, Principal principal) {
+        photoService.addPhoto(photo, request, MemberUtil.getMemberId(principal));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -52,8 +55,8 @@ public class PhotoController {
                     @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
             }
     )
-    public ResponseEntity<Void> deletePhoto(@PathVariable Long photoId, @RequestHeader Long memberId) {
-        photoService.deletePhoto(photoId, memberId);
+    public ResponseEntity<Void> deletePhoto(@PathVariable Long photoId, Principal principal) {
+        photoService.deletePhoto(photoId, MemberUtil.getMemberId(principal));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

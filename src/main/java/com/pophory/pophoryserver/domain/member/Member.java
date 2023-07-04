@@ -59,7 +59,7 @@ public class Member extends BaseTimeEntity {
         this.nickname = nickname;
     }
 
-    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; };
+    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
     @Builder
     public Member(String socialId, SocialType socialType) {

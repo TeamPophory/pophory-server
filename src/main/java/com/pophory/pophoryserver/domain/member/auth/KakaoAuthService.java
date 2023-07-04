@@ -1,13 +1,9 @@
 package com.pophory.pophoryserver.domain.member.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
-import com.pophory.pophoryserver.global.config.jwt.JwtTokenProvider;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
