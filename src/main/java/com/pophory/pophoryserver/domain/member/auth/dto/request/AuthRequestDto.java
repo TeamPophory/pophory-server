@@ -16,6 +16,6 @@ import javax.validation.constraints.NotBlank;
 public class AuthRequestDto {
 
     @NotBlank
-    @Schema(description = "로그인한 소셜 서비스 정보", example = "KAKAO, APPLE")
+    @Schema(description = "로그인한 소셜 서비스 정보", example = "KAKAO 또는 APPLE")
     private String socialType;
 }

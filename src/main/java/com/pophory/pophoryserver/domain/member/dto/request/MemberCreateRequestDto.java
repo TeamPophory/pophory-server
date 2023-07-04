@@ -26,6 +26,6 @@ public class MemberCreateRequestDto {
     @Schema(description = "회원 아이디", example = "pophory")
     private String nickname;
 
-    @Schema(description = "앨범 커버", example = "1")
+    @Schema(description = "앨범 커버 1 ~ 4 중의 값으로 요청", example = "1")
     private int albumCover;
 }
