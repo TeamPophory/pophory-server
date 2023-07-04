@@ -1,5 +1,6 @@
 package com.pophory.pophoryserver.domain.member.auth.dto.response;
 
+import com.pophory.pophoryserver.domain.member.auth.dto.TokenVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class AuthResponseDto {
     @Schema(description = "멤버가 등록되어있는지 여부", example = "true")
     private boolean isRegistered;
 
-    public static AuthResponseDto of(String accessToken, String refreshToken, boolean isRegistered) {
-        return new AuthResponseDto(accessToken, refreshToken, isRegistered);
+    public static AuthResponseDto of(TokenVO tokenVO, boolean isRegistered) {
+        return new AuthResponseDto(tokenVO.getAccessToken(), tokenVO.getRefreshToken(), isRegistered);
     }
 }

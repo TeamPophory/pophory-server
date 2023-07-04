@@ -1,6 +1,9 @@
 package com.pophory.pophoryserver.global.config.jwt;
 
+import io.sentry.Sentry;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -23,23 +26,23 @@ import static com.pophory.pophoryserver.global.config.jwt.JwtValidationType.*;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // request: 클라이언트로부터 수신된 HTTP 요청 객체
     // response: 클라이언트에게 반환될 HTTP 반환 객체
     // filterChain: 다음 필터로 전달하기 위한 필터 체인 객체
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             final String token = getJwtFromRequest(request);            // 헤더에서 JWT 토큰 추출
-            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token) == VALID_JWT) {     // 토큰이 존재하고 유효한 토큰일 때만
-                Long memberId = jwtTokenProvider.getUserFromJwt(token);                                 // 사용자 정보 추출
-                UserAuthentication authentication = new UserAuthentication(memberId, null, null);       //사용자 객체 생성
+            if (jwtTokenProvider.validateToken(token) == VALID_JWT) {     // 토큰이 존재하고 유효한 토큰일 때만
+                Long memberId = jwtTokenProvider.getUserFromJwt(token);
+                UserAuthentication authentication = new UserAuthentication(memberId.toString(), null, null);       //사용자 객체 생성
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));  // request 정보로 사용자 객체 디테일 설정
-                SecurityContextHolder.getContext().setAuthentication(authentication);                   // 현재 보안 컨텍스트에 인증 객체 설정 -> Spring Security는 현재 인증된 사용자를 추적하고 인가 및 접근 제어 수행
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception exception) {
-            logger.error(exception);
+            Sentry.captureException(exception);
         }
         filterChain.doFilter(request, response);            // 다음 필터로 요청 전달
     }

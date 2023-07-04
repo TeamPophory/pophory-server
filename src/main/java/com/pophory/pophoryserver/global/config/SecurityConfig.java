@@ -8,9 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
 @Configuration
 @EnableWebSecurity
@@ -22,7 +25,8 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
             "/api/v1/auth",
-            "/api/v1/test",
+            "/health",
+            "/profile",
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/swagger-ui/index.html",
@@ -36,11 +40,12 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .formLogin().disable()
+                .httpBasic().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)     // 스프링시큐리티가 생성하지도않고 기존것을 사용하지도 않음 -> JWT 방식 사용
+                .sessionCreationPolicy(STATELESS)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(customJwtAuthenticationEntryPoint)        // 예외처리 기능이 작동
+                .authenticationEntryPoint(customJwtAuthenticationEntryPoint)
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
@@ -48,5 +53,9 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+    @Bean
+    public HttpFirewall httpFirewall() {
+        return new DefaultHttpFirewall();
     }
 }
