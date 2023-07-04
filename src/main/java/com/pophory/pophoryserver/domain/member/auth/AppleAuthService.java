@@ -1,11 +1,8 @@
 package com.pophory.pophoryserver.domain.member.auth;
 
 import com.google.gson.*;
-import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
-import com.pophory.pophoryserver.global.config.jwt.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

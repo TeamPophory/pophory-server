@@ -31,7 +31,5 @@ public class StudioController {
                     @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
             }
     )
-    public ResponseEntity<StudioResponseDto> getAllStudio() {
-        return ResponseEntity.ok(studioService.findAll());
-    }
+    public ResponseEntity<StudioResponseDto> getAllStudio() {return ResponseEntity.ok(studioService.findAll());}
 }

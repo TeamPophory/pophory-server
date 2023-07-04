@@ -3,6 +3,7 @@ package com.pophory.pophoryserver.domain.member;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
+import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
+
+import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,8 +35,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, @RequestHeader Long memberId) {
-        memberService.update(memberCreateRequestDto, memberId);
+    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, Principal principal) {
+        memberService.update(memberCreateRequestDto, getMemberId(principal));
         return ResponseEntity.noContent().build();
     }
 
@@ -44,8 +48,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<MemberMyPageGetResponseDto> getMypageMember(@RequestHeader Long memberId) {
-        return ResponseEntity.ok(memberService.getMypageMember(memberId));
+    public ResponseEntity<MemberMyPageGetResponseDto> getMypageMember(Principal principal) {
+        return ResponseEntity.ok(memberService.getMypageMember(getMemberId(principal)));
     }
 
     @GetMapping("/me")
@@ -56,7 +60,7 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<MemberGetResponseDto> getMember(@RequestHeader Long memberId) {
-        return ResponseEntity.ok(memberService.getMember(memberId));
+    public ResponseEntity<MemberGetResponseDto> getMember(Principal principal) {
+        return ResponseEntity.ok(memberService.getMember(getMemberId(principal)));
     }
 }
