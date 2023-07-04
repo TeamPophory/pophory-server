@@ -65,7 +65,8 @@ public class MemberService {
     private void addAlbum(Member member, int albumCover) {
         Album album = new Album();
         album.setCover(albumCover);
-        member.getAlbumList().add(album);
+        album.setMember(member);
+        albumJpaRepository.save(album);
     }
 
     private int getPhotoCount(Long memberId) {
