@@ -29,6 +29,8 @@ dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
@@ -58,6 +60,10 @@ dependencies {
 
 	// OAuth2
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+}
+
+jar {
+	enabled = false
 }
 
 tasks.named('test') {
