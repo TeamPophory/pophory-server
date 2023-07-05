@@ -19,9 +19,8 @@ public class S3Util {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     // 파일 업로드
-    public String upload(InputStream file, String fileName, ObjectMetadata objectMetadata) {
+    public void upload(InputStream file, String fileName, ObjectMetadata objectMetadata) {
         awsS3Config.amazonS3Client().putObject(bucket, fileName, file, objectMetadata);
-        return awsS3Config.amazonS3Client().getUrl(bucket, fileName).toString();
     }
 
     // 파일 삭제
