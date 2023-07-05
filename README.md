@@ -56,4 +56,4 @@
  ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white)
  ![amazons3](https://img.shields.io/badge/amazons3-%569A31.svg?style=for-the-badge&logo=amazons3&logoColor=white)
  ![amazonec2](https://img.shields.io/badge/amazonec2-%FF9900.svg?style=for-the-badge&logo=amazonec2&logoColor=white)
- ![amazonrds](https://img.shields.io/badge/amazonrds-%527FFF.svg?style=for-the-badge&logo=amazonrds&logoColor=white)
+ ![amazonrds](https://img.shields.io/badge/amazonrds-%27FFF.svg?style=for-the-badge&logo=amazonrds&logoColor=white)
