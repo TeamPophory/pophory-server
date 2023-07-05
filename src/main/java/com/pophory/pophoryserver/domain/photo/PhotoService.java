@@ -11,6 +11,7 @@ import com.pophory.pophoryserver.global.exception.S3UploadException;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
 import com.pophory.pophoryserver.infrastructure.s3.S3Util;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -33,6 +34,9 @@ public class PhotoService {
     private final AlbumJpaRepository albumJpaRepository;
     private final StudioJpaRepository studioJpaRepository;
     private final S3Util s3Util;
+
+    @Value("${cloud.aws.CLOUDFRONT}")
+    private String CLOUD_FRONT_DOMAIN;
 
     private static final long MAX_FILE_SIZE = 3145728; // 3MB
 
@@ -74,7 +78,8 @@ public class PhotoService {
     private String upload(MultipartFile file, Long memberId) {
         try {
             String uploadPath = "images/" + memberId + "member/" + UUID.randomUUID() + "." + getExtension(file);
-            return s3Util.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
+            s3Util.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
+            return CLOUD_FRONT_DOMAIN+"/"+uploadPath;
         } catch (IOException e) {
             throw new S3UploadException("파일 업로드에 실패했습니다.");
         }
