@@ -13,10 +13,13 @@ public class AlbumGetResponseDto {
     private Long id;
     @Schema(description = "앨범 제목", example = "강윤서의 앨범")
     private String title;
+    @Schema(description = "앨범 커버", example = "1")
+    private int albumCover;
     @Schema(description = "앨범 사진 수", example = "3")
     private int photoCount;
 
+
     public static AlbumGetResponseDto of(Album album, int count) {
-        return new AlbumGetResponseDto(album.getId(), album.getTitle(), count);
+        return new AlbumGetResponseDto(album.getId(), album.getTitle(), album.getCover(),count);
     }
 }
