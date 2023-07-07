@@ -36,7 +36,7 @@ public class Photo extends BaseTimeEntity {
     private Album album;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "studio_id")
+    @JoinColumn(name = "studio_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Studio studio;
 
     private LocalDate takenAt;
