@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -24,7 +25,7 @@ public class AuthResponseDto {
 
     @NotNull
     @Schema(description = "멤버가 등록되어있는지 여부", example = "true")
-    private boolean isRegistered;
+    private Boolean isRegistered;
 
     public static AuthResponseDto of(TokenVO tokenVO, boolean isRegistered) {
         return new AuthResponseDto(tokenVO.getAccessToken(), tokenVO.getRefreshToken(), isRegistered);
