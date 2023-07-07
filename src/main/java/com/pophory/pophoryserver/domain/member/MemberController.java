@@ -68,7 +68,7 @@ public class MemberController {
     @PostMapping
     @Operation(summary = "멤버 아이디 중복 조회 API")
     @ApiResponses( value = {
-            @ApiResponse(responseCode = "204", description = "아이디 중복 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "아이디 중복 조회 성공"),
             @ApiResponse(responseCode = "400", description = "사용자 정보 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
