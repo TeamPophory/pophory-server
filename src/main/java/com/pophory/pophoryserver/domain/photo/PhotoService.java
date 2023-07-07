@@ -116,6 +116,9 @@ public class PhotoService {
     }
 
     private Studio getStudioById(Long studioId) {
+        if (studioId == null) {
+            return null;
+        }
         return studioJpaRepository.findById(studioId).orElseThrow(
                 () -> new IllegalArgumentException("해당 스튜디오가 존재하지 않습니다. id=" + studioId));
     }
