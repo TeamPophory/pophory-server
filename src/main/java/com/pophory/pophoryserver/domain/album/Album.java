@@ -38,8 +38,6 @@ public class Album extends BaseTimeEntity {
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private final List<Photo> photoList = new ArrayList<>();
 
-    private int limit = 15;
-
     public void softDelete() {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
