@@ -24,7 +24,7 @@ public class Album extends BaseTimeEntity {
 
     private String title = "기본 앨범";
 
-    private int cover = 0;
+    private int cover = 1;
 
     private String imageUrl;
 
@@ -38,6 +38,8 @@ public class Album extends BaseTimeEntity {
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private final List<Photo> photoList = new ArrayList<>();
 
+    private int limit = 15;
+
     public void softDelete() {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
@@ -47,4 +49,6 @@ public class Album extends BaseTimeEntity {
         this.cover = cover;
     }
     public void setMember(Member member) { this.member = member; }
+
+
 }
