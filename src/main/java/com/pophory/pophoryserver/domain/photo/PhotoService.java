@@ -38,7 +38,9 @@ public class PhotoService {
 
     @Value("${cloud.aws.CLOUDFRONT}")
     private String CLOUD_FRONT_DOMAIN;
-    
+
+    private static final int AlBUM_LIMIT = 15;
+
     private static final long MAX_FILE_SIZE = 3145728; // 3MB
 
     @Transactional
@@ -64,7 +66,7 @@ public class PhotoService {
     }
 
     private void checkAlbumLimit(Album album) {
-        if (album.getPhotoList().size() >= album.getLimit()) throw new BadRequestException("앨범 갯수 제한을 넘어갔습니다.");
+        if (album.getPhotoList().size() >= AlBUM_LIMIT) throw new BadRequestException("앨범 갯수 제한을 넘어갔습니다.");
     }
     private PhotoSizeVO getImageSize(MultipartFile file) {
         try {
