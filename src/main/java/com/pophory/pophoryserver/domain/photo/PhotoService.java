@@ -7,6 +7,7 @@ import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
+import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
 import com.pophory.pophoryserver.infrastructure.s3.S3Util;
@@ -37,7 +38,7 @@ public class PhotoService {
 
     @Value("${cloud.aws.CLOUDFRONT}")
     private String CLOUD_FRONT_DOMAIN;
-
+    
     private static final long MAX_FILE_SIZE = 3145728; // 3MB
 
     @Transactional
@@ -46,6 +47,7 @@ public class PhotoService {
         validateExt(file);
         Album album = getAlbumById(request.getAlbumId());
         Studio studio = getStudioById(request.getStudioId());
+        checkAlbumLimit(album);
         photoJpaRepository.save(Photo.builder()
                 .imageUrl(upload(file, memberId))
                 .album(album)
@@ -54,7 +56,6 @@ public class PhotoService {
                 .photoSizeVO(getImageSize(file))
                 .build());
     }
-
     @Transactional
     public void deletePhoto(Long photoId, Long memberId) {
         Photo photo = getPhotoById(photoId);
@@ -62,6 +63,9 @@ public class PhotoService {
         photoJpaRepository.deleteById(photoId);
     }
 
+    private void checkAlbumLimit(Album album) {
+        if (album.getPhotoList().size() >= album.getLimit()) throw new BadRequestException("앨범 갯수 제한을 넘어갔습니다.");
+    }
     private PhotoSizeVO getImageSize(MultipartFile file) {
         try {
             BufferedImage image = ImageIO.read(file.getInputStream());
