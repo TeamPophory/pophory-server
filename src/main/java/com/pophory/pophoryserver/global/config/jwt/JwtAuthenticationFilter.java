@@ -3,7 +3,6 @@ package com.pophory.pophoryserver.global.config.jwt;
 import io.sentry.Sentry;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import static com.pophory.pophoryserver.global.config.jwt.JwtValidationType.*;
 
 // OncePerRequestFilter: 모든 요청에 대해 한 번씩 실행되도록 보장하는 필터
-// 클라가 요청을 보낼 때 JWT 토큰을 함께 전송, 이 때 이 토큰을 추출하고 유효하다면 인증 및 권한을 부여함
+// 클라가 요청을 보낼 때  JWT 토큰을 함께 전송, 이 때 이 토큰을 추출하고 유효하다면 인증 및 권한을 부여함
 // 인증 정보는 SecurityContextHolder에 저장
 // SecurityContextHolder에: 인증된 사용자의 보안을 관리하는 컨텍스트 -> Authentication객체 제공(사용자의 인증정보, 권한정보 포함)
 @Component

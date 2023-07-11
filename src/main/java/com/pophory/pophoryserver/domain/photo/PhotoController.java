@@ -25,7 +25,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RestController
 @RequestMapping("/api/v1/photo")
 @RequiredArgsConstructor
-@Tag(name = "Photo", description = "사진 관련 API")
+@Tag(name = "[Photo] 네컷사진 관련 API")
 @SecurityRequirement(name = "Authorization")
 public class PhotoController {
 

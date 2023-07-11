@@ -1,5 +1,6 @@
 package com.pophory.pophoryserver.domain.auth.dto.response;
 
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
