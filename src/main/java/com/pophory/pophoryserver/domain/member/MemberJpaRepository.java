@@ -1,6 +1,6 @@
 package com.pophory.pophoryserver.domain.member;
 
-import com.pophory.pophoryserver.domain.member.auth.SocialType;
+import com.pophory.pophoryserver.domain.auth.SocialType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

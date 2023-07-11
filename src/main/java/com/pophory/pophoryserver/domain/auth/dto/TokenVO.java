@@ -1,6 +1,5 @@
-package com.pophory.pophoryserver.domain.member.auth.dto;
+package com.pophory.pophoryserver.domain.auth.dto;
 
-import com.pophory.pophoryserver.domain.member.auth.dto.response.TokenResponseDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

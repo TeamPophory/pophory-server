@@ -1,9 +1,11 @@
 package com.pophory.pophoryserver.global.advice;
 
+import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import io.sentry.Sentry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,6 +17,12 @@ import java.io.IOException;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Void> handleBadRequestException(final BadRequestException e) {
+        Sentry.captureException(e);
+        return ResponseEntity.badRequest().build();
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> handleEntityNotFoundException(final EntityNotFoundException e) {
@@ -48,6 +56,12 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Void> handleIllegalArgumentException(final IllegalArgumentException e) {
+        Sentry.captureException(e);
+        return ResponseEntity.badRequest().build();
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Void> handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
         Sentry.captureException(e);
         return ResponseEntity.badRequest().build();
     }

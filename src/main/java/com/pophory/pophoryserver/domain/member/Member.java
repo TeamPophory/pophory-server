@@ -2,7 +2,7 @@ package com.pophory.pophoryserver.domain.member;
 
 
 import com.pophory.pophoryserver.domain.album.Album;
-import com.pophory.pophoryserver.domain.member.auth.SocialType;
+import com.pophory.pophoryserver.domain.auth.SocialType;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static javax.persistence.EnumType.*;
 
@@ -60,6 +61,10 @@ public class Member extends BaseTimeEntity {
     }
 
     public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+
+    public boolean checkSignUpUpdated() {
+        return !(Objects.isNull(this.nickname) || Objects.isNull(this.realName));
+    }
 
     @Builder
     public Member(String socialId, SocialType socialType) {

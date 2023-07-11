@@ -27,20 +27,46 @@ public class SecurityConfig {
             "/api/v1/auth",
             "/health",
             "/profile",
+            "/actuator/**",
+            "/api/v2/push/test/no-auth"
+    };
+
+    private static final String[] SWAGGER_URL = {
+            "/swagger-resources/**",
+            "/favicon.ico",
+            "/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/swagger-ui/index.html",
             "/docs/swagger-ui/index.html",
             "/swagger-ui/swagger-ui.css",
-            "/actuator/**",
-            "/swagger-resources/**",
-            "/favicon.ico",
-            "/api-docs/**"
     };
 
     @Bean
     @Profile("!prod")
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(STATELESS)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(customJwtAuthenticationEntryPoint)
+                .and()
+                .authorizeHttpRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(SWAGGER_URL).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+
+    @Bean
+    @Profile("prod")
+    SecurityFilterChain prodSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
                 .formLogin().disable()

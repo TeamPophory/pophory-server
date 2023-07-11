@@ -1,10 +1,10 @@
-package com.pophory.pophoryserver.domain.member.auth;
+package com.pophory.pophoryserver.domain.auth;
 
 import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
-import com.pophory.pophoryserver.domain.member.auth.dto.TokenVO;
-import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
-import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
+import com.pophory.pophoryserver.domain.auth.dto.TokenVO;
+import com.pophory.pophoryserver.domain.auth.dto.request.AuthRequestDto;
+import com.pophory.pophoryserver.domain.auth.dto.response.AuthResponseDto;
 import com.pophory.pophoryserver.global.config.jwt.JwtTokenProvider;
 import com.pophory.pophoryserver.global.config.jwt.UserAuthentication;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +32,8 @@ public class SocialService {
     public AuthResponseDto signIn(String socialAccessToken, AuthRequestDto authRequestDto) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SocialType socialType = SocialType.valueOf(authRequestDto.getSocialType());
         String socialId = getSocialId(socialType, socialAccessToken);
-        boolean isRegistered = memberJpaRepository.existsMemberBySocialIdAndSocialType(socialId, socialType);
-
         // 유저 정보가 존재하지 않을 때
-        if (!isRegistered) {
+        if (!memberJpaRepository.existsMemberBySocialIdAndSocialType(socialId, socialType)) {
             Member member = Member.builder()
                     .socialId(socialId)
                     .socialType(socialType)
@@ -43,7 +41,10 @@ public class SocialService {
             memberJpaRepository.save(member);
         }
 
+        boolean isRegistered = false;
+
         Member signedMember = getMemberBySocialAndSocialId(socialType, socialId);
+        if (signedMember.checkSignUpUpdated()) isRegistered = true;
         TokenVO tokenVO = generateToken(new UserAuthentication(signedMember.getId(), null, null));
         signedMember.updateRefreshToken(tokenVO.getRefreshToken());
 
