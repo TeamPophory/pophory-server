@@ -44,4 +44,5 @@ application-infra.yml
 .DS_Store
 .run
 application-*.yml
+pophory_fcm.json
 ```
