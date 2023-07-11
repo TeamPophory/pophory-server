@@ -1,10 +1,10 @@
-package com.pophory.pophoryserver.domain.member.auth;
+package com.pophory.pophoryserver.domain.auth;
 
 import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
-import com.pophory.pophoryserver.domain.member.auth.dto.TokenVO;
-import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
-import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
+import com.pophory.pophoryserver.domain.auth.dto.TokenVO;
+import com.pophory.pophoryserver.domain.auth.dto.request.AuthRequestDto;
+import com.pophory.pophoryserver.domain.auth.dto.response.AuthResponseDto;
 import com.pophory.pophoryserver.global.config.jwt.JwtTokenProvider;
 import com.pophory.pophoryserver.global.config.jwt.UserAuthentication;
 import lombok.RequiredArgsConstructor;
