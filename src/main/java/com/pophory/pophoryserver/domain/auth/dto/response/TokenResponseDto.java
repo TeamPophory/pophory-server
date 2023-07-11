@@ -1,4 +1,4 @@
-package com.pophory.pophoryserver.domain.member.auth.dto.response;
+package com.pophory.pophoryserver.domain.auth.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

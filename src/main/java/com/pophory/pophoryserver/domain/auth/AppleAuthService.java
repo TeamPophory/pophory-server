@@ -1,4 +1,4 @@
-package com.pophory.pophoryserver.domain.member.auth;
+package com.pophory.pophoryserver.domain.auth;
 
 import com.google.gson.*;
 import io.jsonwebtoken.Claims;

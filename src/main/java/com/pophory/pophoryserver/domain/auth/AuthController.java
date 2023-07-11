@@ -1,11 +1,14 @@
-package com.pophory.pophoryserver.domain.member.auth;
+package com.pophory.pophoryserver.domain.auth;
 
-import com.pophory.pophoryserver.domain.member.auth.dto.request.AuthRequestDto;
-import com.pophory.pophoryserver.domain.member.auth.dto.response.AuthResponseDto;
-import com.pophory.pophoryserver.domain.member.auth.dto.response.TokenResponseDto;
+import com.pophory.pophoryserver.domain.auth.dto.request.AuthRequestDto;
+import com.pophory.pophoryserver.domain.auth.dto.response.AuthResponseDto;
+import com.pophory.pophoryserver.domain.auth.dto.response.TokenResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,7 +24,7 @@ import java.security.spec.InvalidKeySpecException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
-@Tag(name = "auth", description = "사용자 인증/인가 관련 API")
+@Tag(name = "[Auth] 사용자 인증/인가 관련 API")
 public class AuthController {
 
     private final AuthService authService;
@@ -30,6 +33,7 @@ public class AuthController {
     @DeleteMapping(produces = "application/json")
     @SecurityRequirement(name = "Authorization")
     @Operation(summary = "회원탈퇴 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "회원탈퇴 성공"),
             @ApiResponse(responseCode = "400", description = "회원탈퇴 실패", content = @Content),
@@ -55,6 +59,7 @@ public class AuthController {
     @PostMapping("/token")
     @SecurityRequirement(name = "Authorization")
     @Operation(summary = "토큰 재발급 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "토큰 재발급 성공"),
             @ApiResponse(responseCode = "400", description = "토큰 재발급 실패", content = @Content),

@@ -2,7 +2,7 @@ package com.pophory.pophoryserver.domain.member;
 
 
 import com.pophory.pophoryserver.domain.album.Album;
-import com.pophory.pophoryserver.domain.member.auth.SocialType;
+import com.pophory.pophoryserver.domain.auth.SocialType;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
