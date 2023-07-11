@@ -1,6 +1,5 @@
-package com.pophory.pophoryserver.domain.member.auth.dto.request;
+package com.pophory.pophoryserver.domain.auth.dto.request;
 
-import com.pophory.pophoryserver.domain.member.auth.SocialType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
