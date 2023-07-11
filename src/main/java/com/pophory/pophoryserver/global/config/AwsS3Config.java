@@ -1,4 +1,4 @@
-package com.pophory.pophoryserver.infrastructure.s3;
+package com.pophory.pophoryserver.global.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

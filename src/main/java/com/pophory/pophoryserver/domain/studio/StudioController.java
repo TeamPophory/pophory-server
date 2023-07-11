@@ -2,7 +2,10 @@ package com.pophory.pophoryserver.domain.studio;
 
 import com.pophory.pophoryserver.domain.studio.dto.StudioResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/studios")
-@Tag(name = "studio", description = "사진관 관련 API")
+@Tag(name = "[Studio] 사진관 관련 API")
 @SecurityRequirement(name = "Authorization")
 public class StudioController {
 
@@ -24,6 +27,7 @@ public class StudioController {
 
     @GetMapping
     @Operation(summary = "스튜디오 목록 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "스튜디오 목록 조회 성공"),
