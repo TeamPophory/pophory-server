@@ -1,5 +1,6 @@
 package com.pophory.pophoryserver.global.advice;
 
+import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import io.sentry.Sentry;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,12 @@ import java.io.IOException;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Void> handleBadRequestException(final BadRequestException e) {
+        Sentry.captureException(e);
+        return ResponseEntity.badRequest().build();
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> handleEntityNotFoundException(final EntityNotFoundException e) {

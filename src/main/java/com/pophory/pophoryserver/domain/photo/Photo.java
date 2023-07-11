@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.photo;
 
 import com.pophory.pophoryserver.domain.album.Album;
+import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.tag.GuestTag;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static javax.persistence.FetchType.*;
 
@@ -65,6 +67,14 @@ public class Photo extends BaseTimeEntity {
     public void softDelete() {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
+    }
+
+    private void setAlbum(Album album) {
+        if (Objects.nonNull(this.album)) {
+            this.album.getPhotoList().remove(this);
+        }
+        this.album = album;
+        album.getPhotoList().add(this);
     }
 }
 

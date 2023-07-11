@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +46,5 @@ public class Album extends BaseTimeEntity {
         this.cover = cover;
     }
     public void setMember(Member member) { this.member = member; }
-
 
 }
