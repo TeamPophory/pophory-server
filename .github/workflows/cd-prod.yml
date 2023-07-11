@@ -1,0 +1,98 @@
+name: pophory prod cd
+
+on:
+  push:
+    branches: [ main ] # main branch로 push 될 때 실행됩니다.
+
+env:
+  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+
+jobs:
+  build:
+    name: Code deployment
+
+    # 실행 환경
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1) 워크플로우 실행 전 기본적으로 체크아웃 필요
+      - name: checkout
+        uses: actions/checkout@v3
+
+      # 2) JDK 11버전 설치, 다른 JDK 버전을 사용하다면 수정
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'corretto'
+
+      - name: make application.yml, application-infra.yml
+        run: |
+          ## create application.yml
+          mkdir ./src/main/resources
+          cd ./src/main/resources
+          
+          # application.yml 파일 생성
+          touch ./application.yml
+          touch ./application-infra.yml
+          
+          # GitHub-Actions 에서 설정한 값을 application.yml 파일에 쓰기
+          echo "${{ secrets.APPLICATION_PROD }}" >> ./application.yml
+          echo "${{ secrets.APPLICATION_INFRA }}" >> ./application-infra.yml
+          
+          # application.yml 파일 확인
+          cat ./application.yml
+          cat ./application-infra.yml
+        shell: bash
+
+      # 이 워크플로우는 gradle build
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle # 실제 application build(-x 옵션을 통해 test는 제외)
+        run: ./gradlew build -x test
+
+      # 디렉토리 생성
+      - name: Make Directory
+        run: mkdir -p deploy
+
+      # Jar 파일 복사
+      - name: Copy Jar
+        run: cp ./build/libs/*.jar ./deploy
+
+      - name: Copy appspec.yml
+        run:
+          cp appspec.yml ./deploy
+
+      # script files 복사
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy
+
+      - name: Make zip file
+        run: zip -r ./pophory-server.zip ./deploy
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./pophory-server.zip s3://$S3_BUCKET_NAME/
+
+      # Deploy
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        run:
+          aws deploy create-deployment
+          --application-name pophory-ec2-deploy
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name pophory-deploy-group
+          --file-exists-behavior OVERWRITE
+          --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=pophory-server.zip
+          --region ap-northeast-2
