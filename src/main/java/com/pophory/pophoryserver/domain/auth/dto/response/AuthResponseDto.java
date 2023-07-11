@@ -1,12 +1,11 @@
-package com.pophory.pophoryserver.domain.member.auth.dto.response;
+package com.pophory.pophoryserver.domain.auth.dto.response;
 
-import com.pophory.pophoryserver.domain.member.auth.dto.TokenVO;
+import com.pophory.pophoryserver.domain.auth.dto.TokenVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
