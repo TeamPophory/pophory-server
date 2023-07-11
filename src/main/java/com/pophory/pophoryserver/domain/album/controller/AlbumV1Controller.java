@@ -1,5 +1,6 @@
-package com.pophory.pophoryserver.domain.album;
+package com.pophory.pophoryserver.domain.album.controller;
 
+import com.pophory.pophoryserver.domain.album.AlbumService;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +23,9 @@ import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/albums")
-@Tag(name = "[Album] 앨범 관련 API")
+@Tag(name = "[Album] 앨범 관련 API (V1)")
 @SecurityRequirement(name = "Authorization")
-public class AlbumController {
+public class AlbumV1Controller {
 
     private final AlbumService albumService;
 

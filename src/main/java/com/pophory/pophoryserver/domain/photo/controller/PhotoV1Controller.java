@@ -1,5 +1,6 @@
-package com.pophory.pophoryserver.domain.photo;
+package com.pophory.pophoryserver.domain.photo.controller;
 
+import com.pophory.pophoryserver.domain.photo.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,9 +26,9 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RestController
 @RequestMapping("/api/v1/photo")
 @RequiredArgsConstructor
-@Tag(name = "[Photo] 네컷사진 관련 API")
+@Tag(name = "[Photo] 네컷사진 관련 API (V1)")
 @SecurityRequirement(name = "Authorization")
-public class PhotoController {
+public class PhotoV1Controller {
 
     private final PhotoService photoService;
 
