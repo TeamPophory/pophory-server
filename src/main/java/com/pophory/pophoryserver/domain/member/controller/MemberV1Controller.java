@@ -1,5 +1,6 @@
-package com.pophory.pophoryserver.domain.member;
+package com.pophory.pophoryserver.domain.member.controller;
 
+import com.pophory.pophoryserver.domain.member.MemberService;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberNicknameDuplicateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
@@ -26,9 +27,9 @@ import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/member")
-@Tag(name = "[Member] 사용자 관련 API")
+@Tag(name = "[Member] 사용자 관련 API (V1)")
 @SecurityRequirement(name = "Authorization")
-public class MemberController {
+public class MemberV1Controller {
     private final MemberService memberService;
 
     @PatchMapping

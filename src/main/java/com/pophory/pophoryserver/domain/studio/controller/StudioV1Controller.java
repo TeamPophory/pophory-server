@@ -1,5 +1,6 @@
-package com.pophory.pophoryserver.domain.studio;
+package com.pophory.pophoryserver.domain.studio.controller;
 
+import com.pophory.pophoryserver.domain.studio.StudioService;
 import com.pophory.pophoryserver.domain.studio.dto.StudioResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/studios")
-@Tag(name = "[Studio] 사진관 관련 API")
+@Tag(name = "[Studio] 사진관 관련 API (V1)")
 @SecurityRequirement(name = "Authorization")
-public class StudioController {
+public class StudioV1Controller {
 
     private final StudioService studioService;
 

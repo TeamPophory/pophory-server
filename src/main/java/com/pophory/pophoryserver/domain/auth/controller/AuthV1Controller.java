@@ -1,5 +1,7 @@
-package com.pophory.pophoryserver.domain.auth;
+package com.pophory.pophoryserver.domain.auth.controller;
 
+import com.pophory.pophoryserver.domain.auth.AuthService;
+import com.pophory.pophoryserver.domain.auth.SocialService;
 import com.pophory.pophoryserver.domain.auth.dto.request.AuthRequestDto;
 import com.pophory.pophoryserver.domain.auth.dto.response.AuthResponseDto;
 import com.pophory.pophoryserver.domain.auth.dto.response.TokenResponseDto;
@@ -24,8 +26,8 @@ import java.security.spec.InvalidKeySpecException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
-@Tag(name = "[Auth] 사용자 인증/인가 관련 API")
-public class AuthController {
+@Tag(name = "[Auth] 사용자 인증/인가 관련 API (V1)")
+public class AuthV1Controller {
 
     private final AuthService authService;
     private final SocialService socialService;
