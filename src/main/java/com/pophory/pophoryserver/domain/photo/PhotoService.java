@@ -10,7 +10,7 @@ import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
-import com.pophory.pophoryserver.infrastructure.s3.S3Util;
+import com.pophory.pophoryserver.domain.s3.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class PhotoService {
     private final PhotoJpaRepository photoJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
     private final StudioJpaRepository studioJpaRepository;
-    private final S3Util s3Util;
+    private final S3Service s3Service;
 
     @Value("${cloud.aws.CLOUDFRONT}")
     private String CLOUD_FRONT_DOMAIN;
@@ -61,7 +61,7 @@ public class PhotoService {
     @Transactional
     public void deletePhoto(Long photoId, Long memberId) {
         Photo photo = getPhotoById(photoId);
-        s3Util.delete(photo.getImageUrl());
+        s3Service.delete(photo.getImageUrl());
         photoJpaRepository.deleteById(photoId);
     }
 
@@ -84,7 +84,7 @@ public class PhotoService {
     private String upload(MultipartFile file, Long memberId) {
         try {
             String uploadPath = "images/" + memberId + "member/" + UUID.randomUUID() + "." + getExtension(file);
-            s3Util.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
+            s3Service.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
             return CLOUD_FRONT_DOMAIN+"/"+uploadPath;
         } catch (IOException e) {
             throw new S3UploadException("파일 업로드에 실패했습니다.");

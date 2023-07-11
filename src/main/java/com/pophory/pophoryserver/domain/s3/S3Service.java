@@ -1,18 +1,19 @@
-package com.pophory.pophoryserver.infrastructure.s3;
+package com.pophory.pophoryserver.domain.s3;
 
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.pophory.pophoryserver.global.config.AwsS3Config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class S3Util {
+public class S3Service {
 
     private final AwsS3Config awsS3Config;
 

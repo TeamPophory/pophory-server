@@ -1,11 +1,12 @@
 package com.pophory.pophoryserver.domain.album;
 
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
-import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,7 +22,7 @@ import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/albums")
-@Tag(name = "album", description = "앨범 관련 API")
+@Tag(name = "[Album] 앨범 관련 API")
 @SecurityRequirement(name = "Authorization")
 public class AlbumController {
 
@@ -29,6 +30,7 @@ public class AlbumController {
 
     @GetMapping
     @Operation(summary = "앨범 목록 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "앨범 목록 조회 성공"),
             @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
@@ -40,6 +42,7 @@ public class AlbumController {
 
     @GetMapping("{albumId}/photos")
     @Operation(summary = "앨범에 속한 사진 목록 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "앨범에 속한 사진 목록 조회 성공"),
             @ApiResponse(responseCode = "400", description = "앨범에 속한 사진 목록 조회 실패", content = @Content),
