@@ -15,6 +15,5 @@ public class StudioResponseDto {
 
     public static StudioResponseDto of(List<Studio> studios) {
         return new StudioResponseDto(studios);
-
     }
 }

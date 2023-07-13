@@ -1,7 +1,5 @@
 package com.pophory.pophoryserver.domain.fcm;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.pophory.pophoryserver.domain.fcm.dto.FcmDto;
 import com.pophory.pophoryserver.domain.fcm.dto.request.FcmRequestDto;
@@ -10,9 +8,6 @@ import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
 import com.pophory.pophoryserver.domain.fcm.dto.MessageDto;
 import com.pophory.pophoryserver.domain.fcm.dto.NotificationDto;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONArray;
-import okhttp3.*;
-import okhttp3.MediaType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;

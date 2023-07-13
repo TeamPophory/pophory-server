@@ -4,13 +4,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class PhotoUtil {
 
     public static String changeTakenAtToResponseFormat(LocalDate takenAt) {
             return takenAt.toString().substring(0, 10).replace("-", ".");
-
     }
 
    public static LocalDate changeRequestToTakenAt(String takenAt) {
