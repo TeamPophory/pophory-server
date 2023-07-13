@@ -3,8 +3,13 @@ package com.pophory.pophoryserver.domain.photo;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
-import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
+import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV1RequestDto;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAddResponseDto;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
+import com.pophory.pophoryserver.domain.s3.UploadType;
+import com.pophory.pophoryserver.domain.s3.dto.response.S3GetPresignedUrlResponseDto;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
@@ -39,12 +44,13 @@ public class PhotoService {
     @Value("${cloud.aws.CLOUDFRONT}")
     private String CLOUD_FRONT_DOMAIN;
 
-    private static final int AlBUM_LIMIT = 15;
-
     private static final long MAX_FILE_SIZE = 3145728; // 3MB
 
+    private static final String MEMBER_PREFIX = "member/";
+    private final MemberJpaRepository memberJpaRepository;
+
     @Transactional
-    public void addPhoto(MultipartFile file, PhotoAddRequestDto request, Long memberId) {
+    public void addPhotoV1(MultipartFile file, PhotoAddV1RequestDto request, Long memberId) {
         validateFileSize(file);
         validateExt(file);
         Album album = getAlbumById(request.getAlbumId());
@@ -58,6 +64,21 @@ public class PhotoService {
                 .photoSizeVO(getImageSize(file))
                 .build());
     }
+
+    @Transactional
+    public PhotoAddResponseDto addPhotoV2(PhotoAddV2RequestDto request, Long memberId) {
+        Album album = getAlbumById(request.getAlbumId());
+        Studio studio = getStudioById(request.getStudioId());
+        Photo photo =  photoJpaRepository.save(Photo.builder()
+                .imageUrl(CLOUD_FRONT_DOMAIN + "/" + UploadType.PHOTO.getName() + getPophoryIdByMemberId(memberId) + MEMBER_PREFIX + request.getFileName())
+                .album(album)
+                .studio(studio)
+                .takenAt(PhotoUtil.changeRequestToTakenAt(request.getTakenAt()))
+                .photoSizeVO(PhotoSizeVO.of(request.getWidth(), request.getHeight()))
+                .build());
+        return PhotoAddResponseDto.of(photo.getId());
+    }
+
     @Transactional
     public void deletePhoto(Long photoId, Long memberId) {
         Photo photo = getPhotoById(photoId);
@@ -65,25 +86,39 @@ public class PhotoService {
         photoJpaRepository.deleteById(photoId);
     }
 
+    public S3GetPresignedUrlResponseDto getPresignedUrl(UploadType type, Long memberId) {
+        String fileName = createJpgFileName();
+        return S3GetPresignedUrlResponseDto.of(s3Service.getPresignedUrl(type.getName() + getPophoryIdByMemberId(memberId) + MEMBER_PREFIX + fileName), fileName);
+    }
     private void checkAlbumLimit(Album album) {
-        if (album.getPhotoList().size() >= AlBUM_LIMIT) throw new BadRequestException("앨범 갯수 제한을 넘어갔습니다.");
+        if (album.getPhotoList().size() >= album.getPhotoLimit()) throw new BadRequestException("앨범 갯수 제한을 넘어갔습니다.");
     }
     private PhotoSizeVO getImageSize(MultipartFile file) {
         try {
             BufferedImage image = ImageIO.read(file.getInputStream());
-            return new PhotoSizeVO(image.getWidth(), image.getHeight());
+            return PhotoSizeVO.of(image.getWidth(), image.getHeight());
         } catch (IOException e) {
             throw new IllegalArgumentException("이미지를 읽어오는데 실패했습니다.");
         }
+    }
+
+    private String getPophoryIdByMemberId(Long memberId) {
+        return memberJpaRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 멤버가 존재하지 않습니다. id=" + memberId)).getPophoryId();
     }
 
     private Photo getPhotoById(Long photoId) {
         return photoJpaRepository.findById(photoId).orElseThrow(() -> new EntityNotFoundException("해당 사진이 존재하지 않습니다. id=" + photoId));
     }
 
+    private String createFileName() {
+        return UUID.randomUUID().toString();
+    }
+
+    private String createJpgFileName() { return UUID.randomUUID() + ".jpg"; }
+
     private String upload(MultipartFile file, Long memberId) {
         try {
-            String uploadPath = "images/" + memberId + "member/" + UUID.randomUUID() + "." + getExtension(file);
+            String uploadPath = UploadType.PHOTO.getName() + memberId + MEMBER_PREFIX + createFileName() + "." + getExtension(file);
             s3Service.upload(file.getInputStream(), uploadPath, getObjectMetadata(file));
             return CLOUD_FRONT_DOMAIN+"/"+uploadPath;
         } catch (IOException e) {

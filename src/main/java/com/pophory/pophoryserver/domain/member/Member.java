@@ -41,6 +41,8 @@ public class Member extends BaseTimeEntity {
 
     private String fcmToken;
 
+    private String pophoryId;
+
     private boolean isDeleted = false;
     private LocalDateTime deletedAt;
 
@@ -61,6 +63,10 @@ public class Member extends BaseTimeEntity {
     }
 
     public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+
+    public void generatePophoryId(String pophoryId) {
+        this.pophoryId = pophoryId;
+    }
 
     public boolean checkSignUpUpdated() {
         return !(Objects.isNull(this.nickname) || Objects.isNull(this.realName));
