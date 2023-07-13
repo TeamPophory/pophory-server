@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class PhotoSizeVO {
 
-    private int width;
-    private int height;
+    private Integer width;
+    private Integer height;
 }

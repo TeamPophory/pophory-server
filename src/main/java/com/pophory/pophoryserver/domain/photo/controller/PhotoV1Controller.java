@@ -1,9 +1,11 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
 import com.pophory.pophoryserver.domain.photo.PhotoService;
-import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddRequestDto;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,6 +36,7 @@ public class PhotoV1Controller {
 
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE, produces = APPLICATION_JSON_VALUE)
     @Operation(summary = "사진 추가 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "사진 추가 성공"),
             @ApiResponse(responseCode = "400", description = "사진 추가 실패"),
@@ -41,13 +44,14 @@ public class PhotoV1Controller {
     })
     public ResponseEntity<Void> addPhoto(
             @Schema(description = "사진 file") @RequestPart MultipartFile photo,
-            @Valid PhotoAddRequestDto request, Principal principal) {
+            @Valid PhotoAddV2RequestDto request, Principal principal) {
         photoService.addPhoto(photo, request, MemberUtil.getMemberId(principal));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping(path = "/{photoId}")
     @Operation(summary = "사진 삭제 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "204", description = "사진 삭제 성공"),
