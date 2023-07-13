@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.s3;
 
 
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.pophory.pophoryserver.global.config.AwsS3Config;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+import static com.amazonaws.HttpMethod.*;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +37,24 @@ public class S3Service {
 
     public String getImageUrl(String filePath) {
         return awsS3Config.amazonS3Client().getUrl(bucket, filePath).toString();
+    }
+
+    public String getPresignedUrl(String key) {
+        return generatePresignedUrlRequest(key).toString();
+    }
+
+    private URL generatePresignedUrlRequest(String key) {
+        return awsS3Config.amazonS3Client()
+                .generatePresignedUrl(new GeneratePresignedUrlRequest(bucket, key)
+                        .withMethod(PUT)
+                        .withExpiration(getPreSignedUrlExpiration()));
+    }
+
+    private Date getPreSignedUrlExpiration() {
+        Date expiration = new Date();
+        long expTimeMillis = expiration.getTime();
+        expTimeMillis += 1000 * 60 * 2;
+        expiration.setTime(expTimeMillis);
+        return expiration;
     }
 }

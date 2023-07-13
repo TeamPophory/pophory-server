@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 @Schema(description = "사진 추가 요청 DTO")
-public class PhotoAddRequestDto {
+public class PhotoAddV1RequestDto {
 
     @Schema(description = "앨범 id", example = "1")
     private Long albumId;

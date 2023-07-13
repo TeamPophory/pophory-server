@@ -8,6 +8,7 @@ import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetRespo
 import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
+import com.pophory.pophoryserver.global.util.MemberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,8 @@ public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
+
+    private static final int INITIAL_PHOTO_LIMIT = 15;
 
     @Transactional
     public void update(MemberCreateRequestDto request, Long memberId) {
@@ -49,10 +52,12 @@ public class MemberService {
         return MemberNicknameDuplicateResponseDto.of(memberJpaRepository.existsMemberByNickname(nickname));
     }
 
+
     private void updateMemberInfo(MemberCreateRequestDto request, Long memberId) {
         Member member = findMemberById(memberId);
         member.updateRealName(request.getRealName());
         member.updateNickname(request.getNickname());
+        member.generatePophoryId(MemberUtil.generateRandomString(6));
         addAlbum(member, request.getAlbumCover());
     }
 
@@ -72,6 +77,7 @@ public class MemberService {
         Album album = new Album();
         album.setCover(albumCover);
         album.setMember(member);
+        album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
     }
 

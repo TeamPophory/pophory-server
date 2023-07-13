@@ -24,6 +24,8 @@ import java.security.Principal;
 public class FcmController {
 
     private final FcmService fcmService;
+
+    @Deprecated
     @PostMapping("/push/test")
     @Operation(summary = "푸쉬 알림 Test API")
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
