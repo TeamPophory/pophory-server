@@ -18,7 +18,6 @@ public class AlbumGetResponseDto {
     @Schema(description = "앨범 사진 수", example = "3")
     private int photoCount;
 
-
     public static AlbumGetResponseDto of(Album album, int count) {
         return new AlbumGetResponseDto(album.getId(), album.getTitle(), album.getCover(),count);
     }

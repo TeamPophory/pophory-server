@@ -55,7 +55,7 @@ public class MemberV1Controller {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<MemberMyPageGetResponseDto> getMypageMember(Principal principal) {
+    public ResponseEntity<MemberMyPageGetResponseDto> getMyPageMember(Principal principal) {
         return ResponseEntity.ok(memberService.getMypageMember(getMemberId(principal)));
     }
 
@@ -81,7 +81,7 @@ public class MemberV1Controller {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<MemberNicknameDuplicateResponseDto> postMemberNickname(@Valid @RequestBody MemberNicknameDuplicateRequestDto memberNicknameDuplicateRequestDto) {
-        return ResponseEntity.ok(memberService.checkDuplicateMemberNickname(memberNicknameDuplicateRequestDto.getNickname()));
+    public ResponseEntity<MemberNicknameDuplicateResponseDto> postMemberNickname(@Valid @RequestBody MemberNicknameDuplicateRequestDto request) {
+        return ResponseEntity.ok(memberService.checkDuplicateMemberNickname(request.getNickname()));
     }
 }
