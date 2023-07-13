@@ -2,6 +2,8 @@ package com.pophory.pophoryserver.domain.member;
 
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumCoverJpaRepository;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
@@ -26,6 +28,7 @@ public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
+    private final AlbumCoverJpaRepository albumCoverJpaRepository;
 
     private static final int INITIAL_PHOTO_LIMIT = 15;
 
@@ -73,8 +76,12 @@ public class MemberService {
         );
     }
 
-    private void addAlbum(Member member, int albumCover) {
+    private void addAlbum(Member member, int cover) {
         Album album = new Album();
+        AlbumCover albumCover = AlbumCover.builder()
+                .coverNumber(cover)
+                .build();
+        albumCoverJpaRepository.save(albumCover);
         album.setCover(albumCover);
         album.setMember(member);
         album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
