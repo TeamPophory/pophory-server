@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV1RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAddResponseDto;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
@@ -49,7 +50,7 @@ public class PhotoService {
     private final MemberJpaRepository memberJpaRepository;
 
     @Transactional
-    public void addPhoto(MultipartFile file, PhotoAddV2RequestDto request, Long memberId) {
+    public void addPhotoV1(MultipartFile file, PhotoAddV1RequestDto request, Long memberId) {
         validateFileSize(file);
         validateExt(file);
         Album album = getAlbumById(request.getAlbumId());
