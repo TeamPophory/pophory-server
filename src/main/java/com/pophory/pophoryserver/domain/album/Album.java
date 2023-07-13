@@ -25,6 +25,8 @@ public class Album extends BaseTimeEntity {
 
     private int cover = 1;
 
+    private int photoLimit;
+
     private String imageUrl;
 
     private boolean isDeleted = false;
@@ -46,5 +48,8 @@ public class Album extends BaseTimeEntity {
         this.cover = cover;
     }
     public void setMember(Member member) { this.member = member; }
-
+    public void setPhotoLimit(int photoLimit) {
+        this.photoLimit = photoLimit;
+    }
 }
+
