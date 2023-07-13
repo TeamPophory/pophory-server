@@ -3,6 +3,7 @@ package com.pophory.pophoryserver.domain.member;
 
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.auth.SocialType;
+import com.pophory.pophoryserver.domain.fcm.FcmEntity;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,6 +49,9 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Album> albumList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FcmEntity> fcmList = new ArrayList<>();
 
     public void softDelete() {
         this.isDeleted = true;

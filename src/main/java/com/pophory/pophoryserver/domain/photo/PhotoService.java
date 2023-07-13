@@ -82,9 +82,12 @@ public class PhotoService {
     @Transactional
     public void deletePhoto(Long photoId, Long memberId) {
         Photo photo = getPhotoById(photoId);
-        s3Service.delete(photo.getImageUrl());
+        if (!Objects.equals(photo.getAlbum().getMember().getId(),memberId)) {
+            throw new BadRequestException("해당 사진의 주인이 아닙니다.");
+        }
         photoJpaRepository.deleteById(photoId);
     }
+
 
     public S3GetPresignedUrlResponseDto getPresignedUrl(UploadType type, Long memberId) {
         String fileName = createJpgFileName();
