@@ -53,5 +53,4 @@ public class AlbumV1Controller {
     public ResponseEntity<PhotoListGetResponseDto> getPhotos(@PathVariable Long albumId, Principal principal) {
         return ResponseEntity.ok(albumService.getPhotosByAlbum(albumId, getMemberId(principal)));
     }
-
 }

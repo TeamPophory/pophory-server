@@ -46,5 +46,4 @@ public class Album extends BaseTimeEntity {
         this.cover = cover;
     }
     public void setMember(Member member) { this.member = member; }
-
 }

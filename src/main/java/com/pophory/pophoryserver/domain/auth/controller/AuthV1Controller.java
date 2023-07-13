@@ -54,8 +54,8 @@ public class AuthV1Controller {
             @ApiResponse(responseCode = "400", description = "소셜로그인 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto authRequestDto) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        return ResponseEntity.ok(socialService.signIn(socialAccessToken, authRequestDto));
+    public ResponseEntity<AuthResponseDto> socialLogin(@RequestHeader("Authorization") String socialAccessToken, @RequestBody AuthRequestDto request) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return ResponseEntity.ok(socialService.signIn(socialAccessToken, request));
     }
 
     @PostMapping("/token")
