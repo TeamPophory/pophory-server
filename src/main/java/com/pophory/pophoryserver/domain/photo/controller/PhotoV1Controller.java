@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
 import com.pophory.pophoryserver.domain.photo.PhotoService;
+import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV1RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,8 +45,8 @@ public class PhotoV1Controller {
     })
     public ResponseEntity<Void> addPhoto(
             @Schema(description = "사진 file") @RequestPart MultipartFile photo,
-            @Valid PhotoAddV2RequestDto request, Principal principal) {
-        photoService.addPhoto(photo, request, MemberUtil.getMemberId(principal));
+            @Valid PhotoAddV1RequestDto request, Principal principal) {
+        photoService.addPhotoV1(photo, request, MemberUtil.getMemberId(principal));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
