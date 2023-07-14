@@ -7,6 +7,7 @@ import com.pophory.pophoryserver.domain.albumtheme.AlbumCoverJpaRepository;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
+import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
@@ -55,6 +56,12 @@ public class MemberService {
         return MemberNicknameDuplicateResponseDto.of(memberJpaRepository.existsMemberByNickname(nickname));
     }
 
+    @Transactional(readOnly = true)
+    public MemberMyPageGetV2ResponseDto getMypageMemberV2(Long memberId) {
+        return MemberMyPageGetV2ResponseDto.of(
+                findMemberById(memberId), getPhotoCount(memberId)
+        );
+    }
 
     private void updateMemberInfo(MemberCreateRequestDto request, Long memberId) {
         Member member = findMemberById(memberId);
