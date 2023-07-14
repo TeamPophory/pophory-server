@@ -4,6 +4,8 @@
 <br>
 <img src="https://github.com/TeamPophory/pophory-server/assets/65678579/c2223c52-3eff-428c-9e2f-c8c4d33bc043">
 
+![Alt](https://repobeats.axiom.co/api/embed/04d4dc851d30a20636f96a9a48ba0fc10caca276.svg "Repobeats analytics image")
+
 ## 💜 Pophory SERVER Developers
 
 <img src="https://github.com/TeamPophory/pophory-server/assets/65678579/0a978b09-822f-4d1e-9bbb-13cc8c5ad6f2.png" width="200">|<img src="https://user-images.githubusercontent.com/65678579/210243739-e84cf9aa-2315-41b4-be82-df9d3e4cc614.png" width="200"> | 
