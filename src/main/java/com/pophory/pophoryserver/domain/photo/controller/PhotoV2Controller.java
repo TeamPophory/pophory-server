@@ -26,7 +26,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/photos")
+@RequestMapping("/api/v2/photo")
 @Tag(name = "[Photo] 네컷사진 관련 API (V2)")
 public class PhotoV2Controller {
 
