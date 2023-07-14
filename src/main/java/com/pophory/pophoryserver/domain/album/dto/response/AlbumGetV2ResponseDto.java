@@ -1,1 +1,0 @@
-package com.pophory.pophoryserver.domain.album.dto.response;
