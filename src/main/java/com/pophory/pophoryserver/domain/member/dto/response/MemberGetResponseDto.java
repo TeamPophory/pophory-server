@@ -18,7 +18,7 @@ public class MemberGetResponseDto {
     private String realName;
     @Schema(description = "회원 닉네임", example = "yundol")
     private String nickname;
-    @Schema(description = "회원 프로필 이미지", example = "https://pophorycom/1.jpg")
+    @Schema(description = "[Optional] 회원 프로필 이미지", example = "https://pophorycom/1.jpg")
     private String profileImageUrl;
 
     public static MemberGetResponseDto of(Member member) {
