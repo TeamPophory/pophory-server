@@ -28,6 +28,7 @@ import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 @Tag(name = "[Member] 사용자 관련 API (V2)")
 @SecurityRequirement(name = "Authorization")
 public class MemberV2Controller {
+
     private final MemberService memberService;
 
     @GetMapping
@@ -41,5 +42,18 @@ public class MemberV2Controller {
     )
     public ResponseEntity<MemberMyPageGetV2ResponseDto> getMemberV2(Principal principal) {
         return ResponseEntity.ok(memberService.getMypageMemberV2(getMemberId(principal)));
+
+    private final MemberService memberService;
+    @GetMapping("/me")
+    @Operation(summary = "사용자 정보 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "사용자 정보 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "사용자 정보 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    }
+    )
+    public ResponseEntity<MemberGetResponseDto> getMember(Principal principal) {
+        return ResponseEntity.ok(memberService.getMember(getMemberId(principal)));
     }
 }

@@ -2,7 +2,9 @@
 주머니 속 잃어버릴 걱정 없는 모바일 네컷앨범 서비스.
 
 <br>
+<img src="https://github.com/TeamPophory/pophory-server/assets/65678579/c2223c52-3eff-428c-9e2f-c8c4d33bc043">
 
+![Alt](https://repobeats.axiom.co/api/embed/04d4dc851d30a20636f96a9a48ba0fc10caca276.svg "Repobeats analytics image")
 
 ## 💜 Pophory SERVER Developers
 
