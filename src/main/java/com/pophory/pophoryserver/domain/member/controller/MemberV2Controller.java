@@ -1,8 +1,8 @@
 package com.pophory.pophoryserver.domain.member.controller;
 
-
 import com.pophory.pophoryserver.domain.member.MemberService;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
+import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -30,15 +30,29 @@ import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 public class MemberV2Controller {
 
     private final MemberService memberService;
-    @GetMapping("/me")
-    @Operation(summary = "사용자 정보 조회 API")
+
+    @GetMapping
+    @Operation(summary = "마이페이지 내 정보 조회 API")
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
-    @ApiResponses( value = {
-            @ApiResponse(responseCode = "200", description = "사용자 정보 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "사용자 정보 조회 실패", content = @Content),
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "내 정보 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "내 정보 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
+    public ResponseEntity<MemberMyPageGetV2ResponseDto> getMemberV2(Principal principal) {
+        return ResponseEntity.ok(memberService.getMypageMemberV2(getMemberId(principal)));
+    }
+
+
+    @GetMapping
+    @Operation(summary = "마이페이지 내 정보 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "내 정보 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "내 정보 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    })
     public ResponseEntity<MemberGetResponseDto> getMember(Principal principal) {
         return ResponseEntity.ok(memberService.getMember(getMemberId(principal)));
     }
