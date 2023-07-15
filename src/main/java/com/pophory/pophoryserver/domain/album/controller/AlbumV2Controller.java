@@ -40,7 +40,7 @@ public class AlbumV2Controller {
             @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<AlbumListGetResponseDto> getAlbum(Principal principal) {
+    public ResponseEntity<AlbumListGetResponseDto> getAlbums(Principal principal) {
         return ResponseEntity.ok(albumService.getAlbums(MemberUtil.getMemberId(principal)));
     }
 
@@ -53,6 +53,6 @@ public class AlbumV2Controller {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<AlbumGetResponseDto> getAlbumById(@PathVariable Long albumId) {
-        return ResponseEntity.ok(albumService.getAlbumById(albumId));
+        return ResponseEntity.ok(albumService.getAlbum(albumId));
     }
 }

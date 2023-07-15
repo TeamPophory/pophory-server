@@ -47,7 +47,7 @@ public class AlbumService {
     }
 
     @Transactional(readOnly = true)
-    public AlbumGetResponseDto getAlbumById(Long albumId) {
+    public AlbumGetResponseDto getAlbum(Long albumId) {
         Album album = getAlbumById(albumId);
         return AlbumGetResponseDto.of(album, album.getPhotoList().size());
     }
