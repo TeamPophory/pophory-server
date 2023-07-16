@@ -4,7 +4,6 @@ package com.pophory.pophoryserver.domain.album.controller;
 import com.pophory.pophoryserver.domain.album.AlbumService;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
