@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.album.controller;
 
 
 import com.pophory.pophoryserver.domain.album.AlbumService;
+import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +40,19 @@ public class AlbumV2Controller {
             @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<AlbumListGetResponseDto> getAlbum(Principal principal) {
+    public ResponseEntity<AlbumListGetResponseDto> getAlbums(Principal principal) {
         return ResponseEntity.ok(albumService.getAlbums(MemberUtil.getMemberId(principal)));
+    }
+
+    @GetMapping("/{albumId}")
+    @Operation(summary = "앨범 단건 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "앨범 목록 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    })
+    public ResponseEntity<AlbumGetResponseDto> getAlbumById(@PathVariable Long albumId) {
+        return ResponseEntity.ok(albumService.getAlbum(albumId));
     }
 }
