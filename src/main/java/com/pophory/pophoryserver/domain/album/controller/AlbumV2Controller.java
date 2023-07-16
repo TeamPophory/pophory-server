@@ -4,6 +4,7 @@ package com.pophory.pophoryserver.domain.album.controller;
 import com.pophory.pophoryserver.domain.album.AlbumService;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -54,5 +55,17 @@ public class AlbumV2Controller {
     })
     public ResponseEntity<AlbumGetResponseDto> getAlbumById(@PathVariable Long albumId) {
         return ResponseEntity.ok(albumService.getAlbum(albumId));
+    }
+    
+    @GetMapping("/{albumId}/photo")
+    @Operation(summary = "앨범 내 사진 목록 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "앨범 내 사진 목록 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "앨범 내 사진 목록 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    })
+    public ResponseEntity<PhotoListGetResponseDto> getAlbumPhotoById(@PathVariable Long albumId, Principal principal) {
+        return ResponseEntity.ok(albumService.getPhotosByAlbum(albumId, MemberUtil.getMemberId(principal)));
     }
 }
