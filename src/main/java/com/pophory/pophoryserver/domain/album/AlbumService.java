@@ -46,6 +46,12 @@ public class AlbumService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public AlbumGetResponseDto getAlbum(Long albumId) {
+        Album album = getAlbumById(albumId);
+        return AlbumGetResponseDto.of(album, album.getPhotoList().size());
+    }
+
     private Album getAlbumById(Long albumId) {
         return albumJpaRepository.findById(albumId).orElseThrow(
                 () -> new EntityNotFoundException("해당 앨범이 존재하지 않습니다. id=" + albumId)
