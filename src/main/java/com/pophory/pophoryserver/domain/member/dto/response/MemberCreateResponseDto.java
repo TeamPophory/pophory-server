@@ -11,9 +11,9 @@ import static lombok.AccessLevel.PRIVATE;
 @Schema(description = "회원가입")
 public class MemberCreateResponseDto {
     @Schema(description = "앨범 아이디", example = "1")
-    private int albumId;
+    private Long albumId;
 
-    public static MemberCreateResponseDto of(int albumId) {
+    public static MemberCreateResponseDto of(Long albumId) {
         return new MemberCreateResponseDto(albumId);
     }
 }

@@ -9,10 +9,7 @@ import com.pophory.pophoryserver.domain.fcm.FcmJpaRepository;
 import com.pophory.pophoryserver.domain.fcm.FcmOS;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateV2RequestDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2ResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
+import com.pophory.pophoryserver.domain.member.dto.response.*;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
@@ -45,9 +42,9 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateV2(MemberCreateV2RequestDto request, Long memberId) {
+    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
-        updateMemberInfoV2(request, memberId);
+        return MemberCreateResponseDto.of(updateMemberInfoV2(request, memberId));
     }
 
     @Transactional(readOnly = true)
@@ -82,13 +79,14 @@ public class MemberService {
         addAlbum(member, request.getAlbumCover());
     }
 
-    private void updateMemberInfoV2(MemberCreateV2RequestDto request, Long memberId) {
+    private Long updateMemberInfoV2(MemberCreateV2RequestDto request, Long memberId) {
         Member member = findMemberById(memberId);
         member.updateRealName(request.getRealName());
         member.updateNickname(request.getNickname());
         member.generatePophoryId(MemberUtil.generateRandomString(6));
-        addAlbum(member, request.getAlbumCover());
+        Long albumId = addAlbumV2(member, request.getAlbumCover());
         addFcmInfo(request.getFcmToken(), request.getFcmOS(), member);
+        return albumId;
     }
 
     private void checkNicknameDuplicate(String nickName) {
@@ -113,6 +111,20 @@ public class MemberService {
         album.setMember(member);
         album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
+    }
+
+    private Long addAlbumV2(Member member, int cover) {
+        Album album = new Album();
+        AlbumCover albumCover = AlbumCover.builder()
+                .coverNumber(cover)
+                .build();
+        albumCoverJpaRepository.save(albumCover);
+        album.setCover(albumCover);
+        album.setMember(member);
+        album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
+        albumJpaRepository.save(album);
+        System.out.println(album.getId() + "DFSDFS");
+        return album.getId();
     }
 
     private void addFcmInfo(String fcmToken, FcmOS fcmOS, Member member) {
