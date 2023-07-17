@@ -15,14 +15,14 @@ import javax.validation.constraints.Size;
 public class MemberCreateRequestDto {
 
     @NotBlank
-    @Size(min = 1, max = 10)
+    @Size(min = 2, max = 6)
     @Pattern(regexp = "^[가-힣]*$")
     @Schema(description = "회원 이름", example = "한수아")
     private String realName;
 
     @NotBlank
     @Size(min = 4, max = 12)
-    @Pattern(regexp = "^[a-zA-Z0-9_]*$")
+    @Pattern(regexp = "^[a-zA-Z0-9._]*$")
     @Schema(description = "회원 아이디", example = "pophory")
     private String nickname;
 
