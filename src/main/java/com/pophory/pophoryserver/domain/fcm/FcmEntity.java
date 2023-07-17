@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.fcm;
 
 import com.pophory.pophoryserver.domain.member.Member;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +27,11 @@ public class FcmEntity {
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = LAZY)
     private Member member;
+
+    @Builder
+    public FcmEntity(String fcmToken, FcmOS fcmOS, Member member) {
+        this.fcmToken = fcmToken;
+        this.fcmOS = fcmOS;
+        this.member = member;
+    }
 }
