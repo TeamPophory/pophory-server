@@ -1,7 +1,7 @@
 package com.pophory.pophoryserver.domain.s3;
 
 
-import com.pophory.pophoryserver.domain.photo.PhotoService;
+import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.s3.dto.response.S3GetPresignedUrlResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;

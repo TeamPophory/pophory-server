@@ -3,20 +3,18 @@ package com.pophory.pophoryserver.domain.photo.dto.response;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
-@Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Data
 @Schema(description = "사진 정보")
-public class PhotoGetResponseDto {
+public class PhotoGetV2ResponseDto {
     @Schema(description = "사진 고유 id", example = "1")
     private Long id;
-    
+
     @Schema(description = "스튜디오 이름", example = "인생 네컷")
     private String studio;
 
@@ -32,13 +30,15 @@ public class PhotoGetResponseDto {
     @Schema(description = "사진 세로 길이", example = "1080")
     private int height;
 
-    public static PhotoGetResponseDto of(Photo photo)  {
+    @Schema(description = "사진 공유 id", example = "1ad3dvd2D")
+    private String shareId;
+
+    public static PhotoGetV2ResponseDto of(Photo photo)  {
         String studioName = photo.getStudio() != null ? photo.getStudio().getName() : "noStudio";
-        return new PhotoGetResponseDto(photo.getId(), studioName, PhotoUtil.changeTakenAtToResponseFormat(photo.getTakenAt()), photo.getImageUrl(), photo.getWidth(), photo.getHeight());
+        return new PhotoGetV2ResponseDto(photo.getId(), studioName, PhotoUtil.changeTakenAtToResponseFormat(photo.getTakenAt()), photo.getImageUrl(), photo.getWidth(), photo.getHeight(), photo.getShareId());
     }
 
     public static LocalDate getLocalDateTakenAt(PhotoGetResponseDto photoGetResponseDto) {
         return PhotoUtil.changeRequestToTakenAt(photoGetResponseDto.getTakenAt());
     }
-
 }

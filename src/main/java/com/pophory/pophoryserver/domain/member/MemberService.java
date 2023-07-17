@@ -1,7 +1,7 @@
 package com.pophory.pophoryserver.domain.member;
 
 import com.pophory.pophoryserver.domain.album.Album;
-import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
+import com.pophory.pophoryserver.domain.album.repository.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCoverJpaRepository;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
@@ -11,7 +11,7 @@ import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2Res
 import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
-import com.pophory.pophoryserver.global.util.MemberUtil;
+import com.pophory.pophoryserver.global.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +67,7 @@ public class MemberService {
         Member member = findMemberById(memberId);
         member.updateRealName(request.getRealName());
         member.updateNickname(request.getNickname());
-        member.generatePophoryId(MemberUtil.generateRandomString(6));
+        member.generatePophoryId(RandomUtil.generateRandomString(8));
         addAlbum(member, request.getAlbumCover());
     }
 
