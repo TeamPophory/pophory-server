@@ -16,10 +16,13 @@ public class PhotoShareResponseDto {
     @Schema(description = "사용자 아이디", example = "l.___.in")
     private String nickname;
 
+    @Schema(description = "공유하는 사진 id", example = "1")
+    private Long photoId;
+
     @Schema(description = "공유하는 사진 url", example = "https://~")
     private String imageUrl;
 
     public static PhotoShareResponseDto of(Photo photo, Member member) {
-        return new PhotoShareResponseDto(member.getRealName(), member.getNickname(), photo.getImageUrl());
+        return new PhotoShareResponseDto(member.getRealName(), member.getNickname(), photo.getId(), photo.getImageUrl());
     }
 }

@@ -21,7 +21,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/share/photo")
+@RequestMapping("/api/v2/share/")
 @Tag(name = "[Photo] 네컷사진 공유 관련 API (V2)")
 public class PhotoShareController {
     
@@ -37,7 +37,7 @@ public class PhotoShareController {
         return ResponseEntity.ok(photoShareService.getSharedPhoto(shareId));
     }
 
-    @PostMapping("/{photoId}")
+    @PostMapping("/photo/{photoId}")
     @SecurityRequirement(name = "Authorization")
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @Operation(summary = "공유 수락 API", description = "공유 수락 버튼을 눌렀을 때, 사용자의 앨범에 사진이 추가됩니다.")
