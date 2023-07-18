@@ -29,6 +29,7 @@ public class StudioService {
 
     public StudioGetResponseDto findAllV2() {
         List<StudioV2ResponseDto> studios = studioJpaRepository.findAll().stream()
+                .filter(studio -> studio.getId() != -1)
                 .map(studio -> StudioV2ResponseDto.builder()
                         .id(studio.getId())
                         .name(studio.getName())
