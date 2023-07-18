@@ -123,7 +123,6 @@ public class MemberService {
         album.setMember(member);
         album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
-        System.out.println(album.getId() + "DFSDFS");
         return album.getId();
     }
 
