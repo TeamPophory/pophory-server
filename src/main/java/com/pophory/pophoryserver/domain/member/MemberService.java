@@ -83,7 +83,7 @@ public class MemberService {
         Member member = findMemberById(memberId);
         member.updateRealName(request.getRealName());
         member.updateNickname(request.getNickname());
-        member.generatePophoryId(MemberUtil.generateRandomString(6));
+        member.generatePophoryId(RandomUtil.generateRandomString(8));
         Long albumId = addAlbumV2(member, request.getAlbumCover());
         addFcmInfo(request.getFcmToken(), request.getFcmOS(), member);
         return albumId;
