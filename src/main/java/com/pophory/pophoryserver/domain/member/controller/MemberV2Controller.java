@@ -1,7 +1,9 @@
 package com.pophory.pophoryserver.domain.member.controller;
 
 import com.pophory.pophoryserver.domain.member.MemberService;
+import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateV2RequestDto;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberNicknameDuplicateRequestDto;
+import com.pophory.pophoryserver.domain.member.dto.response.MemberCreateResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
@@ -31,6 +33,19 @@ import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 public class MemberV2Controller {
 
     private final MemberService memberService;
+
+    @PatchMapping
+    @Operation(summary = "회원가입 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204", description = "회원가입 성공"),
+            @ApiResponse(responseCode = "400", description = "회원가입 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    }
+    )
+    public ResponseEntity<MemberCreateResponseDto> patchMember(@Valid @RequestBody MemberCreateV2RequestDto request, Principal principal) {
+        return ResponseEntity.ok(memberService.updateV2(request, getMemberId(principal)));
+    }
 
     @GetMapping
     @Operation(summary = "마이페이지 내 정보 조회 API")

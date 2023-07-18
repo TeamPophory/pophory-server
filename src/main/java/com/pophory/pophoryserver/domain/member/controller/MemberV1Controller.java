@@ -41,8 +41,8 @@ public class MemberV1Controller {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto memberCreateRequestDto, Principal principal) {
-        memberService.update(memberCreateRequestDto, getMemberId(principal));
+    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto request, Principal principal) {
+        memberService.update(request, getMemberId(principal));
         return ResponseEntity.noContent().build();
     }
 

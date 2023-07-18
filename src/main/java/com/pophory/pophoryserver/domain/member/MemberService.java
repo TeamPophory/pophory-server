@@ -4,11 +4,12 @@ import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCoverJpaRepository;
+import com.pophory.pophoryserver.domain.fcm.FcmEntity;
+import com.pophory.pophoryserver.domain.fcm.FcmJpaRepository;
+import com.pophory.pophoryserver.domain.fcm.FcmOS;
 import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateRequestDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2ResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
+import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateV2RequestDto;
+import com.pophory.pophoryserver.domain.member.dto.response.*;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
@@ -30,6 +31,7 @@ public class MemberService {
     private final MemberJpaRepository memberJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
     private final AlbumCoverJpaRepository albumCoverJpaRepository;
+    private final FcmJpaRepository fcmJpaRepository;
 
     private static final int INITIAL_PHOTO_LIMIT = 15;
 
@@ -37,6 +39,12 @@ public class MemberService {
     public void update(MemberCreateRequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
         updateMemberInfo(request, memberId);
+    }
+
+    @Transactional
+    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) {
+        checkNicknameDuplicate(request.getNickname());
+        return MemberCreateResponseDto.of(updateMemberInfoV2(request, memberId));
     }
 
     @Transactional(readOnly = true)
@@ -71,6 +79,16 @@ public class MemberService {
         addAlbum(member, request.getAlbumCover());
     }
 
+    private Long updateMemberInfoV2(MemberCreateV2RequestDto request, Long memberId) {
+        Member member = findMemberById(memberId);
+        member.updateRealName(request.getRealName());
+        member.updateNickname(request.getNickname());
+        member.generatePophoryId(MemberUtil.generateRandomString(6));
+        Long albumId = addAlbumV2(member, request.getAlbumCover());
+        addFcmInfo(request.getFcmToken(), request.getFcmOS(), member);
+        return albumId;
+    }
+
     private void checkNicknameDuplicate(String nickName) {
         if (memberJpaRepository.existsMemberByNickname(nickName)) {
             throw new EntityExistsException("이미 존재하는 닉네임입니다. nickname: " + nickName);
@@ -93,6 +111,28 @@ public class MemberService {
         album.setMember(member);
         album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
+    }
+
+    private Long addAlbumV2(Member member, int cover) {
+        Album album = new Album();
+        AlbumCover albumCover = AlbumCover.builder()
+                .coverNumber(cover)
+                .build();
+        albumCoverJpaRepository.save(albumCover);
+        album.setCover(albumCover);
+        album.setMember(member);
+        album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
+        albumJpaRepository.save(album);
+        return album.getId();
+    }
+
+    private void addFcmInfo(String fcmToken, FcmOS fcmOS, Member member) {
+        FcmEntity fcmEntity = FcmEntity.builder()
+                .fcmToken(fcmToken)
+                .fcmOS(fcmOS)
+                .member(member)
+                .build();
+        fcmJpaRepository.save(fcmEntity);
     }
 
     private int getPhotoCount(Long memberId) {
