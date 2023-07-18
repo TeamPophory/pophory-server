@@ -1,6 +1,8 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
 
+import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAllListResponseDto;
 import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAddResponseDto;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URISyntaxException;
 import java.security.Principal;
 
+import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -63,4 +66,20 @@ public class PhotoV2Controller {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    public ResponseEntity<PhotoAllListResponseDto> getAllPhoto(Principal principal) {
+        return ResponseEntity.ok(photoService.getAllPhotosV2(MemberUtil.getMemberId(principal)));
+    }
+
+    @GetMapping
+    @Operation(summary = "사진 전체 조회 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "사진 전체 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "사진 전체 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    }
+    )
+    public ResponseEntity<PhotoAllListResponseDto> getAllPhotos(Principal principal) {
+        return ResponseEntity.ok(photoService.getAllPhotosV2(MemberUtil.getMemberId(principal)));
+    }
 }
