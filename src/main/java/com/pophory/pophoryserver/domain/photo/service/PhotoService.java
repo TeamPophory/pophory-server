@@ -1,9 +1,11 @@
-package com.pophory.pophoryserver.domain.photo;
+package com.pophory.pophoryserver.domain.photo.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.pophory.pophoryserver.domain.album.Album;
-import com.pophory.pophoryserver.domain.album.AlbumJpaRepository;
+import com.pophory.pophoryserver.domain.album.repository.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
+import com.pophory.pophoryserver.domain.photo.Photo;
+import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV1RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAddResponseDto;

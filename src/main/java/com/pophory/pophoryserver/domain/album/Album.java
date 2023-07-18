@@ -55,4 +55,8 @@ public class Album extends BaseTimeEntity {
     public void setPhotoLimit(int photoLimit) {
         this.photoLimit = photoLimit;
     }
+
+    public boolean checkPhotoLimit() {
+        return this.photoLimit > this.photoList.size();
+    }
 }
