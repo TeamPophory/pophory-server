@@ -34,7 +34,7 @@ public class PhotoGetV2ResponseDto {
     private String shareId;
 
     public static PhotoGetV2ResponseDto of(Photo photo)  {
-        String studioName = photo.getStudio() != null ? photo.getStudio().getName() : "noStudio";
+        String studioName = photo.getStudio() != null ? photo.getStudio().getName() : "NONE";
         return new PhotoGetV2ResponseDto(photo.getId(), studioName, PhotoUtil.changeTakenAtToResponseFormat(photo.getTakenAt()), photo.getImageUrl(), photo.getWidth(), photo.getHeight(), photo.getShareId());
     }
 

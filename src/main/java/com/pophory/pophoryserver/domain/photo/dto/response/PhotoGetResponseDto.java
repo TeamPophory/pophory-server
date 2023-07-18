@@ -33,7 +33,7 @@ public class PhotoGetResponseDto {
     private int height;
 
     public static PhotoGetResponseDto of(Photo photo)  {
-        String studioName = photo.getStudio() != null ? photo.getStudio().getName() : "noStudio";
+        String studioName = photo.getStudio() != null ? photo.getStudio().getName() : "NONE";
         return new PhotoGetResponseDto(photo.getId(), studioName, PhotoUtil.changeTakenAtToResponseFormat(photo.getTakenAt()), photo.getImageUrl(), photo.getWidth(), photo.getHeight());
     }
 
