@@ -29,7 +29,8 @@ public class SecurityConfig {
             "/health",
             "/profile",
             "/actuator/**",
-            "/api/v2/push/test/no-auth"
+            "/api/v2/push/test/no-auth",
+            "/api/v2/share/**",
     };
 
     private static final String[] SWAGGER_URL = {

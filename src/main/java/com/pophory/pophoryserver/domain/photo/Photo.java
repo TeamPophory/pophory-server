@@ -4,6 +4,7 @@ import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import com.pophory.pophoryserver.global.util.RandomUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,11 +37,14 @@ public class Photo extends BaseTimeEntity {
     @JoinColumn(name = "studio_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Studio studio;
 
+    private String shareId;
+    
     private LocalDate takenAt;
 
     private int width;
 
     private int height;
+
 
     @Builder
     public Photo(String imageUrl, Album album, Studio studio, LocalDate takenAt, PhotoSizeVO photoSizeVO) {
@@ -51,6 +55,7 @@ public class Photo extends BaseTimeEntity {
         this.isDeleted = false;
         this.width = photoSizeVO.getWidth();
         this.height = photoSizeVO.getHeight();
+        this.shareId = RandomUtil.generateRandomString(10);
     }
 
     public void softDelete() {

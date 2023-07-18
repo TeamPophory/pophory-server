@@ -1,7 +1,7 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
 
-import com.pophory.pophoryserver.domain.photo.PhotoService;
+import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAddResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/photo")
 @Tag(name = "[Photo] 네컷사진 관련 API (V2)")
+@SecurityRequirement(name = "Authorization")
 public class PhotoV2Controller {
 
     private final PhotoService photoService;
@@ -45,7 +47,7 @@ public class PhotoV2Controller {
         return ResponseEntity.created(PhotoUtil.getURI(response.getPhotoId())).build();
     }
 
-    @DeleteMapping(path = "/{photoId}")
+    @DeleteMapping( "/{photoId}")
     @Operation(summary = "사진 삭제 API")
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(
@@ -60,4 +62,5 @@ public class PhotoV2Controller {
         photoService.deletePhoto(photoId, MemberUtil.getMemberId(principal));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

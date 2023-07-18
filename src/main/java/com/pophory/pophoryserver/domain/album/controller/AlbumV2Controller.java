@@ -2,9 +2,9 @@ package com.pophory.pophoryserver.domain.album.controller;
 
 
 import com.pophory.pophoryserver.domain.album.AlbumService;
-import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
-import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
+import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetV2ResponseDto;
+import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetV2ResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetV2ResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,7 +26,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/albums")
+@RequestMapping("/api/v2/album")
 @Tag(name = "[Album] 앨범 관련 API (V2)")
 @SecurityRequirement(name = "Authorization")
 public class AlbumV2Controller {
@@ -41,8 +41,8 @@ public class AlbumV2Controller {
             @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<AlbumListGetResponseDto> getAlbums(Principal principal) {
-        return ResponseEntity.ok(albumService.getAlbums(MemberUtil.getMemberId(principal)));
+    public ResponseEntity<AlbumListGetV2ResponseDto> getAlbums(Principal principal) {
+        return ResponseEntity.ok(albumService.getAlbumsV2(MemberUtil.getMemberId(principal)));
     }
 
     @GetMapping("/{albumId}")
@@ -53,7 +53,7 @@ public class AlbumV2Controller {
             @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<AlbumGetResponseDto> getAlbumById(@PathVariable Long albumId) {
+    public ResponseEntity<AlbumGetV2ResponseDto> getAlbumById(@PathVariable Long albumId) {
         return ResponseEntity.ok(albumService.getAlbum(albumId));
     }
     
@@ -65,7 +65,7 @@ public class AlbumV2Controller {
             @ApiResponse(responseCode = "400", description = "앨범 내 사진 목록 조회 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<PhotoListGetResponseDto> getAlbumPhotoById(@PathVariable Long albumId, Principal principal) {
-        return ResponseEntity.ok(albumService.getPhotosByAlbum(albumId, MemberUtil.getMemberId(principal)));
+    public ResponseEntity<PhotoListGetV2ResponseDto> getAlbumPhotoById(@PathVariable Long albumId, Principal principal) {
+        return ResponseEntity.ok(albumService.getPhotosByAlbumV2(albumId, MemberUtil.getMemberId(principal)));
     }
 }

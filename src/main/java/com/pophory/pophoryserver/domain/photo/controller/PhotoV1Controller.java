@@ -1,8 +1,7 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
-import com.pophory.pophoryserver.domain.photo.PhotoService;
+import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV1RequestDto;
-import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

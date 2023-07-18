@@ -2,11 +2,16 @@ package com.pophory.pophoryserver.domain.album;
 
 
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
+import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
+import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetV2ResponseDto;
+import com.pophory.pophoryserver.domain.album.repository.AlbumRepository;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetV2ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +26,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AlbumService {
 
-    private final AlbumJpaRepository albumJpaRepository;
+    private final AlbumRepository albumRepository;
     private final PhotoJpaRepository photoJpaRepository;
 
     @Transactional(readOnly = true)
     public AlbumListGetResponseDto getAlbums(Long memberId) {
         return AlbumListGetResponseDto.of(
-                albumJpaRepository.findAllByMemberId(memberId).stream()
+                albumRepository.findAllByMemberId(memberId).stream()
                         .map(album -> AlbumGetResponseDto.of(album, album.getPhotoList().size()))
                         .collect(Collectors.toList())
         );
@@ -47,13 +52,37 @@ public class AlbumService {
     }
 
     @Transactional(readOnly = true)
-    public AlbumGetResponseDto getAlbum(Long albumId) {
-        Album album = getAlbumById(albumId);
-        return AlbumGetResponseDto.of(album, album.getPhotoList().size());
+    public PhotoListGetV2ResponseDto getPhotosByAlbumV2(Long albumId, Long memberId) {
+        List<Photo> photos = new ArrayList<>();
+        return PhotoListGetV2ResponseDto.of (
+                photoJpaRepository.findAllByAlbum(getAlbumById(albumId))
+                        .stream()
+                        .sorted(Comparator.comparing(Photo::getTakenAt)
+                                .thenComparing(Photo::getCreatedAt))
+                        .map(PhotoGetV2ResponseDto::of)
+                        .collect(Collectors.toList())
+        );
     }
 
+    @Transactional(readOnly = true)
+    public AlbumListGetV2ResponseDto getAlbumsV2(Long memberId) {
+        return AlbumListGetV2ResponseDto.of(
+                albumRepository.findAlbumsByMemberId(memberId).stream()
+                        .map(album -> AlbumGetV2ResponseDto.of(album, album.getPhotoList().size()))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public AlbumGetV2ResponseDto getAlbum(Long albumId) {
+        Album album = getAlbumById(albumId);
+        return AlbumGetV2ResponseDto.of(album, album.getPhotoList().size());
+    }
+
+
+
     private Album getAlbumById(Long albumId) {
-        return albumJpaRepository.findById(albumId).orElseThrow(
+        return albumRepository.findById(albumId).orElseThrow(
                 () -> new EntityNotFoundException("해당 앨범이 존재하지 않습니다. id=" + albumId)
         );
     }
