@@ -8,7 +8,7 @@ import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV1RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAddResponseDto;
+import com.pophory.pophoryserver.domain.photo.dto.response.*;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.domain.s3.UploadType;
 import com.pophory.pophoryserver.domain.s3.dto.response.S3GetPresignedUrlResponseDto;
@@ -29,9 +29,8 @@ import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -90,6 +89,19 @@ public class PhotoService {
         photoJpaRepository.deleteById(photoId);
     }
 
+    public PhotoAllListResponseDto getAllPhotosV2(Long memberId) {
+        List<Photo> photos = new ArrayList<>();
+        albumJpaRepository.findAllByMemberId(memberId).forEach(album -> photos.addAll(album.getPhotoList()));
+        List<PhotoAllListV2ResponseDto> photoList = photos.stream()
+                .sorted(Comparator.comparing(Photo::getTakenAt)
+                        .thenComparing(Photo::getCreatedAt).reversed())
+                .map(photo -> PhotoAllListV2ResponseDto.builder()
+                        .photoId(photo.getId())
+                        .photoUrl(photo.getImageUrl())
+                        .build())
+                .collect(Collectors.toList());
+        return PhotoAllListResponseDto.of(photoList);
+    }
 
     public S3GetPresignedUrlResponseDto getPresignedUrl(UploadType type, Long memberId) {
         String fileName = createJpgFileName();
