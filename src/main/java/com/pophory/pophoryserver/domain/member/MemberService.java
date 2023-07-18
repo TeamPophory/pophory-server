@@ -71,6 +71,11 @@ public class MemberService {
         );
     }
 
+    @Transactional
+    public void logout(Long memberId) {
+        findMemberById(memberId).updateRefreshToken(null);
+    }
+
     private void updateMemberInfo(MemberCreateRequestDto request, Long memberId) {
         Member member = findMemberById(memberId);
         member.updateRealName(request.getRealName());

@@ -7,6 +7,7 @@ import com.pophory.pophoryserver.domain.member.dto.response.MemberCreateResponse
 import com.pophory.pophoryserver.domain.member.dto.response.MemberGetResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.member.dto.response.MemberNicknameDuplicateResponseDto;
+import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,5 +86,19 @@ public class MemberV2Controller {
     )
     public ResponseEntity<MemberNicknameDuplicateResponseDto> postMemberNickname(@Valid @RequestBody MemberNicknameDuplicateRequestDto request) {
         return ResponseEntity.ok(memberService.checkDuplicateMemberNickname(request.getNickname()));
+    }
+
+    @PostMapping("/sign-out")
+    @Operation(summary = "멤버 로그아웃 API")
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204", description = "로그아웃 성공"),
+            @ApiResponse(responseCode = "400", description = "로그아웃 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+    }
+    )
+    public ResponseEntity<Void> logout(Principal principal){
+        memberService.logout(MemberUtil.getMemberId(principal));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
