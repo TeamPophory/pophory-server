@@ -2,6 +2,7 @@ package com.pophory.pophoryserver.domain.version;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import static javax.persistence.EnumType.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class ServiceVersion {
 
     @Id @GeneratedValue
