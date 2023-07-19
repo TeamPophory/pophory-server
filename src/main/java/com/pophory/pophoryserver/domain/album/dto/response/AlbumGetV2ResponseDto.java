@@ -14,7 +14,7 @@ public class AlbumGetV2ResponseDto {
     @Schema(description = "앨범 제목", example = "강윤서의 앨범")
     private String title;
     @Schema(description = "앨범 디자인", example = "1")
-    private Long albumDesignId;
+    private Long albumCover;
     @Schema(description = "앨범 사진 수", example = "3")
     private int photoCount;
     @Schema(description = "앨범 사진 한도", example = "15")
