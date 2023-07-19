@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URISyntaxException;
 import java.security.Principal;
 
-import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
