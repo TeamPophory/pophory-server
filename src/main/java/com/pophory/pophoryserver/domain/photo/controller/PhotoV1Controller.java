@@ -39,8 +39,8 @@ public class PhotoV1Controller {
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "사진 추가 성공"),
-            @ApiResponse(responseCode = "400", description = "사진 추가 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "사진 추가 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<Void> addPhoto(
             @Schema(description = "사진 file") @RequestPart MultipartFile photo,

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.*;
 
 @Entity
@@ -24,6 +25,9 @@ public class AlbumCover {
     private int coverNumber;
 
     private String imageUrl;
+
+    @Enumerated(STRING)
+    private AlbumTheme theme;
 
     @OneToMany(mappedBy = "albumCover", cascade = CascadeType.ALL)
     private List<AlbumDesign> albumDesignList = new ArrayList<>();
