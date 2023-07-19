@@ -59,11 +59,11 @@ public class AlbumV2Controller {
     }
 
     @PatchMapping("/{albumId}")
-    @Operation(summary = "앨범 단건 조회 API")
+    @Operation(summary = "앨범 디자인 수정 API")
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "앨범 목록 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "앨범 목록 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "200", description = "앨범 디자인 수정 성공"),
+            @ApiResponse(responseCode = "400", description = "앨범 디자인 수정 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<Void> updateAlbumDesign(@PathVariable Long albumId, @Valid @RequestBody AlbumDesignUpdateRequestDto request) {
