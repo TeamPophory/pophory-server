@@ -6,6 +6,7 @@ import com.pophory.pophoryserver.domain.s3.dto.response.S3GetPresignedUrlRespons
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,12 +32,26 @@ public class S3Controller {
     @Operation(summary = "사진 업로드 url 생성 API")
     @ApiResponses(
             value = {
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "사진 업로드 url 생성 성공"),
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "사진 업로드 url 생성 실패", content = @Content),
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+                    @ApiResponse(responseCode = "200", description = "사진 업로드 url 생성 성공"),
+                    @ApiResponse(responseCode = "400", description = "사진 업로드 url 생성 실패", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
             }
     )
-    public ResponseEntity<S3GetPresignedUrlResponseDto> getPresignedUrl(Principal principal) {
+    public ResponseEntity<S3GetPresignedUrlResponseDto> getUploadPhotoPresignedUrl(Principal principal) {
         return ResponseEntity.ok(photoService.getPresignedUrl(UploadType.PHOTO, MemberUtil.getMemberId(principal)));
+    }
+
+    @GetMapping(value = "/profile", produces = APPLICATION_JSON_VALUE)
+    @SecurityRequirement(name = "Authorization")
+    @Operation(summary = "사진 업로드 url 생성 API")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "프로필 사진 업로드 url 생성 성공"),
+                    @ApiResponse(responseCode = "400", description = "프로필 사진 업로드 url 생성 실패", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
+            }
+    )
+    public ResponseEntity<S3GetPresignedUrlResponseDto> getUploadProfilePresignedUrl(Principal principal) {
+        return ResponseEntity.ok(photoService.getPresignedUrl(UploadType.PROFILE, MemberUtil.getMemberId(principal)));
     }
 }
