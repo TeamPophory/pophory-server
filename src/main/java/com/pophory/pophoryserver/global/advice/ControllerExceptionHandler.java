@@ -1,7 +1,10 @@
 package com.pophory.pophoryserver.global.advice;
 
+import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
+import com.pophory.pophoryserver.global.response.CodeResponse;
+import com.pophory.pophoryserver.global.response.ResponseCode;
 import io.sentry.Sentry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,4 +86,11 @@ public class ControllerExceptionHandler {
         Sentry.captureException(e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
+    @ExceptionHandler(AlbumLimitExceedException.class)
+    public ResponseEntity<CodeResponse> handleAlbumLimitExceedException(final AlbumLimitExceedException e) {
+        Sentry.captureException(e);
+        return ResponseEntity.badRequest().body(new CodeResponse(ResponseCode.ALBUM_LIMIT_EXCEED.getCode()));
+    }
+
 }
