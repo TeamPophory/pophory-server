@@ -4,6 +4,8 @@ import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.repository.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCoverJpaRepository;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumDesignJpaRepository;
 import com.pophory.pophoryserver.domain.fcm.FcmEntity;
 import com.pophory.pophoryserver.domain.fcm.FcmJpaRepository;
 import com.pophory.pophoryserver.domain.fcm.FcmOS;
@@ -30,7 +32,7 @@ public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
-    private final AlbumCoverJpaRepository albumCoverJpaRepository;
+    private final AlbumDesignJpaRepository albumDesignJpaRepository;
     private final FcmJpaRepository fcmJpaRepository;
 
     private static final int INITIAL_PHOTO_LIMIT = 15;
@@ -106,25 +108,17 @@ public class MemberService {
         );
     }
 
-    private void addAlbum(Member member, int cover) {
+    private void addAlbum(Member member, Long cover) {
         Album album = new Album();
-        AlbumCover albumCover = AlbumCover.builder()
-                .coverNumber(cover)
-                .build();
-        albumCoverJpaRepository.save(albumCover);
-        album.setCover(albumCover);
+        album.setAlbumDesign(getAlbumDesignById(cover));
         album.setMember(member);
         album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
     }
 
-    private Long addAlbumV2(Member member, int cover) {
+    private Long addAlbumV2(Member member, Long cover) {
         Album album = new Album();
-        AlbumCover albumCover = AlbumCover.builder()
-                .coverNumber(cover)
-                .build();
-        albumCoverJpaRepository.save(albumCover);
-        album.setCover(albumCover);
+        album.setAlbumDesign(getAlbumDesignById(cover));
         album.setMember(member);
         album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
@@ -145,6 +139,12 @@ public class MemberService {
                 album -> album.getPhotoList().size())
                 .mapToInt(Integer::intValue)
                 .sum();
+    }
+
+    private AlbumDesign getAlbumDesignById(Long albumDesignId) {
+        return albumDesignJpaRepository.findById(albumDesignId).orElseThrow(
+                () -> new EntityNotFoundException("해당 앨범 디자인이 존재하지 않습니다. id:" + albumDesignId)
+        );
     }
 
     private List<PhotoGetResponseDto> getPhotos(Long memberId) {
