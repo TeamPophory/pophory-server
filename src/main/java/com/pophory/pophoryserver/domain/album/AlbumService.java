@@ -1,11 +1,14 @@
 package com.pophory.pophoryserver.domain.album;
 
 
+import com.pophory.pophoryserver.domain.album.dto.request.AlbumDesignUpdateRequestDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.album.repository.AlbumRepository;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumDesignJpaRepository;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
@@ -28,6 +31,7 @@ public class AlbumService {
 
     private final AlbumRepository albumRepository;
     private final PhotoJpaRepository photoJpaRepository;
+    private final AlbumDesignJpaRepository albumDesignJpaRepository;
 
     @Transactional(readOnly = true)
     public AlbumListGetResponseDto getAlbums(Long memberId) {
@@ -79,11 +83,21 @@ public class AlbumService {
         return AlbumGetV2ResponseDto.of(album, album.getPhotoList().size());
     }
 
-
+    @Transactional
+    public void updateAlbumDesign(AlbumDesignUpdateRequestDto request, Long albumId) {
+        Album album = getAlbumById(albumId);
+        album.setAlbumDesign(getAlbumDesignById(request.getAlbumDesign()));
+    }
 
     private Album getAlbumById(Long albumId) {
         return albumRepository.findById(albumId).orElseThrow(
                 () -> new EntityNotFoundException("해당 앨범이 존재하지 않습니다. id=" + albumId)
+        );
+    }
+
+    private AlbumDesign getAlbumDesignById(Long albumDesignId) {
+        return albumDesignJpaRepository.findById(albumDesignId).orElseThrow(
+                () -> new EntityNotFoundException("해당 앨범 디자인이 존재하지 않습니다. id=")
         );
     }
 }
