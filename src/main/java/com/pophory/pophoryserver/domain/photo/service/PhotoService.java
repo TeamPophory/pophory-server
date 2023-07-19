@@ -14,6 +14,7 @@ import com.pophory.pophoryserver.domain.s3.UploadType;
 import com.pophory.pophoryserver.domain.s3.dto.response.S3GetPresignedUrlResponseDto;
 import com.pophory.pophoryserver.domain.studio.Studio;
 import com.pophory.pophoryserver.domain.studio.StudioJpaRepository;
+import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
 import com.pophory.pophoryserver.global.util.PhotoUtil;
@@ -55,6 +56,7 @@ public class PhotoService {
         validateFileSize(file);
         validateExt(file);
         Album album = getAlbumById(request.getAlbumId());
+        if (!album.checkPhotoLimit()) throw new AlbumLimitExceedException("앨범 갯수 제한을 넘어갔습니다. albumId : " + album.getId());
         Studio studio = getStudioById(request.getStudioId());
         checkAlbumLimit(album);
         photoJpaRepository.save(Photo.builder()
@@ -69,6 +71,7 @@ public class PhotoService {
     @Transactional
     public PhotoAddResponseDto addPhotoV2(PhotoAddV2RequestDto request, Long memberId) {
         Album album = getAlbumById(request.getAlbumId());
+        if (!album.checkPhotoLimit()) throw new AlbumLimitExceedException("앨범 갯수 제한을 넘어갔습니다. albumId : " + album.getId());
         Studio studio = getStudioById(request.getStudioId());
         Photo photo =  photoJpaRepository.save(Photo.builder()
                 .imageUrl(CLOUD_FRONT_DOMAIN + "/" + UploadType.PHOTO.getName() + getPophoryIdByMemberId(memberId) + MEMBER_PREFIX + request.getFileName())

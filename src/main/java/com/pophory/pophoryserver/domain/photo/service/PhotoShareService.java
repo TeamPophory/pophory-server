@@ -4,8 +4,10 @@ import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.repository.AlbumJpaRepository;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.PhotoJpaRepository;
+import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareApproveResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareResponseDto;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
+import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,17 +29,18 @@ public class PhotoShareService {
     }
 
     @Transactional
-    public Long addPhotoFromShare(Long receiverId, Long sharedPhotoId) {
+    public PhotoShareApproveResponseDto addPhotoFromShare(Long receiverId, Long sharedPhotoId) {
         Photo sharedPhoto = getPhotoById(sharedPhotoId);
         Album album = getAlbumByMemberId(receiverId);
-        if (!album.checkPhotoLimit()) throw new BadRequestException("앨범 한도를 초과했습니다.");
+        if (!album.checkPhotoLimit()) throw new AlbumLimitExceedException("앨범 한도를 초과했습니다.");
         Photo photo = Photo.builder()
                 .imageUrl(sharedPhoto.getImageUrl())
                 .album(album)
                 .studio(sharedPhoto.getStudio())
                 .photoSizeVO(PhotoSizeVO.of(sharedPhoto.getWidth(), sharedPhoto.getHeight()))
                 .build();
-        return photo.getId();
+        photoJpaRepository.save(photo);
+        return PhotoShareApproveResponseDto.of(album);
     }
 
     private Album getAlbumByMemberId(Long memberId) {
