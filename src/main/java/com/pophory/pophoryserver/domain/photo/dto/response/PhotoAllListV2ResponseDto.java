@@ -16,9 +16,13 @@ public class PhotoAllListV2ResponseDto {
     @Schema(description = "사진 url", example = "https://pophorycom/1.jpg")
     private String photoUrl;
 
+    @Schema(description = "사진 공유 id", example = "1ad3dvd2D")
+    private String shareId;
+
     @Builder
-    public PhotoAllListV2ResponseDto(Long photoId, String photoUrl) {
-        this.photoId = photoId;
-        this.photoUrl = photoUrl;
+    public PhotoAllListV2ResponseDto(Photo photo) {
+        this.photoId = photo.getId();
+        this.photoUrl = photo.getImageUrl();
+        this.shareId = photo.getShareId();
     }
 }

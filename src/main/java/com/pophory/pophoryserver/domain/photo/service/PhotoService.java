@@ -96,8 +96,7 @@ public class PhotoService {
                 .sorted(Comparator.comparing(Photo::getTakenAt)
                         .thenComparing(Photo::getCreatedAt).reversed())
                 .map(photo -> PhotoAllListV2ResponseDto.builder()
-                        .photoId(photo.getId())
-                        .photoUrl(photo.getImageUrl())
+                        .photo(photo)
                         .build())
                 .collect(Collectors.toList());
         return PhotoAllListResponseDto.of(photoList);
