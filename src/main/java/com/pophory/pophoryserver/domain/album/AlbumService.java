@@ -86,7 +86,7 @@ public class AlbumService {
     @Transactional
     public void updateAlbumDesign(AlbumDesignUpdateRequestDto request, Long albumId) {
         Album album = getAlbumById(albumId);
-        album.setAlbumDesign(getAlbumDesignById(request.getAlbumDesign()));
+        album.setAlbumDesign(getAlbumDesignById(request.getAlbumDesignId()));
     }
 
     private Album getAlbumById(Long albumId) {

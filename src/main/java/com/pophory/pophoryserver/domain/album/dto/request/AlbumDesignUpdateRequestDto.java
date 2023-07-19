@@ -11,10 +11,10 @@ import lombok.Getter;
 public class AlbumDesignUpdateRequestDto {
 
     @Schema(description = "앨범 디자인", example = "1")
-    private Long albumDesign;
+    private Long albumDesignId;
 
     @JsonCreator
-    private AlbumDesignUpdateRequestDto(Long albumDesign) {
-        this.albumDesign = albumDesign;
+    private AlbumDesignUpdateRequestDto(Long albumDesignId) {
+        this.albumDesignId = albumDesignId;
     }
 }
