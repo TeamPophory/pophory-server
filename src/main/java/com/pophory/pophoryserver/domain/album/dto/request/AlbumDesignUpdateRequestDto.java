@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@Schema(description = "회원 가입 요청 DTO")
+@Schema(description = "앨범 디자인 수정 DTO")
 public class AlbumDesignUpdateRequestDto {
 
     @Schema(description = "앨범 디자인", example = "1")
