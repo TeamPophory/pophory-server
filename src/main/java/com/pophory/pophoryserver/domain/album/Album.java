@@ -1,6 +1,7 @@
 package com.pophory.pophoryserver.domain.album;
 
 import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
+import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
 import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
@@ -24,9 +25,9 @@ public class Album extends BaseTimeEntity {
 
     private String title = "기본 앨범";
 
-    @JoinColumn(name = "album_cover_id")
+    @JoinColumn(name = "album_design_id")
     @OneToOne(fetch = LAZY)
-    private AlbumCover albumCover;
+    private AlbumDesign albumDesign;
 
     private int photoLimit;
 
@@ -47,8 +48,8 @@ public class Album extends BaseTimeEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public void setCover(AlbumCover albumCover) {
-        this.albumCover = albumCover;
+    public void setAlbumDesign(AlbumDesign albumDesign) {
+        this.albumDesign = albumDesign;
     }
     public void setMember(Member member) { this.member = member; }
 

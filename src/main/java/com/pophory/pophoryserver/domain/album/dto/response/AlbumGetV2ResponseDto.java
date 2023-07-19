@@ -13,14 +13,14 @@ public class AlbumGetV2ResponseDto {
     private Long id;
     @Schema(description = "앨범 제목", example = "강윤서의 앨범")
     private String title;
-    @Schema(description = "앨범 커버", example = "1")
-    private int albumCover;
+    @Schema(description = "앨범 디자인", example = "1")
+    private Long albumDesignId;
     @Schema(description = "앨범 사진 수", example = "3")
     private int photoCount;
     @Schema(description = "앨범 사진 한도", example = "15")
     private int photoLimit;
 
     public static AlbumGetV2ResponseDto of(Album album, int count) {
-        return new AlbumGetV2ResponseDto(album.getId(), album.getTitle(), album.getAlbumCover().getCoverNumber(),count, album.getPhotoLimit());
+        return new AlbumGetV2ResponseDto(album.getId(), album.getTitle(), album.getAlbumDesign().getId(), count, album.getPhotoLimit());
     }
 }
