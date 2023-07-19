@@ -14,7 +14,7 @@ public class AlbumDesign {
     @Id @GeneratedValue
     private Long id;
 
-    @JoinColumn(name = "album_id")
+    @JoinColumn(name = "album_cover_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AlbumCover albumCover;
 
