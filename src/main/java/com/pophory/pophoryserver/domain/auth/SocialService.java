@@ -19,8 +19,7 @@ import java.security.spec.InvalidKeySpecException;
 @Service
 @RequiredArgsConstructor
 public class SocialService {
-
-    // TODO: AccessToken 만료시간 2시간으로 설정
+    
     protected static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 2 * 100L; // 200시간
     protected static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 24 * 14L; // 2주
 

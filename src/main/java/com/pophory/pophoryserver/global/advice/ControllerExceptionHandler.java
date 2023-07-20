@@ -3,9 +3,11 @@ package com.pophory.pophoryserver.global.advice;
 import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
+import com.pophory.pophoryserver.global.exception.SelfApproveException;
 import com.pophory.pophoryserver.global.response.CodeResponse;
 import com.pophory.pophoryserver.global.response.ResponseCode;
 import io.sentry.Sentry;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -93,4 +95,9 @@ public class ControllerExceptionHandler {
         return ResponseEntity.badRequest().body(new CodeResponse(ResponseCode.ALBUM_LIMIT_EXCEED.getCode()));
     }
 
+    @ExceptionHandler(SelfApproveException.class)
+    public ResponseEntity<CodeResponse> handleSelfApproveException(final SelfApproveException e) {
+        Sentry.captureException(e);
+        return ResponseEntity.badRequest().body(new CodeResponse(ResponseCode.SELF_APPROVE.getCode()));
+    }
 }

@@ -9,11 +9,13 @@ import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareResponseDto
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
+import com.pophory.pophoryserver.global.exception.SelfApproveException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +35,12 @@ public class PhotoShareService {
         Photo sharedPhoto = getPhotoById(sharedPhotoId);
         Album album = getAlbumByMemberId(receiverId);
         if (!album.checkPhotoLimit()) throw new AlbumLimitExceedException("앨범 한도를 초과했습니다.");
+        if (album.getMember().getId().equals(receiverId)) throw new SelfApproveException("자신의 사진은 수락할 수 없습니다.");
         Photo photo = Photo.builder()
                 .imageUrl(sharedPhoto.getImageUrl())
                 .album(album)
                 .studio(sharedPhoto.getStudio())
+                .takenAt(sharedPhoto.getTakenAt())
                 .photoSizeVO(PhotoSizeVO.of(sharedPhoto.getWidth(), sharedPhoto.getHeight()))
                 .build();
         photoJpaRepository.save(photo);
