@@ -35,7 +35,6 @@ public class PophorysmService {
     @Value("${cloud.aws.CLOUDFRONT}")
     private String CLOUD_FRONT_DOMAIN;
 
-
     @Transactional(readOnly = true)
     public PophorysmGetPresignedUrlResponseDto getSharePresignedUrl(UploadType type, String nickname, Long memberId) {
         validatePophoryId(memberId);
@@ -69,6 +68,7 @@ public class PophorysmService {
     private Studio findPophorysmStudio(String pophorysmStudio) {
         return studioJpaRepository.findByName(pophorysmStudio).orElseThrow(
                 () -> new IllegalArgumentException("포포리즘 스튜디오가 존재하지 않습니다."));
+
     }
 
     private Member getMemberByNickname(String nickname) {
