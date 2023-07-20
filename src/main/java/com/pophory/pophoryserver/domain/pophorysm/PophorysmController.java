@@ -9,6 +9,7 @@ import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -34,8 +35,8 @@ public class PophorysmController {
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "포포리즘 공유를 위한 presigned url 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "presigned url 조회 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "presigned url 조회 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<PophorysmGetPresignedUrlResponseDto> getPophorysmPresignedUrl(@RequestParam("u") String nickname, Principal principal) {
         return ResponseEntity.ok(pophorysmService.getSharePresignedUrl(UploadType.PHOTO, nickname, MemberUtil.getMemberId(principal)));
@@ -46,8 +47,8 @@ public class PophorysmController {
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "포포리즘 공유 성공"),
-            @ApiResponse(responseCode = "400", description = "포포리즘 공유 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "포포리즘 공유 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<Void> sharePhotoByPophorysm(@RequestBody PophorysmShareRequestDto request, Principal principal) {
         pophorysmService.sharePhoto(request, MemberUtil.getMemberId(principal));
