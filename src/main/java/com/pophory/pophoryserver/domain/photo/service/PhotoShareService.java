@@ -35,7 +35,9 @@ public class PhotoShareService {
         Photo sharedPhoto = getPhotoById(sharedPhotoId);
         Album album = getAlbumByMemberId(receiverId);
         if (!album.checkPhotoLimit()) throw new AlbumLimitExceedException("앨범 한도를 초과했습니다.");
-        if (album.getMember().getId().equals(receiverId)) throw new SelfApproveException("자신의 사진은 수락할 수 없습니다.");
+        if (sharedPhoto.getAlbum().getMember().getId().equals(receiverId)) {
+            throw new SelfApproveException("자신의 사진은 수락할 수 없습니다.");
+        }
         Photo photo = Photo.builder()
                 .imageUrl(sharedPhoto.getImageUrl())
                 .album(album)
