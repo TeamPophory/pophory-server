@@ -50,7 +50,7 @@ public class PophorysmController {
             @ApiResponse(responseCode = "500", description = "서버 오류")
     })
     public ResponseEntity<Void> sharePhotoByPophorysm(@RequestBody PophorysmShareRequestDto request, Principal principal) {
-        pophorysmService.sharePhoto(request, MemberUtil. getMemberId(principal));
+        pophorysmService.sharePhoto(request, MemberUtil.getMemberId(principal));
         return ResponseEntity.ok().build();
     }
 }
