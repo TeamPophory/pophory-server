@@ -3,10 +3,10 @@ package com.pophory.pophoryserver.domain.photo.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
 @AllArgsConstructor
-@Getter
+@Data
 @Schema(description = "사진 추가 요청 DTO")
 public class PhotoAddV2RequestDto {
 

@@ -7,6 +7,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
+@Schema(description = "사진 공유 요청 DTO")
 public class PhotoShareRequestDto {
 
     @Schema(description = "사진 파일이름", example = "ca4f3c69-a7ac-45ee-a594-d0567a4b66b2.jpg")
