@@ -8,9 +8,6 @@ import lombok.Data;
 @Data
 public class PophorysmShareRequestDto {
 
-    @Schema(description = "사진 id", example = "10")
-    private Long photoId;
-
     @Schema(description = "유저 닉네임", example = "kraken")
     private String nickname;
 
@@ -25,4 +22,10 @@ public class PophorysmShareRequestDto {
 
     @Schema(description = "사진 세로 길이", example = "800")
     private Integer height;
+
+    @Schema(description = "스튜디오 이름", example = "포포리즘")
+    private String studioName;
+
+    @Schema(description = "찍은 날짜", example = "2021.06.30")
+    private String takenAt;
 }
