@@ -1,8 +1,6 @@
 name: Pophory CI
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
@@ -28,12 +26,11 @@ jobs:
       - name: application.yml
         run: |
           ## create application.yml
-          mkdir ./src/main/resources
           cd ./src/main/resources
           
           # application.yml 파일 생성
           touch ./application.yml
-          touch ./application-infra.yml]
+          touch ./application-infra.yml
           touch ./pophory_fcm.json
           
           # GitHub-Actions 에서 설정한 값을 application.yml 파일에 쓰기
