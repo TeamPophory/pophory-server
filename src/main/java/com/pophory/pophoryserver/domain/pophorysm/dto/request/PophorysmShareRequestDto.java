@@ -7,10 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class PophorysmShareRequestDto {
-
-    @Schema(description = "사진 id", example = "10")
-    private Long photoId;
-
+    
     @Schema(description = "유저 닉네임", example = "kraken")
     private String nickname;
 
