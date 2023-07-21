@@ -40,7 +40,7 @@ public class PophorysmService {
         validatePophoryId(memberId);
         String pophoryId = getPophoryIdByMemberNickname(nickname);
         String filename = UUID.randomUUID() + ".jpg";
-        String key = type.getName() + "member" + pophoryId + filename;
+        String key = type.getName() + "member" + pophoryId + "/" + filename;
         return PophorysmGetPresignedUrlResponseDto.of(s3Service.getPresignedUrl(key),filename, pophoryId);
     }
 
