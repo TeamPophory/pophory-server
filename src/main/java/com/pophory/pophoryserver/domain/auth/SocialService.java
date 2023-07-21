@@ -20,7 +20,7 @@ import java.security.spec.InvalidKeySpecException;
 @RequiredArgsConstructor
 public class SocialService {
     
-    protected static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 2 * 100L; // 200시간
+    protected static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 2L; // 2시간
     protected static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 24 * 14L; // 2주
 
     private final JwtTokenProvider jwtTokenProvider;
