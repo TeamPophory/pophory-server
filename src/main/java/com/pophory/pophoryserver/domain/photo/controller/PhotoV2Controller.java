@@ -1,7 +1,6 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
 
-import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAllListResponseDto;
 import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;

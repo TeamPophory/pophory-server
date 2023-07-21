@@ -1,8 +1,6 @@
 package com.pophory.pophoryserver.domain.pophorysm;
 
-import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.pophorysm.dto.request.PophorysmShareRequestDto;
-import com.pophory.pophoryserver.domain.s3.S3Service;
 import com.pophory.pophoryserver.domain.s3.UploadType;
 import com.pophory.pophoryserver.domain.version.dto.response.PophorysmGetPresignedUrlResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
