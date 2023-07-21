@@ -40,12 +40,13 @@ public class PophorysmService {
         validatePophoryId(memberId);
         String pophoryId = getPophoryIdByMemberNickname(nickname);
         String filename = UUID.randomUUID() + ".jpg";
-        String key = type.getName() + "member" + pophoryId + "/" + filename;
+        String key = type.getName() + pophoryId + "member" + "/" + filename;
         return PophorysmGetPresignedUrlResponseDto.of(s3Service.getPresignedUrl(key),filename, pophoryId);
     }
 
     @Transactional
     public void sharePhoto(PophorysmShareRequestDto request, Long memberId) {
+
         validatePophoryId(memberId);
         Member member = getMemberByNickname(request.getNickname());
         Album album = member.getAlbumList().stream().findFirst().orElseThrow(
@@ -59,7 +60,7 @@ public class PophorysmService {
                         .album(member.getAlbumList().get(0))
                         .studio(findPophorysmStudio(request.getStudioName()))
                         .takenAt(PhotoUtil.changeRequestToTakenAt(request.getTakenAt()))
-                        .imageUrl(CLOUD_FRONT_DOMAIN + "/" + UploadType.PHOTO.getName() + "member" + member.getPophoryId() + "/" + request.getFileName())
+                        .imageUrl(CLOUD_FRONT_DOMAIN + "/" + UploadType.PHOTO.getName() + member.getPophoryId() + "member" + "/" + request.getFileName())
                         .photoSizeVO(PhotoSizeVO.of(request.getWidth(), request.getHeight()))
                         .build()
         );
