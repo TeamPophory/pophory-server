@@ -5,7 +5,6 @@ import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareApproveResp
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareResponseDto;
 import com.pophory.pophoryserver.domain.photo.service.PhotoShareService;
 import com.pophory.pophoryserver.global.util.MemberUtil;
-import com.pophory.pophoryserver.global.util.PhotoUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

@@ -1,8 +1,5 @@
 package com.pophory.pophoryserver.domain.studio;
 
-import com.pophory.pophoryserver.domain.photo.Photo;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
-import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import com.pophory.pophoryserver.domain.studio.dto.StudioGetResponseDto;
 import com.pophory.pophoryserver.domain.studio.dto.StudioResponseDto;
 import com.pophory.pophoryserver.domain.studio.dto.StudioV2ResponseDto;
@@ -10,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 

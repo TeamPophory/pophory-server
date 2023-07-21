@@ -62,7 +62,7 @@ public class AlbumService {
                 photoJpaRepository.findAllByAlbum(getAlbumById(albumId))
                         .stream()
                         .sorted(Comparator.comparing(Photo::getTakenAt)
-                                .thenComparing(Photo::getCreatedAt))
+                                .thenComparing(Photo::getCreatedAt).reversed())
                         .map(PhotoGetV2ResponseDto::of)
                         .collect(Collectors.toList())
         );

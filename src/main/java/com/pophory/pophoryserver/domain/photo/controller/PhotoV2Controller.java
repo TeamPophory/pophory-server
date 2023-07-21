@@ -1,7 +1,6 @@
 package com.pophory.pophoryserver.domain.photo.controller;
 
 
-import com.pophory.pophoryserver.domain.member.dto.response.MemberMyPageGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoAllListResponseDto;
 import com.pophory.pophoryserver.domain.photo.service.PhotoService;
 import com.pophory.pophoryserver.domain.photo.dto.request.PhotoAddV2RequestDto;
@@ -41,8 +40,8 @@ public class PhotoV2Controller {
     @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "사진 추가 성공"),
-            @ApiResponse(responseCode = "400", description = "사진 추가 실패"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
+            @ApiResponse(responseCode = "400", description = "사진 추가 실패", content = @Content),
+            @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
     public ResponseEntity<Void> uploadPhoto(@RequestBody PhotoAddV2RequestDto request, Principal principal) throws URISyntaxException {
         PhotoAddResponseDto response =  photoService.addPhotoV2(request, MemberUtil.getMemberId(principal));

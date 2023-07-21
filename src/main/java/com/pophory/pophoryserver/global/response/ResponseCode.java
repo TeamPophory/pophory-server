@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ResponseCode {
-    ALBUM_LIMIT_EXCEED(442);
+    ALBUM_LIMIT_EXCEED(442),
+    SELF_APPROVE(4423);
 
     private final int code;
 }
