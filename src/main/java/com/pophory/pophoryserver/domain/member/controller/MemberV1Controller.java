@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 
 import static com.pophory.pophoryserver.global.util.MemberUtil.getMemberId;
@@ -41,7 +42,7 @@ public class MemberV1Controller {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto request, Principal principal) {
+    public ResponseEntity<Void> patchMember(@Valid @RequestBody MemberCreateRequestDto request, Principal principal) throws IOException {
         memberService.update(request, getMemberId(principal));
         return ResponseEntity.noContent().build();
     }

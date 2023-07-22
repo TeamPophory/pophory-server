@@ -44,14 +44,22 @@ public class MemberService {
     @Transactional
     public void update(MemberCreateRequestDto request, Long memberId) throws IOException {
         checkNicknameDuplicate(request.getNickname());
-        slackService.sendSignInAlert(request.getNickname());
+        try {
+            slackService.sendSignInAlert(request.getNickname());
+        } catch (IOException e) {
+            throw new IOException("Slack 서버에 접속할 수 없습니다.");
+        }
         updateMemberInfo(request, memberId);
     }
 
     @Transactional
-    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) throws IOException {
+    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) throws IOException{
         checkNicknameDuplicate(request.getNickname());
-        slackService.sendSignInAlert(request.getNickname());
+        try {
+            slackService.sendSignInAlert(request.getNickname());
+        } catch (IOException e) {
+            throw new IOException("Slack 서버에 접속할 수 없습니다.");
+        }
         return MemberCreateResponseDto.of(updateMemberInfoV2(request, memberId));
     }
 

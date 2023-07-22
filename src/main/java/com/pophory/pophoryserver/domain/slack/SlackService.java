@@ -16,7 +16,7 @@ public class SlackService {
     @Value("${slack.webhook.url}")
     private String SLACK_WEBHOOK_URL;
 
-    public void sendSignInAlert(String nickname) {
+    public void sendSignInAlert(String nickname) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForEntity(
                 SLACK_WEBHOOK_URL,

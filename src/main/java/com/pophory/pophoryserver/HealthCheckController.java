@@ -1,6 +1,5 @@
 package com.pophory.pophoryserver;
 
-import com.pophory.pophoryserver.domain.slack.SlackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +16,6 @@ public class HealthCheckController {
 
     @GetMapping("/health")
     @Operation(summary = "health check API", description = "항상 OK를 반환합니다.")
-    public ResponseEntity<String> test() throws IOException {
-        return ResponseEntity.ok("OK");
-    }
+    public ResponseEntity<String> test() {return ResponseEntity.ok("OK");}
 
 }
