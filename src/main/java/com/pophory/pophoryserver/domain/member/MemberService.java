@@ -14,6 +14,7 @@ import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateV2Request
 import com.pophory.pophoryserver.domain.member.dto.response.*;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
+import com.pophory.pophoryserver.domain.slack.SlackService;
 import com.pophory.pophoryserver.global.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,17 +37,29 @@ public class MemberService {
     private final AlbumDesignJpaRepository albumDesignJpaRepository;
     private final FcmJpaRepository fcmJpaRepository;
 
+    private final SlackService slackService;
+
     private static final int INITIAL_PHOTO_LIMIT = 15;
 
     @Transactional
-    public void update(MemberCreateRequestDto request, Long memberId) {
+    public void update(MemberCreateRequestDto request, Long memberId) throws IOException {
         checkNicknameDuplicate(request.getNickname());
+        try {
+            slackService.sendSignInAlert(request.getNickname());
+        } catch (IOException e) {
+            throw new IOException("Slack 서버에 접속할 수 없습니다.");
+        }
         updateMemberInfo(request, memberId);
     }
 
     @Transactional
-    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) {
+    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) throws IOException{
         checkNicknameDuplicate(request.getNickname());
+        try {
+            slackService.sendSignInAlert(request.getNickname());
+        } catch (IOException e) {
+            throw new IOException("Slack 서버에 접속할 수 없습니다.");
+        }
         return MemberCreateResponseDto.of(updateMemberInfoV2(request, memberId));
     }
 
