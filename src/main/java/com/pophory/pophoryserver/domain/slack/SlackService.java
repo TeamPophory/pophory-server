@@ -4,11 +4,11 @@ import com.pophory.pophoryserver.domain.slack.dto.SlackMessageDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-@RestController
+@Service
 public class SlackService {
 
     @Value("${slack.webhook.url}")
