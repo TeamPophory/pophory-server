@@ -46,7 +46,7 @@ public class MemberV2Controller {
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     }
     )
-    public ResponseEntity<MemberCreateResponseDto> patchMember(@Valid @RequestBody MemberCreateV2RequestDto request, Principal principal) throws IOException {
+    public ResponseEntity<MemberCreateResponseDto> patchMember(@Valid @RequestBody MemberCreateV2RequestDto request, Principal principal) {
         return ResponseEntity.ok(memberService.updateV2(request, getMemberId(principal)));
     }
 

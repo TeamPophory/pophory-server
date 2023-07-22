@@ -42,24 +42,16 @@ public class MemberService {
     private static final int INITIAL_PHOTO_LIMIT = 15;
 
     @Transactional
-    public void update(MemberCreateRequestDto request, Long memberId) throws IOException {
+    public void update(MemberCreateRequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
-        try {
-            slackService.sendSignInAlert(request.getNickname());
-        } catch (IOException e) {
-            throw new IOException("Slack 서버에 접속할 수 없습니다.");
-        }
+        slackService.sendSignInAlert(request.getNickname());
         updateMemberInfo(request, memberId);
     }
 
     @Transactional
-    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) throws IOException{
+    public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
-        try {
             slackService.sendSignInAlert(request.getNickname());
-        } catch (IOException e) {
-            throw new IOException("Slack 서버에 접속할 수 없습니다.");
-        }
         return MemberCreateResponseDto.of(updateMemberInfoV2(request, memberId));
     }
 
