@@ -47,6 +47,8 @@ dependencies {
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
 
 	// sentry
 	implementation 'io.sentry:sentry-spring-boot-starter:6.23.0'
