@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,15 @@ import static javax.persistence.EnumType.*;
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
+    private static final int MEMBER_DELETE_EXPIRE_TIME = 7;
+
     @Id @GeneratedValue
     private Long id;
 
     @Column(length = 6)
     private String realName;
 
-    @Column(length = 15)
+    @Column(length = 15, unique = true)
     private String nickname;
 
     private String profileImage;
@@ -36,6 +39,7 @@ public class Member extends BaseTimeEntity {
     @Enumerated(value = STRING)
     private SocialType socialType;
 
+    @NotNull(message = "소셜 아이디는 필수입니다.")
     private String socialId;
 
     private String refreshToken;
