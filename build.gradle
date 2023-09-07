@@ -9,6 +9,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	id("application")
 }
 
 group = 'com.pophory'
@@ -52,6 +53,9 @@ dependencies {
 
 	// sentry
 	implementation 'io.sentry:sentry-spring-boot-starter:6.23.0'
+
+	// slack
+	implementation("com.slack.api:slack-api-client:1.31.0")
 
 	// Database
 	runtimeOnly 'com.h2database:h2'
