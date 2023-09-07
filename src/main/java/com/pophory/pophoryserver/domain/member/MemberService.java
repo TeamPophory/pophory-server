@@ -17,6 +17,7 @@ import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.domain.slack.SlackService;
 import com.pophory.pophoryserver.global.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberService {
 
+    @Value("${slack.channel.signin}")
+    private String SLACK_CHANNEL_SIGNIN;
+
     private final MemberJpaRepository memberJpaRepository;
     private final AlbumJpaRepository albumJpaRepository;
     private final AlbumDesignJpaRepository albumDesignJpaRepository;
@@ -40,18 +44,19 @@ public class MemberService {
     private final SlackService slackService;
 
     private static final int INITIAL_PHOTO_LIMIT = 15;
+    private static final String SLACK_MESSAGE = " \uD83C\uDF89 %s 님이 포포리의 회원가입을 완료했습니다. \uD83C\uDF89";
 
     @Transactional
     public void update(MemberCreateRequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
-        slackService.sendSignInAlert(request.getNickname());
+        slackService.sendMessage(SLACK_CHANNEL_SIGNIN, String.format(SLACK_MESSAGE, request.getNickname()));
         updateMemberInfo(request, memberId);
     }
 
     @Transactional
     public MemberCreateResponseDto updateV2(MemberCreateV2RequestDto request, Long memberId) {
         checkNicknameDuplicate(request.getNickname());
-            slackService.sendSignInAlert(request.getNickname());
+            slackService.sendMessage(SLACK_CHANNEL_SIGNIN, String.format(SLACK_MESSAGE, request.getNickname()));
         return MemberCreateResponseDto.of(updateMemberInfoV2(request, memberId));
     }
 
