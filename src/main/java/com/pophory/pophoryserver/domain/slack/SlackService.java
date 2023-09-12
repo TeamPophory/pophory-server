@@ -1,30 +1,48 @@
 package com.pophory.pophoryserver.domain.slack;
 
 import com.pophory.pophoryserver.domain.slack.dto.SlackMessageDto;
+import com.slack.api.methods.MethodsClient;
+import com.slack.api.methods.SlackApiException;
+import com.slack.api.methods.request.chat.ChatPostMessageRequest;
+import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import com.slack.api.Slack;
+
+
+import java.io.IOException;
+import java.util.Arrays;
 
 
 @Service
+@RequiredArgsConstructor
 public class SlackService {
 
-    @Value("${slack.webhook.url}")
-    private String SLACK_WEBHOOK_URL;
+    @Value("${slack.bot.token}")
+    private String SLACK_TOKEN;
 
-    public void sendSignInAlert(String nickname){
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity(
-                SLACK_WEBHOOK_URL,
-                createSlackHttpRequest("🎉 " + nickname + "님이 포포리의 회원가입을 완료했습니다. 🎉"),
-                String.class);
+    private final Environment env;
+
+
+    public void sendMessage(String channel, String text) {
+        try {
+        Slack slack = Slack.getInstance();
+        ChatPostMessageResponse response = slack.methods(SLACK_TOKEN).chatPostMessage(req -> req
+                .channel(channel)
+                .text("["+getProfiles()+"]"+ text));
+            System.out.println(response);
+        } catch (IOException | SlackApiException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-    private HttpEntity<SlackMessageDto> createSlackHttpRequest(String text) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Accept", "application/json; UTF-8");
-        return new HttpEntity<>(SlackMessageDto.of(text), headers);
+    private String getProfiles() {
+        return Arrays.stream(env.getActiveProfiles())
+                .findFirst()
+                .orElse("");
     }
 }

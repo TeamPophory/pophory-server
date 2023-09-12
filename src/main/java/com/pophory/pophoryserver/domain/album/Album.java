@@ -5,10 +5,12 @@ import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
 import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public class Album extends BaseTimeEntity {
     @OneToOne(fetch = LAZY)
     private AlbumDesign albumDesign;
 
+    @Min(value = 1, message = "사진제한은 1장 이상이어야 합니다.")
     private int photoLimit;
 
     private String imageUrl;
@@ -47,6 +50,17 @@ public class Album extends BaseTimeEntity {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
     }
+
+    @Builder
+    public Album(String title, AlbumDesign albumDesign, int photoLimit, String imageUrl, Member member) {
+        this.title = title;
+        this.albumDesign = albumDesign;
+        this.photoLimit = photoLimit;
+        this.imageUrl = imageUrl;
+        this.member = member;
+    }
+
+
 
     public void setAlbumDesign(AlbumDesign albumDesign) {
         this.albumDesign = albumDesign;
