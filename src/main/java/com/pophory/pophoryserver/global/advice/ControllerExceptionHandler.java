@@ -1,5 +1,6 @@
 package com.pophory.pophoryserver.global.advice;
 
+import com.pophory.pophoryserver.domain.slack.SlackService;
 import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
 import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.S3UploadException;
@@ -7,7 +8,9 @@ import com.pophory.pophoryserver.global.exception.SelfApproveException;
 import com.pophory.pophoryserver.global.response.CodeResponse;
 import com.pophory.pophoryserver.global.response.ResponseCode;
 import io.sentry.Sentry;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.apache.bcel.classfile.Code;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -21,7 +24,13 @@ import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ControllerExceptionHandler {
+
+    private final SlackService slackService;
+
+    @Value("${slack.channel.monitor}")
+    private String SLACK_CHANNEL_MONITOR;
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Void> handleBadRequestException(final BadRequestException e) {
@@ -86,6 +95,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Void> handleException(final Exception e) {
         Sentry.captureException(e);
+        slackService.sendMessage(SLACK_CHANNEL_MONITOR, e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
