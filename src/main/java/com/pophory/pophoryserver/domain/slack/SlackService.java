@@ -41,8 +41,7 @@ public class SlackService {
         }
     }
     private String getProfiles() {
-        return Arrays.stream(env.getActiveProfiles())
-                .findFirst()
-                .orElse("");
+        String activeProfile =  Arrays.stream(env.getActiveProfiles()).findFirst().orElse("");
+        return activeProfile.equals("blue") || activeProfile.equals("green") ? "prod" : activeProfile;
     }
 }
