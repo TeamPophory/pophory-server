@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - echo Installing dependencies...
+      - apt-get update -y
+  pre_build:
+    commands:
+      - echo Running pre-build commands...
+      - export GRADLE_HOME=/opt/gradle/gradle-6.8.3
+      - export PATH=$GRADLE_HOME/bin:$PATH
+  build:
+    commands:
+      - echo Building the project...
+      - ./gradlew build -x test
+  post_build:
+    commands:
+      - echo Running post-build commands...
+
+artifacts:
+  files:
+    - build/libs/*.jar
+
+cache:
+  paths:
+    - '/root/.gradle/**/*'
