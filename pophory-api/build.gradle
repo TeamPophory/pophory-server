@@ -1,0 +1,7 @@
+bootJar.enabled=true
+
+dependencies {
+    implementation project(':pophory-common')
+    implementation project(':pophory-domain')
+    implementation project(':pophory-external')
+}

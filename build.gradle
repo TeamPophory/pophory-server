@@ -1,91 +1,90 @@
 buildscript {
-	ext {
-		queryDslVersion = "5.0.0"
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:3.0.9")
 	}
 }
 
-plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.0.9'
-	id 'io.spring.dependency-management' version '1.1.2'
-	id("application")
-}
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
 
-group = 'com.pophory'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	sourceCompatibility = '17'
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+	group = 'com.pophory'
+	version = '0.0.1-SNAPSHOT'
+	java {
+		sourceCompatibility = '17'
 	}
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		// Spring boot
+		implementation 'org.springframework.boot:spring-boot-starter-actuator'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+
+		//querydsl 추가
+		implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+		annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+		annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+		annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+		//test
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// Lombok
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+		testCompileOnly 'org.projectlombok:lombok'
+
+		// sentry
+		implementation 'io.sentry:sentry-spring-boot-starter:6.23.0'
+
+		// slack
+		implementation("com.slack.api:slack-api-client:1.31.0")
+
+		// Database
+		runtimeOnly 'com.h2database:h2'
+		runtimeOnly 'com.mysql:mysql-connector-j'
+		runtimeOnly 'org.postgresql:postgresql'
+
+		// swagger
+		implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+
+		// AWS S3
+		implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+		// FCM
+		implementation 'com.google.firebase:firebase-admin:9.1.1'
+
+		// JWT
+		implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+		implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+		implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+		implementation 'com.google.code.gson:gson:2.10.1'
+
+		// OAuth2
+		implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+		tasks.named('test') {
+			useJUnitPlatform()
+		}
+	}
+
 }
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	// Spring boot
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	//querydsl 추가
-	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
-	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-	//test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-
-	// Lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-	testCompileOnly 'org.projectlombok:lombok'
-
-	// sentry
-	implementation 'io.sentry:sentry-spring-boot-starter:6.23.0'
-
-	// slack
-	implementation("com.slack.api:slack-api-client:1.31.0")
-
-	// Database
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	runtimeOnly 'org.postgresql:postgresql'
-
-	// swagger
-	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-
-	// AWS S3
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-
-	// FCM
-	implementation 'com.google.firebase:firebase-admin:9.1.1'
-
-	// JWT
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
-	implementation 'com.google.code.gson:gson:2.10.1'
-
-	// OAuth2
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-}
-
-jar {
-	enabled = false
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
+bootJar.enabled = false

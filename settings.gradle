@@ -1,1 +1,5 @@
 rootProject.name = 'pophoryserver'
+include 'pophory-domain'
+include 'pophory-common'
+include 'pophory-api'
+include 'pophory-external'
