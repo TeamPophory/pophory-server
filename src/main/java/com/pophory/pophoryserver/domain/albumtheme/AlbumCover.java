@@ -1,17 +1,15 @@
 package com.pophory.pophoryserver.domain.albumtheme;
 
-import com.pophory.pophoryserver.domain.album.Album;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.*;
+import static jakarta.persistence.EnumType.STRING;
+
 
 @Entity
 @Table(name = "album_cover")
@@ -19,7 +17,8 @@ import static javax.persistence.FetchType.*;
 @Getter
 public class AlbumCover {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private int coverNumber;

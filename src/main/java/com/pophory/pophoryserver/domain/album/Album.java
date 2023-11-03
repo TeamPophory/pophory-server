@@ -1,21 +1,21 @@
 package com.pophory.pophoryserver.domain.album;
 
-import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
 import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
+
 
 @Entity
 @Getter
