@@ -2,8 +2,6 @@ package com.pophory.pophoryserver.domain.album.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

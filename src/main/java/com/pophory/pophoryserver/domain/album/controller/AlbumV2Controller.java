@@ -5,7 +5,6 @@ import com.pophory.pophoryserver.domain.album.AlbumService;
 import com.pophory.pophoryserver.domain.album.dto.request.AlbumDesignUpdateRequestDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.album.dto.response.AlbumListGetV2ResponseDto;
-import com.pophory.pophoryserver.domain.member.dto.request.MemberCreateV2RequestDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetV2ResponseDto;
 import com.pophory.pophoryserver.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,12 +16,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController

@@ -8,8 +8,9 @@ import com.pophory.pophoryserver.global.exception.SelfApproveException;
 import com.pophory.pophoryserver.global.response.CodeResponse;
 import com.pophory.pophoryserver.global.response.ResponseCode;
 import io.sentry.Sentry;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
+
 import java.io.IOException;
 
 @RestControllerAdvice

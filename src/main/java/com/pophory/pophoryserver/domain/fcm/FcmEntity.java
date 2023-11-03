@@ -1,14 +1,14 @@
 package com.pophory.pophoryserver.domain.fcm;
 
 import com.pophory.pophoryserver.domain.member.Member;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.*;
 
 @Table(name = "fcm")
 @Entity

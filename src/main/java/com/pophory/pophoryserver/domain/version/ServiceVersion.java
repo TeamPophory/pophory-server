@@ -1,19 +1,20 @@
 package com.pophory.pophoryserver.domain.version;
 
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import static jakarta.persistence.EnumType.STRING;
 
-import static javax.persistence.EnumType.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class ServiceVersion {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Column(name = "os_type")

@@ -7,12 +7,12 @@ import com.pophory.pophoryserver.domain.auth.dto.request.AuthRequestDto;
 import com.pophory.pophoryserver.domain.auth.dto.response.AuthResponseDto;
 import com.pophory.pophoryserver.global.config.jwt.JwtTokenProvider;
 import com.pophory.pophoryserver.global.config.jwt.UserAuthentication;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 

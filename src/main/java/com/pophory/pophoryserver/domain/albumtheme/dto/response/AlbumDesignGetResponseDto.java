@@ -1,7 +1,6 @@
 package com.pophory.pophoryserver.domain.albumtheme.dto.response;
 
 import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
-import com.pophory.pophoryserver.domain.albumtheme.AlbumTheme;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

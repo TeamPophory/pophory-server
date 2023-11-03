@@ -23,9 +23,9 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         Info info = new Info()
-                .title("Pophory API V1 Spec")
-                .description("Pophory API V1 Document")
-                .version("1.0.0");
+                .title("Pophory API V1, V2 Spec")
+                .description("Pophory API documentation")
+                .version("1.0.4");
 
         return new OpenAPI()
                 .components(new Components())

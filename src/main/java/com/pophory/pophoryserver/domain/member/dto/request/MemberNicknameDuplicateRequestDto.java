@@ -2,14 +2,11 @@ package com.pophory.pophoryserver.domain.member.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Getter
 @Schema(description = "회원 아이디 중복 확인 요청 DTO")

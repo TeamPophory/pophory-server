@@ -1,10 +1,10 @@
 package com.pophory.pophoryserver.domain.auth.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
