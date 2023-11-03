@@ -30,7 +30,7 @@ jobs:
       - name: make application.yml, application-infra.yml
         run: |
           ## create application.yml
-          cd ./src/main/resources
+          cd ./pophory-api/src/main/resources
           
           # application.yml 파일 생성
           touch ./application.yml
