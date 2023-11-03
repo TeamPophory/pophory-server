@@ -8,14 +8,13 @@ import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareApproveResp
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoShareResponseDto;
 import com.pophory.pophoryserver.domain.photo.vo.PhotoSizeVO;
 import com.pophory.pophoryserver.global.exception.AlbumLimitExceedException;
-import com.pophory.pophoryserver.global.exception.BadRequestException;
 import com.pophory.pophoryserver.global.exception.SelfApproveException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Objects;
+
 
 @Service
 @RequiredArgsConstructor

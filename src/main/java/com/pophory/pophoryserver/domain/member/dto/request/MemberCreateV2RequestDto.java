@@ -2,13 +2,13 @@ package com.pophory.pophoryserver.domain.member.dto.request;
 
 import com.pophory.pophoryserver.domain.fcm.FcmOS;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

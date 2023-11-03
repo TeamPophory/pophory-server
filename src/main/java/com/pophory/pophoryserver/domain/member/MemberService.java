@@ -2,8 +2,6 @@ package com.pophory.pophoryserver.domain.member;
 
 import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.album.repository.AlbumJpaRepository;
-import com.pophory.pophoryserver.domain.albumtheme.AlbumCover;
-import com.pophory.pophoryserver.domain.albumtheme.AlbumCoverJpaRepository;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumDesign;
 import com.pophory.pophoryserver.domain.albumtheme.AlbumDesignJpaRepository;
 import com.pophory.pophoryserver.domain.fcm.FcmEntity;
@@ -16,14 +14,13 @@ import com.pophory.pophoryserver.domain.photo.Photo;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.domain.slack.SlackService;
 import com.pophory.pophoryserver.global.util.RandomUtil;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

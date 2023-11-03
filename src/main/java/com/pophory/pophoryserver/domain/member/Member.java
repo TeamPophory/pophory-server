@@ -5,18 +5,19 @@ import com.pophory.pophoryserver.domain.album.Album;
 import com.pophory.pophoryserver.domain.auth.SocialType;
 import com.pophory.pophoryserver.domain.fcm.FcmEntity;
 import com.pophory.pophoryserver.global.entity.BaseTimeEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static javax.persistence.EnumType.*;
+import static jakarta.persistence.EnumType.STRING;
+
 
 @Entity
 @Getter

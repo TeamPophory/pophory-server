@@ -15,11 +15,11 @@ import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoGetV2ResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetResponseDto;
 import com.pophory.pophoryserver.domain.photo.dto.response.PhotoListGetV2ResponseDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

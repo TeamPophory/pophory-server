@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static io.swagger.v3.oas.annotations.enums.ParameterIn.*;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "[AlbumDesign] 앨범 디자인 관련 API (V2)")
@@ -28,7 +30,7 @@ public class AlbumDesignController {
 
     @GetMapping
     @Operation(summary = "앨범 디자인 정보 조회 API")
-    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = ParameterIn.HEADER, required = true, schema = @Schema(type = "string"))
+    @Parameter(name = "Authorization", description = "Bearer {access_token}", in = HEADER, required = true, schema = @Schema(type = "string"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " 앨범 디자인 정보 조회 성공"),
             @ApiResponse(responseCode = "400", description = "사진 추가 실패", content = @Content),

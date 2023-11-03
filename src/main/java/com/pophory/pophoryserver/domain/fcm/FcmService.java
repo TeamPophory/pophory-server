@@ -7,6 +7,7 @@ import com.pophory.pophoryserver.domain.member.Member;
 import com.pophory.pophoryserver.domain.member.MemberJpaRepository;
 import com.pophory.pophoryserver.domain.fcm.dto.MessageDto;
 import com.pophory.pophoryserver.domain.fcm.dto.NotificationDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -14,7 +15,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 

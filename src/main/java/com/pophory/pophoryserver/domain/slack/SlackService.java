@@ -1,17 +1,11 @@
 package com.pophory.pophoryserver.domain.slack;
 
-import com.pophory.pophoryserver.domain.slack.dto.SlackMessageDto;
-import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
-import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import com.slack.api.Slack;
 
 

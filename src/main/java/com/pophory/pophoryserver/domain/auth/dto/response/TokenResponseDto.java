@@ -2,11 +2,11 @@ package com.pophory.pophoryserver.domain.auth.dto.response;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

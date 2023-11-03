@@ -5,7 +5,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import static com.pophory.pophoryserver.domain.member.QMember.*;
+import static com.pophory.pophoryserver.domain.member.QMember.member;
+
 
 @Repository
 @RequiredArgsConstructor
