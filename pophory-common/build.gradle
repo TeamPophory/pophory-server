@@ -3,4 +3,8 @@ jar.enabled = true
 
 dependencies {
     implementation(project(':pophory-external'))
+
+    // sentry
+    implementation 'io.sentry:sentry-spring-boot-starter:6.23.0'
+
 }

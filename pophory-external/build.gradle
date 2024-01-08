@@ -2,4 +2,6 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
+    // slack
+    implementation("com.slack.api:slack-api-client:1.31.0")
 }
