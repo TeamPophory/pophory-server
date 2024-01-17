@@ -16,8 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KakaoAuthService {
 
-    @Value("${jwt.KAKAO_URL}")
-    private String KAKAO_URL;
+    private static final String KAKAO_URL = "https://kapi.kakao.com/v2/user/me";
 
     public String login(String socialAccessToken) {
         return getKakaoData(socialAccessToken);

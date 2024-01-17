@@ -37,12 +37,12 @@ out/
 .vscode/
 
 application.yml
-application-dev.yml
-application-local.yml
-application-prod.yml
-application-infra.yml
+application-dev.yaml
+application-local.yaml
+application-prod.yaml
 .DS_Store
 .run
 application-*.yml
 pophory_fcm.json
+secret.properties
 ```

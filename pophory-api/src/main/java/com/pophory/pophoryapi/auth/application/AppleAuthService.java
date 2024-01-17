@@ -25,8 +25,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AppleAuthService {
 
-    @Value("${jwt.APPLE_URL}")
-    private String APPLE_URL;
+    private static final String APPLE_URL = "https://appleid.apple.com/auth/keys";
 
 
     protected String login(String socialAccessToken) throws NoSuchAlgorithmException, InvalidKeySpecException {

@@ -1,25 +1,22 @@
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: dev
     import: secret.properties
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DEV_DB_ENDPOINT}:3306/${DEV_DB_NAME}?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DEV_DB_USER}
+    password: ${DEV_DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
 
 jwt:
   secret: ${JWT_SECRET}
-
-jwt.APPLE_URL: ${APPLE_URL}
-jwt.KAKAO_URL: ${KAKAO_URL}
 
 sentry:
   dsn: ${SENTRY_DSN}
