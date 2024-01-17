@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -23,7 +24,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @NoArgsConstructor
 public class Album extends BaseTimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     private String title = "기본 앨범";

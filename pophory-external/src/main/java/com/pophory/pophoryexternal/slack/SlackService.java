@@ -22,7 +22,6 @@ public class SlackService {
 
     private final Environment env;
 
-
     public void sendMessage(String channel, String text) {
         try {
         Slack slack = Slack.getInstance();

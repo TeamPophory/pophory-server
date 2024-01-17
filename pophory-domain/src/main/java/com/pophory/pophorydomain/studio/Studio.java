@@ -8,14 +8,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class Studio {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(unique = true)

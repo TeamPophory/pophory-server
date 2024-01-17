@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 
 @Table(name = "fcm")
@@ -16,7 +17,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 public class FcmEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String fcmToken;
 
