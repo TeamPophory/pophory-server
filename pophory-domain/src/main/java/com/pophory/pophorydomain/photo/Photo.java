@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -21,7 +22,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 public class Photo extends BaseTimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     private String imageUrl;

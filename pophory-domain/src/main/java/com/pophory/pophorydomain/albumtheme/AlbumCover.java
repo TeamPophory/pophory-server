@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -17,8 +18,7 @@ import static jakarta.persistence.EnumType.STRING;
 @Getter
 public class AlbumCover {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     private int coverNumber;

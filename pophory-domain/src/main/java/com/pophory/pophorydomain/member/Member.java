@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -26,7 +27,7 @@ public class Member extends BaseTimeEntity {
 
     private static final int MEMBER_DELETE_EXPIRE_TIME = 7;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(length = 6)

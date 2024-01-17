@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -13,8 +14,7 @@ import static jakarta.persistence.EnumType.STRING;
 @NoArgsConstructor
 public class ServiceVersion {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "os_type")

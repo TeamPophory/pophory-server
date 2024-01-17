@@ -61,7 +61,8 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberGetResponseDto getMember(Long id) {
+    public MemberGetResponseDto getMember(Long id)
+    {
         return MemberGetResponseDto.of(findMemberById(id));
     }
 
