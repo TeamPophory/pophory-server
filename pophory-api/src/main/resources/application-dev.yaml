@@ -5,7 +5,7 @@ spring:
     import: secret.properties
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DEV_DB_ENDPOINT}:3306/${DEV_DB_NAME}?serverTimezone=KST
+    url: jdbc:mysql://${DEV_DB_ENDPOINT}:3306/${DEV_DB_NAME}
     username: ${DEV_DB_USER}
     password: ${DEV_DB_PASSWORD}
   jpa:
@@ -20,7 +20,7 @@ jwt:
 
 sentry:
   dsn: ${SENTRY_DSN}
-  environment: local
+  environment: dev
   traces-sample-rate: 1.0
   enable-tracing: true
   exception-resolver-order: -2147483647

@@ -8,9 +8,9 @@ spring:
     import: secret.properties
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DEV_DB_ENDPOINT}:3306/${DEV_DB_NAME}?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${DEV_DB_USER}
-    password: ${DEV_DB_PASSWORD}
+    url: jdbc:mysql://${PROD_DB_ENDPOINT}:3306/${PROD_DB_NAME}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
@@ -23,7 +23,7 @@ jwt:
 
 sentry:
   dsn: ${SENTRY_DSN}
-  environment: local
+  environment: prod
   traces-sample-rate: 1.0
   enable-tracing: true
   exception-resolver-order: -2147483647
@@ -67,9 +67,9 @@ spring:
     import: secret.properties
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DEV_DB_ENDPOINT}:3306/${DEV_DB_NAME}?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${DEV_DB_USER}
-    password: ${DEV_DB_PASSWORD}
+    url: jdbc:mysql://${PROD_DB_ENDPOINT}:3306/${PROD_DB_NAME}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
@@ -82,7 +82,7 @@ jwt:
 
 sentry:
   dsn: ${SENTRY_DSN}
-  environment: local
+  environment: prod
   traces-sample-rate: 1.0
   enable-tracing: true
   exception-resolver-order: -2147483647
