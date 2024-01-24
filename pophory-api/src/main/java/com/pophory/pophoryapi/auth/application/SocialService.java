@@ -10,6 +10,7 @@ import com.pophory.pophorydomain.member.SocialType;
 import com.pophory.pophorydomain.member.infrastructure.MemberJpaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +21,12 @@ import java.security.spec.InvalidKeySpecException;
 @Service
 @RequiredArgsConstructor
 public class SocialService {
-    
-    protected static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 2L; // 2시간
-    protected static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000 * 24 * 14L; // 2주
+
+    @Value("${jwt.access-token.expiration-time}")
+    private long ACCESS_TOKEN_EXPIRATION_TIME;
+
+    @Value("${jwt.refresh-token.expiration-time}")
+    private long REFRESH_TOKEN_EXPIRATION_TIME; // 2주
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberJpaRepository memberJpaRepository;

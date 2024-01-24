@@ -20,6 +20,10 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
+  access-token:
+    expiration-time: 7200000
+  refresh-token:
+    expiration-time: 1209600000
 
 sentry:
   dsn: ${SENTRY_DSN}
