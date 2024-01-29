@@ -62,14 +62,16 @@ public class Album extends BaseTimeEntity {
         this.member = member;
     }
 
-
-
-    public void setAlbumDesign(AlbumDesign albumDesign) {
+    public void updateAlbumDesign(AlbumDesign albumDesign) {
         this.albumDesign = albumDesign;
     }
-    public void setMember(Member member) { this.member = member; }
 
-    public void setPhotoLimit(int photoLimit) {
+    public void updateMember(Member member) {
+        this.member = member;
+    }
+
+    public void updatePhotoLimit(int photoLimit) {
+        if (photoLimit < 1) throw new IllegalArgumentException("사진 제한은 1장 이상이어야 합니다.");
         this.photoLimit = photoLimit;
     }
 

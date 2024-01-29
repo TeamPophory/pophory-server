@@ -122,17 +122,17 @@ public class MemberService {
 
     private void addAlbum(Member member, Long cover) {
         Album album = new Album();
-        album.setAlbumDesign(getAlbumDesignById(cover));
-        album.setMember(member);
-        album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
+        album.updateAlbumDesign(getAlbumDesignById(cover));
+        album.updateMember(member);
+        album.updatePhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
     }
 
     private Long addAlbumV2(Member member, Long cover) {
         Album album = new Album();
-        album.setAlbumDesign(getAlbumDesignById(cover));
-        album.setMember(member);
-        album.setPhotoLimit(INITIAL_PHOTO_LIMIT);
+        album.updateAlbumDesign(getAlbumDesignById(cover));
+        album.updateMember(member);
+        album.updatePhotoLimit(INITIAL_PHOTO_LIMIT);
         albumJpaRepository.save(album);
         return album.getId();
     }

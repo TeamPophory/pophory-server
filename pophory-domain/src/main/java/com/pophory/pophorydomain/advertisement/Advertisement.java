@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Advertisement {
+public class               Advertisement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,6 @@ public class Advertisement {
 
     private String iOSVersion;
 
-    @Column(name = "android_version")
     private String androidVersion;
 
     private String adName;
