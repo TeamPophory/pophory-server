@@ -7,6 +7,6 @@ import java.util.List;
 
 @AllArgsConstructor(staticName = "of")
 @Data
-public class AlbumDesignListGetResponseDto {
+public class AlbumDesignsGetResponseDto {
     private List<AlbumDesignGetResponseDto> albumDesigns;
 }

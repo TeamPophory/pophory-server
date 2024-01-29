@@ -2,7 +2,7 @@ package com.pophory.pophoryapi.albumtheme.presentation;
 
 
 import com.pophory.pophoryapi.albumtheme.application.AlbumDesignService;
-import com.pophory.pophoryapi.albumtheme.dto.response.AlbumDesignListGetResponseDto;
+import com.pophory.pophoryapi.albumtheme.dto.response.AlbumDesignsGetResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,7 +36,7 @@ public class AlbumDesignController {
             @ApiResponse(responseCode = "400", description = "사진 추가 실패", content = @Content),
             @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content)
     })
-    public ResponseEntity<AlbumDesignListGetResponseDto> getAlbumDesignList() {
+    public ResponseEntity<AlbumDesignsGetResponseDto> getAlbumDesignList() {
         return ResponseEntity.ok(albumDesignService.getAlbumDesignList());
     }
 }

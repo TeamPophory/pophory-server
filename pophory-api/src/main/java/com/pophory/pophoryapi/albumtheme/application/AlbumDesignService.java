@@ -2,7 +2,7 @@ package com.pophory.pophoryapi.albumtheme.application;
 
 
 import com.pophory.pophoryapi.albumtheme.dto.response.AlbumDesignGetResponseDto;
-import com.pophory.pophoryapi.albumtheme.dto.response.AlbumDesignListGetResponseDto;
+import com.pophory.pophoryapi.albumtheme.dto.response.AlbumDesignsGetResponseDto;
 import com.pophory.pophorydomain.albumtheme.infrastructure.AlbumDesignJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class AlbumDesignService {
     private final AlbumDesignJpaRepository albumDesignJpaRepository;
 
     @Transactional(readOnly = true)
-    public AlbumDesignListGetResponseDto getAlbumDesignList() {
-        return AlbumDesignListGetResponseDto.of(
+    public AlbumDesignsGetResponseDto getAlbumDesignList() {
+        return AlbumDesignsGetResponseDto.of(
                 albumDesignJpaRepository.findAll()
                         .stream()
                         .map(AlbumDesignGetResponseDto::of)
