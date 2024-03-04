@@ -3,6 +3,7 @@ package com.pophory.pophorydomain.member;
 
 
 import com.pophory.pophorycommon.entity.BaseTimeEntity;
+import com.pophory.pophorycommon.exception.MemberException;
 import com.pophory.pophorydomain.album.Album;
 import com.pophory.pophorydomain.fcm.FcmEntity;
 import jakarta.persistence.*;
@@ -65,10 +66,19 @@ public class Member extends BaseTimeEntity {
     }
 
     public void updateRealName(String realName) {
+        validateRealName(realName);
         this.realName = realName;
     }
 
-    public void updateNickname(String nickname) { this.nickname = nickname; }
+    private void validateRealName(String realName) {
+        if (realName.length() < 6) {
+            throw new MemberException("이름은 6자 이상이어야 합니다.");
+        }
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
@@ -81,7 +91,7 @@ public class Member extends BaseTimeEntity {
     }
 
     @Builder
-    public Member(String socialId, SocialType socialType) {
+    private Member(String socialId, SocialType socialType) {
         this.socialId = socialId;
         this.socialType = socialType;
     }

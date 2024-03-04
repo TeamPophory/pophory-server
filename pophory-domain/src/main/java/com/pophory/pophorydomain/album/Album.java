@@ -23,6 +23,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @NoArgsConstructor
 public class Album extends BaseTimeEntity {
+    private static final int MIN_PHOTO_LIMIT = 1;
 
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -60,6 +61,10 @@ public class Album extends BaseTimeEntity {
         this.photoLimit = photoLimit;
         this.imageUrl = imageUrl;
         this.member = member;
+    }
+
+    private void validatePhotoLimit(int photoLimit) {
+        if (this.photoLimit < 1) throw new IllegalArgumentException("사진 제한은 1장 이상이어야 합니다.");
     }
 
     public void updateAlbumDesign(AlbumDesign albumDesign) {

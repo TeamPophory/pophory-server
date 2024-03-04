@@ -1,6 +1,7 @@
 package com.pophory.pophorycommon.config;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
+
 import java.util.TimeZone;
 
 public class TimeZoneConfig {

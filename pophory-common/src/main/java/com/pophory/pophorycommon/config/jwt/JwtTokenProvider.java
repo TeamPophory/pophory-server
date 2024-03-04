@@ -2,13 +2,13 @@ package com.pophory.pophorycommon.config.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -56,14 +56,8 @@ public class JwtTokenProvider {
         try {
             final Claims claims = getBody(token);
             return JwtValidationType.VALID_JWT;
-        } catch (MalformedJwtException ex) {
-            return JwtValidationType.INVALID_JWT_TOKEN;
-        } catch (ExpiredJwtException ex) {
-            return JwtValidationType.EXPIRED_JWT_TOKEN;
-        } catch (UnsupportedJwtException ex) {
-            return JwtValidationType.UNSUPPORTED_JWT_TOKEN;
-        } catch (IllegalArgumentException ex) {
-            return JwtValidationType.EMPTY_JWT;
+        } catch (RuntimeException ex) {
+            return JwtValidationType.INVALID_JWT;
         }
     }
 

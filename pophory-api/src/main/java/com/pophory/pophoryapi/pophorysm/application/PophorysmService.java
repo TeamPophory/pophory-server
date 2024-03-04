@@ -3,12 +3,12 @@ package com.pophory.pophoryapi.pophorysm.application;
 
 import com.pophory.pophoryapi.pophorysm.dto.request.PophorysmShareRequestDto;
 import com.pophory.pophoryapi.pophorysm.dto.response.PophorysmGetPresignedUrlResponseDto;
+import com.pophory.pophorydomain.member.infrastructure.MemberJpaRepository;
 import com.pophory.pophoryexternal.s3.UploadType;
 import com.pophory.pophoryexternal.s3.S3Service;
 import com.pophory.pophorycommon.util.PhotoUtil;
 import com.pophory.pophorydomain.album.Album;
 import com.pophory.pophorydomain.member.Member;
-import com.pophory.pophorydomain.member.infrastructure.MemberJpaRepository;
 import com.pophory.pophorydomain.photo.Photo;
 import com.pophory.pophorydomain.photo.PhotoSizeVO;
 import com.pophory.pophorydomain.photo.infrastructure.PhotoJpaRepository;
