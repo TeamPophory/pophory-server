@@ -162,12 +162,6 @@ project("pophory-common") {
 		implementation("org.springframework.boot:spring-boot-starter-security")
 		testImplementation("org.springframework.security:spring-security-test")
 
-		//querydsl 추가
-		implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
-		annotationProcessor ("com.querydsl:querydsl-apt:5.0.0:jakarta")
-		annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
-		annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
-
 		// swagger
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 		implementation("org.springdoc:springdoc-openapi-starter-common:2.3.0")
