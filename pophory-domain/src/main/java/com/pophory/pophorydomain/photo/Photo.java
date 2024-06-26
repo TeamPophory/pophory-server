@@ -1,8 +1,8 @@
 package com.pophory.pophorydomain.photo;
 
-import com.pophory.pophorycommon.entity.BaseTimeEntity;
 import com.pophory.pophorycommon.util.RandomUtil;
 import com.pophory.pophorydomain.album.Album;
+import com.pophory.pophorydomain.common.BaseTimeEntity;
 import com.pophory.pophorydomain.studio.Studio;
 import jakarta.persistence.*;
 import lombok.Builder;

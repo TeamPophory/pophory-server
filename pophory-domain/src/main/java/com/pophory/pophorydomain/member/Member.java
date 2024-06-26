@@ -2,9 +2,9 @@ package com.pophory.pophorydomain.member;
 
 
 
-import com.pophory.pophorycommon.entity.BaseTimeEntity;
 import com.pophory.pophorycommon.exception.MemberException;
 import com.pophory.pophorydomain.album.Album;
+import com.pophory.pophorydomain.common.BaseTimeEntity;
 import com.pophory.pophorydomain.fcm.FcmEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

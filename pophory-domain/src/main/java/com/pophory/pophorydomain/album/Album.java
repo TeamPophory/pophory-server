@@ -1,8 +1,8 @@
 package com.pophory.pophorydomain.album;
 
 
-import com.pophory.pophorycommon.entity.BaseTimeEntity;
 import com.pophory.pophorydomain.albumtheme.AlbumDesign;
+import com.pophory.pophorydomain.common.BaseTimeEntity;
 import com.pophory.pophorydomain.member.Member;
 import com.pophory.pophorydomain.photo.Photo;
 import jakarta.persistence.*;
