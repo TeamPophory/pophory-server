@@ -163,12 +163,12 @@ project("pophory-common") {
 		testImplementation("org.springframework.security:spring-security-test")
 
 		//querydsl 추가
-		implementation("com.querydsl:querydsl-jpa:${dependencyManagement.importedProperties["querydsl.version"]}:jakarta")
-		annotationProcessor ("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties["querydsl.version"]}:jakarta")
+		implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+		annotationProcessor ("com.querydsl:querydsl-apt:5.0.0:jakarta")
 		annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
 		annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
 
-		// swagger"
+		// swagger
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 		implementation("org.springdoc:springdoc-openapi-starter-common:2.3.0")
 	}
@@ -192,8 +192,8 @@ project("pophory-domain") {
 		implementation("org.springframework.boot:spring-boot-starter-web")
 
 		//querydsl 추가
-		implementation("com.querydsl:querydsl-jpa:${dependencyManagement.importedProperties["querydsl.version"]}:jakarta")
-		annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties["querydsl.version"]}:jakarta")
+		implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+		annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
 		annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 		annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
@@ -219,18 +219,6 @@ project("pophory-external") {
 		plugin("io.spring.dependency-management")
 		plugin("org.springframework.boot")
 	}
-
-	dependencies {
-		// slack
-		implementation("com.slack.api:slack-api-client:1.31.0")
-
-		// FCM
-		implementation("com.google.firebase:firebase-admin:9.1.1")
-
-		// AWS S3
-		implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
-	}
-
 
 	val jar: Jar by tasks
 	val bootJar: BootJar by tasks
