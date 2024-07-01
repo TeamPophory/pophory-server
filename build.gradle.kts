@@ -133,7 +133,7 @@ project("pophory-api") {
 	val bootJar: BootJar by tasks
 
 	bootJar.enabled = true
-	jar.enabled = true
+	jar.enabled = false
 
 }
 
@@ -161,10 +161,6 @@ project("pophory-common") {
 		// Security
 		implementation("org.springframework.boot:spring-boot-starter-security")
 		testImplementation("org.springframework.security:spring-security-test")
-
-		// swagger
-		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-		implementation("org.springdoc:springdoc-openapi-starter-common:2.3.0")
 	}
 
 	val jar: Jar by tasks

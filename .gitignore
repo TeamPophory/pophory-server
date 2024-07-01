@@ -45,4 +45,6 @@ application-prod.yaml
 application-*.yml
 pophory_fcm.json
 secret.properties
+.env
+docker-compose.yml
 ```

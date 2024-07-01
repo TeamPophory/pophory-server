@@ -1,0 +1,69 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+    import: secret.properties
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-token:
+    expiration-time: 7200000
+  refresh-token:
+    expiration-time: 1209600000
+
+jwt.APPLE_URL: ${APPLE_URL}
+jwt.KAKAO_URL: ${KAKAO_URL}
+
+sentry:
+  dsn: ${SENTRY_DSN}
+  environment: local
+  traces-sample-rate: 1.0
+  enable-tracing: true
+  exception-resolver-order: -2147483647
+
+slack:
+  bot:
+    token: ${SLACK_BOT_TOKEN}
+  channel:
+    sign-in: ${SLACK_SIGNIN_CHANNEL}
+    monitor: ${SLACK_MONITORING_CHANNEL}
+
+fcm:
+  file-path: pophory_fcm.json
+  api:
+    url: ${FCM_URL}
+  google:
+    api: https://www.googleapis.com/auth/cloud-platform
+
+cloud:
+  aws:
+    CLOUDFRONT: ${CLOUDFRONT}
+    region:
+      static: ${S3_REGION}
+    credentials:
+      accessKey: ${S3_ACCESS_KEY}
+      secretKey: ${S3_SECRET_KEY}
+    s3:
+      bucket: ${S3_BUCKET}
+pophorysm:
+  id: ${POPHORYSM_ID}
+
+springdoc:
+  packages-to-scan: com.pophory.pophoryapi
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    tags-sorter: alpah
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+    cache:
+      disabled: true

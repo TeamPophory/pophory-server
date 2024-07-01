@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,7 +116,7 @@ public class MemberService {
     }
 
     private Member findMemberById(Long id) {
-        return memberJpaRepository.findById(id).orElseThrow(
+        return Objects.requireNonNull(memberJpaRepository.findByIdForUpdate(id)).orElseThrow(
                 () -> new EntityNotFoundException("Member가 존재하지 않습니다. id: " + id)
         );
     }

@@ -172,6 +172,7 @@ public class PhotoService {
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
         objectMetadata.setContentDisposition("inline");
+        objectMetadata.setLastModified(new Date());
         return objectMetadata;
     }
 
