@@ -30,9 +30,7 @@ public class Album extends BaseTimeEntity {
 
     private String title = "기본 앨범";
 
-    @JoinColumn(name = "album_design_id")
-    @OneToOne(fetch = LAZY)
-    private AlbumDesign albumDesign;
+    private Long albumDesignId;
 
     @Min(value = 1, message = "사진제한은 1장 이상이어야 합니다.")
     private int photoLimit;
@@ -57,7 +55,7 @@ public class Album extends BaseTimeEntity {
     @Builder
     public Album(String title, AlbumDesign albumDesign, int photoLimit, String imageUrl, Member member) {
         this.title = title;
-        this.albumDesign = albumDesign;
+        this.albumDesignId = albumDesign.getId();
         this.photoLimit = photoLimit;
         this.imageUrl = imageUrl;
         this.member = member;
@@ -68,7 +66,7 @@ public class Album extends BaseTimeEntity {
     }
 
     public void updateAlbumDesign(AlbumDesign albumDesign) {
-        this.albumDesign = albumDesign;
+        this.albumDesignId = albumDesign.getId();
     }
 
     public void updateMember(Member member) {
