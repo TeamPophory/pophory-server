@@ -19,6 +19,6 @@ public class AlbumGetResponseDto {
     private int photoCount;
 
     public static AlbumGetResponseDto of(Album album, int count) {
-        return new AlbumGetResponseDto(album.getId(), album.getTitle(), album.getAlbumDesign().getId(), count);
+        return new AlbumGetResponseDto(album.getId(), album.getTitle(), album.getAlbumDesignId(), count);
     }
 }

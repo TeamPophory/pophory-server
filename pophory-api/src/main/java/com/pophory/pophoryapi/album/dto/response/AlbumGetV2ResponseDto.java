@@ -21,6 +21,6 @@ public class AlbumGetV2ResponseDto {
     private int photoLimit;
 
     public static AlbumGetV2ResponseDto of(Album album, int count) {
-        return new AlbumGetV2ResponseDto(album.getId(), album.getTitle(), album.getAlbumDesign().getId(), count, album.getPhotoLimit());
+        return new AlbumGetV2ResponseDto(album.getId(), album.getTitle(), album.getAlbumDesignId(), count, album.getPhotoLimit());
     }
 }
