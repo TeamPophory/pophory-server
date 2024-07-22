@@ -13,7 +13,8 @@ interface MemberJpaRepository : JpaRepository<Member, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select m from Member m where m.id = :id")
-    fun findByIdForUpdate(@Param("id") id: Long) : Optional<Member?>?
+    fun findByIdForUpdate(@Param("id") id: Long) : Optional<Member>
+
     fun existsMemberByNickname(nickname: String?): Boolean
     fun existsMemberBySocialIdAndSocialType(socialId: String?, socialType: SocialType?): Boolean
 
