@@ -66,14 +66,7 @@ public class Member extends BaseTimeEntity {
     }
 
     public void updateRealName(String realName) {
-        validateRealName(realName);
         this.realName = realName;
-    }
-
-    private void validateRealName(String realName) {
-        if (realName.length() < 6) {
-            throw new MemberException("이름은 6자 이상이어야 합니다.");
-        }
     }
 
     public void updateNickname(String nickname) {
